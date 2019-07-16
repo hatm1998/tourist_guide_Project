@@ -10,6 +10,7 @@
         android:id="@+id/btn_login"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:hint="@string/Login"
         android:text="Login"
         app:layout_constraintBottom_toTopOf="@+id/btn_signup"
         app:layout_constraintEnd_toEndOf="parent"
@@ -20,6 +21,7 @@
         android:id="@+id/btn_signup"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:hint="@string/SignUp"
         android:text="SignUp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -28,6 +30,8 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
         android:layout_marginBottom="300dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/btn_login"
@@ -40,7 +44,7 @@
             android:layout_height="wrap_content"
 
             android:ems="10"
-            android:hint="Email"
+            android:hint="@string/Email"
             android:inputType="textPersonName" />
 
         <EditText
@@ -49,8 +53,9 @@
             android:layout_height="wrap_content"
 
             android:ems="10"
-            android:hint="Password"
+            android:hint="@string/Pass"
             android:inputType="textPersonName"
+            android:password="true"
             tools:layout_editor_absoluteX="8dp" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

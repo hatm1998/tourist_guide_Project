@@ -11,10 +11,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.touristguide.MainActivity;
+import com.example.touristguide.HomeActivity;
 import com.example.touristguide.R;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -115,7 +114,7 @@ public class SignUp extends AppCompatActivity {
                                         {
                                             Toast.makeText(getBaseContext(),"User was registered",Toast.LENGTH_LONG).show();
                                             finish();
-                                            Intent intent = new Intent(SignUp.this , MainActivity.class);
+                                            Intent intent = new Intent(SignUp.this , HomeActivity.class);
                                             startActivity(intent);
                                         }
                                     }

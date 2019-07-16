@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">touristguide</string>
     <string name="title_activity_login">Login</string>
+    <string name="Email">Email</string>
+    <string name="Pass">Password</string>
+    <string name="Login">Login</string>
+    <string name="SignUp">SignUp</string>
+    <string name="Username">UserName</string>
+    <string name="Confrimation_pass">Confirmation Password</string>
 </resources>
