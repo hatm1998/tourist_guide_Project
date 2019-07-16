@@ -6,7 +6,12 @@
     <string name="Login">Login</string>
     <string name="SignUp">SignUp</string>
     <string name="Username">Email</string>
+    <string name="FullName">FullName</string>
+    <string name="Phone">Phone Number</string>
     <string name="Confrimation_pass">Confirmation Password</string>
     <string name="txtGuest">Guest</string>
     <string name="Field_empty">Fields con\'t be Empty</string>
+    <string name="Aleady_a_member">Aleady a member?</string>
+    <string name="Register" >Register</string>
+
 </resources>
