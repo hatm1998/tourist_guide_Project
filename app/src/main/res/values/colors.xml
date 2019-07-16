@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#80E88B44</color>
     <color name="colorPrimaryDark">#80FACB85</color>
-    <color name="colorAccent">#FFFFFF</color>
+    <color name="colorAccent">#7F261E</color>
 
     <color name="ntb_inactive_color">#F1C40F</color>
     F1C40F
