@@ -2,6 +2,7 @@ package com.example.touristguide.authentication;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -50,22 +51,47 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                mAuth.signInWithEmailAndPassword(txt_email.getText().toString(), txt_pass.getText().toString())
-                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(getBaseContext(), "Done", Toast.LENGTH_LONG).show();
-                            finish();
-                            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                            startActivity(intent);
-                        } else {
-                            Toast.makeText(getBaseContext(), task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                        }
-
-                    }
-                });
+                check__For_Login();
             }
         });
+
+
+    }
+    private void check__For_Login()
+    {
+        String Email=txt_email.getText().toString().trim();
+        String password=txt_pass.getText().toString().trim();
+
+        if(TextUtils.isEmpty(Email) && TextUtils.isEmpty(password)) {
+            txt_email.setError(getResources().getString(R.string.Field_empty));
+            txt_pass.setError(getResources().getString(R.string.Field_empty));
+        }
+        else if(TextUtils.isEmpty(Email))
+        {
+            txt_email.setError(getResources().getString(R.string.Field_empty));
+
+        }else if(TextUtils.isEmpty(password))
+        {
+            txt_pass.setError(getResources().getString(R.string.Field_empty));
+        }else {
+
+            // Success Login
+            mAuth.signInWithEmailAndPassword(Email, password)
+                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                finish();
+                                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                                startActivity(intent);
+                            } else {
+                                Toast.makeText(getBaseContext(), task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                            }
+
+                        }
+                    });
+
+        }
+
     }
 }

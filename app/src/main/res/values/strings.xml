@@ -8,4 +8,5 @@
     <string name="Username">UserName</string>
     <string name="Confrimation_pass">Confirmation Password</string>
     <string name="txtGuest">Guest</string>
+    <string name="Field_empty">Fields con\'t be Empty</string>
 </resources>
