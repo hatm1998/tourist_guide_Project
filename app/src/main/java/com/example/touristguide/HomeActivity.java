@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 import devlight.io.library.ntb.NavigationTabBar;
 
-public class MainActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private Button logout; // test button
 
@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_Home);
 
         final String[] colors = getResources().getStringArray(R.array.colorful);
         logout = findViewById(R.id.btn_logout);
