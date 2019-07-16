@@ -1,19 +1,19 @@
 package com.example.touristguide.authentication;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.touristguide.HomeActivity;
 import com.example.touristguide.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -21,7 +21,7 @@ public class Login extends AppCompatActivity {
 
   private   Button btn_login , btn_signup;
   private   FirebaseAuth mAuth;
-   private  EditText txt_email, txt_pass;
+   private TextInputEditText txt_email, txt_pass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

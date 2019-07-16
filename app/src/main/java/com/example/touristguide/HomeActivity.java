@@ -24,7 +24,7 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_Home);
+        setContentView(R.layout.activity_home);
 
         final String[] colors = getResources().getStringArray(R.array.colorful);
         logout = findViewById(R.id.btn_logout);
