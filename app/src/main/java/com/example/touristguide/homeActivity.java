@@ -1,7 +1,11 @@
 package com.example.touristguide;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -30,6 +34,19 @@ public class homeActivity extends AppCompatActivity {
         logout = findViewById(R.id.btn_logout);
         navigationTabBar = findViewById(R.id.ntb);
         mAuth = FirebaseAuth.getInstance();
+
+
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel("MyNotification", "MyNotification", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(channel);
+
+        }
+
+
+
+
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override

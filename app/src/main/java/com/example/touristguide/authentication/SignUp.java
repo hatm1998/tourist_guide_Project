@@ -1,5 +1,8 @@
 package com.example.touristguide.authentication;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -8,11 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.touristguide.HomeActivity;
 import com.example.touristguide.R;
+import com.example.touristguide.homeActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -50,7 +50,7 @@ public class SignUp extends AppCompatActivity {
         firebaseFirestore = FirebaseFirestore.getInstance();
         storageReference = FirebaseStorage.getInstance().getReference();
         txt_username = findViewById(R.id.txt_Username);
-        txt_password = findViewById(R.id.txt_Email);
+        txt_password = findViewById(R.id.txt_password);
         txt_confirmation = findViewById(R.id.txt_confirm_pass);
         txt_email = findViewById(R.id.txt_Email);
 
@@ -114,7 +114,7 @@ public class SignUp extends AppCompatActivity {
                                         {
                                             Toast.makeText(getBaseContext(),"User was registered",Toast.LENGTH_LONG).show();
                                             finish();
-                                            Intent intent = new Intent(SignUp.this , HomeActivity.class);
+                                            Intent intent = new Intent(SignUp.this , homeActivity.class);
                                             startActivity(intent);
                                         }
                                     }
