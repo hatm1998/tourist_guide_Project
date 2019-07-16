@@ -1,12 +1,12 @@
 package com.example.touristguide;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.touristguide.authentication.Login;
 import com.google.firebase.auth.FirebaseAuth;
