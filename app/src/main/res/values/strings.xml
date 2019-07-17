@@ -12,6 +12,9 @@
     <string name="txtGuest">Guest</string>
     <string name="Field_empty">Fields con\'t be Empty</string>
     <string name="Aleady_a_member">Aleady a member?</string>
-    <string name="Register" >Register</string>
+    <string name="Register">Register</string>
+    <string name="Skip">Skip</string>
+    <string name="connectWith">Connect With</string>
+    <string name="Terms"><![CDATA[Terms & Conditon]]></string>
 
 </resources>
