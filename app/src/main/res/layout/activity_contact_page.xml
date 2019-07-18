@@ -115,6 +115,7 @@
                 android:background="@drawable/style_login_signup"
                 android:drawableStart="@drawable/ic_person_black_24dp"
                 android:gravity="center|start|left"
+                android:onClick="btn_signUp"
                 android:paddingStart="5dp"
                 android:text="@string/Register"
                 android:textAlignment="center"
