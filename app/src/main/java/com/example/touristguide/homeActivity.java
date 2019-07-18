@@ -11,8 +11,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.touristguide.Activity.Fragment_Activity;
-import com.example.touristguide.ShareItem.Add_new_post;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
@@ -23,7 +21,6 @@ public class homeActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private Button logout; // test button
 
-    private FloatingActionButton fab;
     private NavigationTabBar navigationTabBar;
 
     @Override
@@ -35,14 +32,7 @@ public class homeActivity extends AppCompatActivity {
         logout = findViewById(R.id.btn_logout);
         navigationTabBar = findViewById(R.id.ntb);
         mAuth = FirebaseAuth.getInstance();
-        fab = findViewById(R.id.fab_add);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent  = new Intent(homeActivity.this , Add_new_post.class);
-                startActivity(intent);
-            }
-        });
+
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
