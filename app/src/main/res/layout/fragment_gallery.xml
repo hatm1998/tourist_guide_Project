@@ -18,22 +18,40 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" >
 
-
-        <ImageView
-            android:id="@+id/imageView8"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:tint="#00D50505"
-            app:srcCompat="@android:drawable/ic_menu_close_clear_cancel"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
             tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="12dp" />
+            tools:layout_editor_absoluteY="12dp">
 
-        <TextView
-            android:id="@+id/txt_path"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:layout_editor_absoluteX="48dp"
-            tools:layout_editor_absoluteY="18dp" />
+            <ImageView
+                android:id="@+id/img_close_gallery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:tint="#00D50505"
+                app:srcCompat="@android:drawable/ic_menu_close_clear_cancel"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="12dp" />
+
+            <Spinner
+                android:id="@+id/sp_Dirction"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/txt_next_gellary"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="20dp"
+                android:textColor="#FFFFFF"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="48dp"
+                tools:layout_editor_absoluteY="18dp"
+                tools:text="@string/next" />
+        </LinearLayout>
+
 
 
     </androidx.appcompat.widget.Toolbar>
@@ -54,7 +72,7 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
         <ImageView
-            android:id="@+id/imageView6"
+            android:id="@+id/img_share"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"

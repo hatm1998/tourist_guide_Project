@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -93,6 +95,45 @@ public class homeActivity extends AppCompatActivity {
         navigationTabBar.setBehaviorEnabled(true);
         navigationTabBar.setIconSizeFraction(0.5f);
 
+
+        navigationTabBar.setOnTabBarSelectedIndexListener(new NavigationTabBar.OnTabBarSelectedIndexListener() {
+            @Override
+            public void onStartTabSelected(NavigationTabBar.Model model, int index) {
+
+
+                return;
+
+            }
+
+
+            @Override
+            public void onEndTabSelected(NavigationTabBar.Model model, int index) {
+
+                switch (index) {
+                    case 0: {
+                        //replacefragment(home_fragment);
+                        break;
+                    }
+
+                    case 1: {
+                        //replacefragment(notifications_fragment);
+                        break;
+                    }
+                    case 2: {
+                       // replacefragment(category_fragment);
+                        break;
+                    }
+                    case 3: {
+                       // replacefragment(profile_fragment);
+                        break;
+                    }
+
+
+                }
+                return;
+            }
+        });
+
     }
 
 
@@ -104,6 +145,16 @@ public class homeActivity extends AppCompatActivity {
 
             sendtologin();
         }
+    }
+
+
+    public void  replacefragment(Fragment fragment) {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.frameLayout, fragment);
+
+        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        fragmentTransaction.commit();
+
     }
 
     private void sendtologin() {
