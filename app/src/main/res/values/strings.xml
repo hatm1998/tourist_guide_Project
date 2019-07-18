@@ -15,5 +15,6 @@
     <string name="Register">Register</string>
     <string name="Contact_With">Contact With</string>
     <string name="Skip">Skip</string>
+    <string name="Terms_Conditions"><![CDATA[Terms &  Conditions]]></string>
 
 </resources>

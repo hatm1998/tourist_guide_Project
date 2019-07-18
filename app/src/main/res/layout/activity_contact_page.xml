@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/petra"
     tools:context=".Contact_page">
 
     <TextView
@@ -14,7 +15,7 @@
         android:layout_marginEnd="14sp"
         android:fontFamily="serif"
         android:text="@string/Skip"
-        android:textColor="#E6813B"
+        android:textColor="#FFFFFF"
         android:textSize="27sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -54,43 +55,38 @@
             android:fontFamily="serif"
             android:gravity="center"
             android:text="@string/Contact_With"
-            android:textColor="#E6813B"
+            android:textColor="#FFFFFF"
             android:textSize="20sp" />
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="7dp">
+            android:layout_gravity="center"
+            android:layout_marginBottom="7dp"
+            android:paddingStart="50dp"
+            android:paddingEnd="50dp">
 
             <ImageView
-                android:id="@+id/imgface"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="95dp"
-                android:layout_marginTop="-3dp"
+                android:id="@+id/imageView13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 app:srcCompat="@drawable/fac" />
 
             <ImageView
-                android:id="@+id/imgtwi"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="1dp"
-                android:layout_marginTop="-1dp"
-                android:layout_toEndOf="@id/imgface"
+                android:id="@+id/imageView14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 app:srcCompat="@drawable/twi" />
 
             <ImageView
-                android:id="@+id/imageView10"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="-1dp"
-                android:layout_marginTop="-2dp"
-                android:layout_toEndOf="@id/imgtwi"
+                android:id="@+id/imageView15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 app:srcCompat="@drawable/go" />
-        </RelativeLayout>
+        </LinearLayout>
 
         <View
             android:id="@+id/view3"
@@ -115,12 +111,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="10dp"
-                android:layout_weight="2"
+                android:layout_weight="1"
                 android:background="@drawable/style_login_signup"
                 android:drawableStart="@drawable/ic_lock_black_24dp"
                 android:gravity="center|start|left"
-                android:paddingStart="50dp"
+                android:paddingStart="5dp"
                 android:text="@string/Register"
+                android:textAlignment="center"
                 android:textColor="#FFFFFF" />
 
             <Button
@@ -128,12 +125,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
-                android:layout_weight="3"
+                android:layout_weight="1"
                 android:background="@drawable/style_login_signup"
                 android:drawableStart="@drawable/ic_person_black_24dp"
                 android:gravity="center|start"
-                android:paddingStart="50dp"
+                android:paddingStart="5dp"
                 android:text="@string/Login"
+                android:textAlignment="center"
                 android:textColor="#FFFFFF" />
         </LinearLayout>
 
@@ -144,8 +142,8 @@
             android:layout_marginBottom="7dp"
             android:fontFamily="serif"
             android:gravity="center"
-            android:text="Terms & Conditions"
-            android:textColor="#E6813B"
+            android:text="@string/Terms_Conditions"
+            android:textColor="#FFFFFF"
             android:textSize="15sp" />
 
     </LinearLayout>
