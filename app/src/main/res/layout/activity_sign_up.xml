@@ -18,25 +18,45 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="270dp"
-            android:background="@drawable/petraaaaa"
-            android:orientation="vertical">
+            android:layout_height="230dp"
+            android:background="@drawable/header">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/profile_image"
-                android:layout_width="150dp"
-                android:layout_height="125dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="40dp"
-                android:layout_marginBottom="30dp"
-                android:src="@drawable/ic_action_name"
-                android:tint="#000000"
-                app:civ_border_color="#000000"
-                app:civ_border_width="2dp" />
+            <ImageView
+                android:id="@+id/imageView9"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_close_black_24dp"
+                tools:ignore="VectorDrawableCompat" />
 
-        </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/profile_image"
+                    android:layout_width="150dp"
+                    android:layout_height="125dp"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginBottom="30dp"
+                    android:src="@drawable/ic_action_name"
+                    android:tint="#000000"
+                    app:civ_border_color="#000000"
+                    app:civ_border_width="2dp" />
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ScrollView
             android:id="@+id/scrollView2"
@@ -51,12 +71,13 @@
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginStart="10dp"
+                    android:layout_height="45dp"
+                    android:layout_marginStart="20dp"
                     android:layout_marginTop="20dp"
-                    android:layout_marginEnd="10dp"
+                    android:layout_marginEnd="20dp"
                     android:layout_marginBottom="15dp"
-                    app:cardCornerRadius="30dp">
+                    app:cardBackgroundColor="#FFFFFF"
+                    app:cardCornerRadius="25dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -68,7 +89,7 @@
                             android:layout_width="35dp"
                             android:layout_height="match_parent"
                             android:layout_marginStart="5dp"
-                            app:srcCompat="@drawable/ic_person_black_24dp"
+                            app:srcCompat="@drawable/ic_person_black_25dp"
                             tools:ignore="VectorDrawableCompat" />
 
                         <com.google.android.material.textfield.TextInputLayout
@@ -90,11 +111,12 @@
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
+                    android:layout_height="45dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
                     android:layout_marginBottom="15dp"
-                    app:cardCornerRadius="30dp">
+                    app:cardBackgroundColor="#FFFFFF"
+                    app:cardCornerRadius="25dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -106,7 +128,7 @@
                             android:layout_width="35dp"
                             android:layout_height="match_parent"
                             android:layout_marginStart="5dp"
-                            app:srcCompat="@drawable/ic_email_black_24dp"
+                            app:srcCompat="@drawable/ic_email_black_25dp"
                             tools:ignore="VectorDrawableCompat" />
 
                         <com.google.android.material.textfield.TextInputLayout
@@ -129,11 +151,12 @@
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
+                    android:layout_height="45dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
                     android:layout_marginBottom="15dp"
-                    app:cardCornerRadius="30dp">
+                    app:cardBackgroundColor="#FFFFFF"
+                    app:cardCornerRadius="25dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -145,7 +168,7 @@
                             android:layout_width="35dp"
                             android:layout_height="match_parent"
                             android:layout_marginStart="5dp"
-                            app:srcCompat="@drawable/ic_phone_black_24dp"
+                            app:srcCompat="@drawable/ic_phone_black_25dp"
                             tools:ignore="VectorDrawableCompat" />
 
                         <com.google.android.material.textfield.TextInputLayout
@@ -168,11 +191,12 @@
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
+                    android:layout_height="45dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
                     android:layout_marginBottom="15dp"
-                    app:cardCornerRadius="30dp">
+                    app:cardBackgroundColor="#FFFFFF"
+                    app:cardCornerRadius="25dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -184,7 +208,7 @@
                             android:layout_width="35dp"
                             android:layout_height="match_parent"
                             android:layout_marginStart="5dp"
-                            app:srcCompat="@drawable/ic_vpn_key_black_24dp"
+                            app:srcCompat="@drawable/ic_vpn_key_black_25dp"
                             tools:ignore="VectorDrawableCompat" />
 
                         <com.google.android.material.textfield.TextInputLayout
@@ -208,11 +232,12 @@
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
+                    android:layout_height="45dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
                     android:layout_marginBottom="15dp"
-                    app:cardCornerRadius="30dp">
+                    app:cardBackgroundColor="#FFFFFF"
+                    app:cardCornerRadius="25dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -224,7 +249,7 @@
                             android:layout_width="35dp"
                             android:layout_height="match_parent"
                             android:layout_marginStart="5dp"
-                            app:srcCompat="@drawable/ic_check_black_24dp"
+                            app:srcCompat="@drawable/ic_check_black_25dp"
                             tools:ignore="VectorDrawableCompat" />
 
                         <com.google.android.material.textfield.TextInputLayout
@@ -268,10 +293,10 @@
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="20dp"
-            android:background="@drawable/style_btn_login_signup"
+            android:background="#E6813B"
             android:hint="@string/SignUp"
             android:text="@string/Register"
-            android:textColor="#7F261E"
+            android:textColor="#FFFFFF"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
