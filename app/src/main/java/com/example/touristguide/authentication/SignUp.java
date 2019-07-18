@@ -1,20 +1,20 @@
 package com.example.touristguide.authentication;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.touristguide.R;
 import com.example.touristguide.homeActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -30,7 +30,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class SignUp extends AppCompatActivity {
 
-    private EditText txt_username, txt_password, txt_confirmation, txt_email;
+    private TextInputEditText txt_username
+            ,txt_email
+            ,Phone
+            , txt_password
+            , txt_confirmation;
     private Button btn_signup;
     private FirebaseAuth mAuth;
     private CircleImageView profile_Image;
@@ -78,9 +82,12 @@ public class SignUp extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
 
-                                UserID = mAuth.getUid();
+                                if (task.isSuccessful()) {
+                                    UserID = mAuth.getUid();
 
-                                createuser();
+                                    Register();
+                                }else
+                                    Toast.makeText(getApplicationContext(),"Error : "+task.getException().getMessage(),Toast.LENGTH_LONG).show();
                             }
                         });
 
@@ -89,7 +96,33 @@ public class SignUp extends AppCompatActivity {
 
     }
 
-    private void createuser() {
+    private void Register() {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         final StorageReference imagepath = storageReference.child("Image_Profile").child(UserID + ".jpg");
 

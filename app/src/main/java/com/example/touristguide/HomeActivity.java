@@ -1,14 +1,16 @@
 package com.example.touristguide;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.touristguide.authentication.Login;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
@@ -30,6 +32,19 @@ public class homeActivity extends AppCompatActivity {
         logout = findViewById(R.id.btn_logout);
         navigationTabBar = findViewById(R.id.ntb);
         mAuth = FirebaseAuth.getInstance();
+
+
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel("MyNotification", "MyNotification", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(channel);
+
+        }
+
+
+
+
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,7 +125,7 @@ public class homeActivity extends AppCompatActivity {
     private void sendtologin() {
 
         finish();
-        Intent intent = new Intent(getApplicationContext(), Login.class);
+        Intent intent = new Intent(getApplicationContext(), Contact_page.class);
         startActivity(intent);
     }
 
