@@ -8,6 +8,7 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.touristguide.ShareItem.Add_new_post;
 import com.example.touristguide.authentication.Login;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -110,7 +111,7 @@ public class homeActivity extends AppCompatActivity {
     private void sendtologin() {
 
         finish();
-        Intent intent = new Intent(getApplicationContext(), Login.class);
+        Intent intent = new Intent(getApplicationContext(), Add_new_post.class);
         startActivity(intent);
     }
 

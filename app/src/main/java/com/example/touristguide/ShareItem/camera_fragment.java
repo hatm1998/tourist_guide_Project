@@ -11,13 +11,13 @@ import androidx.fragment.app.Fragment;
 
 import com.example.touristguide.R;
 
-public class gallery_fragment extends Fragment {
+public class camera_fragment extends Fragment {
 
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_gallery , container , false);
+        View view = inflater.inflate(R.layout.fragment_camera, container , false);
 
         return view;
     }
