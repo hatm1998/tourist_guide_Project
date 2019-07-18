@@ -102,7 +102,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10sp"
+            android:layout_marginBottom="2dp"
             android:orientation="horizontal">
 
             <Button
@@ -111,6 +111,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="10dp"
+                android:layout_marginBottom="8dp"
                 android:layout_weight="1"
                 android:background="@drawable/style_login_signup"
                 android:drawableStart="@drawable/ic_person_black_24dp"
@@ -126,10 +127,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
+                android:layout_marginBottom="8dp"
                 android:layout_weight="1"
                 android:background="@drawable/style_login_signup"
                 android:drawableStart="@drawable/ic_lock_black_24dp"
                 android:gravity="center|start"
+                android:onClick="btn_login"
                 android:paddingStart="5dp"
                 android:text="@string/Login"
                 android:textAlignment="center"

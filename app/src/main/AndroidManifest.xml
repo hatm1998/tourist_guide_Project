@@ -13,7 +13,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ShareItem.Add_new_post"></activity>
-        <activity android:name=".authentication.SignUp" />
+        <activity android:name=".Contact_page"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
+            ></activity>
+        <activity android:name=".authentication.SignUp"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"/>
         <activity
             android:name=".authentication.Login"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />

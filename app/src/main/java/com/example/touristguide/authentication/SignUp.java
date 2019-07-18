@@ -10,6 +10,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.touristguide.Contact_page;
 import com.example.touristguide.R;
 import com.example.touristguide.homeActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -98,32 +99,6 @@ public class SignUp extends AppCompatActivity {
 
     private void Register() {
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         final StorageReference imagepath = storageReference.child("Image_Profile").child(UserID + ".jpg");
 
         imagepath.putFile(ImageUri)
@@ -174,5 +149,11 @@ public class SignUp extends AppCompatActivity {
                 Exception error = result.getError();
             }
         }
+    }
+    // Action -> Button Close
+    public void btn_close(View view){
+        finish();
+        startActivity(  new Intent(this , Contact_page.class));
+        overridePendingTransition(R.anim.up_signup,R.anim.down_signup);
     }
 }

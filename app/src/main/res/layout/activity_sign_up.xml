@@ -20,8 +20,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="230dp"
-            android:background="@drawable/header">
+            android:layout_height="270dp"
+            android:background="@drawable/petraaaaa">
 
             <ImageView
                 android:id="@+id/imageView9"
@@ -29,6 +29,7 @@
                 android:layout_height="40dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
+                android:onClick="btn_close"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_close_black_24dp"

@@ -35,17 +35,7 @@ public class Login extends AppCompatActivity {
         txt_email = findViewById(R.id.txt_email);
         txt_pass = findViewById(R.id.txt_pass);
 
-        btn_signup = findViewById(R.id.btn_signup);
 
-
-        btn_signup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Login.this , SignUp.class);
-                startActivity(intent);
-
-            }
-        });
 
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,8 +44,6 @@ public class Login extends AppCompatActivity {
                 check__For_Login();
             }
         });
-
-
     }
     private void check__For_Login()
     {
