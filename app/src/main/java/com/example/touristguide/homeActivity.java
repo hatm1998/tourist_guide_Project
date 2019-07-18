@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.touristguide.Activity.Fragment_Activity;
+import com.example.touristguide.ShareItem.Add_new_post;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
@@ -112,8 +112,7 @@ public class homeActivity extends AppCompatActivity {
 
                 switch (index) {
                     case 0: {
-                        //replacefragment(home_fragment)
-                        replacefragment(new Fragment_Activity());
+                        //replacefragment(home_fragment);
                         break;
                     }
 
@@ -162,7 +161,7 @@ public class homeActivity extends AppCompatActivity {
     private void sendtologin() {
 
         finish();
-        Intent intent = new Intent(this, Contact_page.class);
+        Intent intent = new Intent(this, Add_new_post.class);
         startActivity(intent);
     }
 

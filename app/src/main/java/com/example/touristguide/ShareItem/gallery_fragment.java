@@ -19,7 +19,18 @@ import androidx.fragment.app.Fragment;
 import com.example.touristguide.R;
 import com.example.touristguide.Utilis.FilePath;
 import com.example.touristguide.Utilis.FileSearch;
+import com.example.touristguide.Utilis.GridImageAdapter;
+import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
+import com.nostra13.universalimageloader.cache.disc.naming.HashCodeFileNameGenerator;
+import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+import com.nostra13.universalimageloader.core.decode.BaseImageDecoder;
+import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class gallery_fragment extends Fragment {
@@ -28,6 +39,8 @@ public class gallery_fragment extends Fragment {
     private ImageView ImagePic;
     private  TextView txt_next;
 
+    private String mappend = "file:/";
+
     private Spinner Sp_Dir;
     private ArrayList<String> directories;
 
@@ -35,7 +48,7 @@ public class gallery_fragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_gallery, container, false);
-
+        imageconfig();
         GallaryGrid = view.findViewById(R.id.GV_gallery_pic);
         ImagePic = view.findViewById(R.id.img_share);
         txt_next = view.findViewById(R.id.txt_next_gellary);
@@ -43,7 +56,10 @@ public class gallery_fragment extends Fragment {
         Sp_Dir = view.findViewById(R.id.sp_Dirction);
 
         directories = new ArrayList<>();
-
+       // getActivity().imageLoader.init(ImageLoaderConfiguration.createDefault(getBaseCont‌​ext()));
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getActivity())
+			.build();
+        ImageLoader.getInstance().init(config);
 
         txt_next.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,7 +89,9 @@ public class gallery_fragment extends Fragment {
         Sp_Dir.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(getContext() , "You Selected : " + directories.get(i),Toast.LENGTH_LONG ).show();
+
+            setupGridView(directories.get(i));
+
             }
 
             @Override
@@ -81,5 +99,28 @@ public class gallery_fragment extends Fragment {
 
             }
         });
+    }
+
+    private void setupGridView(String SelectedDir)
+    {
+        final ArrayList<String> imgURL = FileSearch.getFilepaths(SelectedDir);
+
+
+        // set the grid column width
+        int Gridwidht = getResources().getDisplayMetrics().widthPixels;
+        int imagewidth = Gridwidht / 3; //  <----- this is number of columns GridView
+        GallaryGrid.setColumnWidth(imagewidth);
+
+        GridImageAdapter adapter = new GridImageAdapter(getActivity() , R.layout.gridimageview,mappend,imgURL);
+        GallaryGrid.setAdapter(adapter);
+
+    }
+
+    private void imageconfig()
+    {
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getContext())
+                .memoryCacheExtraOptions(480, 800) // default = device screen dimensions
+                .diskCacheExtraOptions(480, 800, null)
+                .build();
     }
 }

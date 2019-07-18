@@ -6,7 +6,7 @@ public class FilePath {
 
     public String Root_Dir = Environment.getExternalStorageDirectory().getPath();
 
-    public String Picture = Root_Dir + "/Picture";
+    public String Picture = Root_Dir + "/Pictures";
     public String CAMERA = Root_Dir + "/DCIM/camera";
 
 
