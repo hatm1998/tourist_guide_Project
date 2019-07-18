@@ -54,7 +54,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="serif"
             android:gravity="center"
-            android:text="@string/Contact_With"
+            android:text="@string/contact"
             android:textColor="#FFFFFF"
             android:textSize="20sp" />
 

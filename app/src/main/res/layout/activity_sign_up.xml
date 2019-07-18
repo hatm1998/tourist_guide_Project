@@ -293,7 +293,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="20dp"
-            android:background="#E6813B"
+            android:background="#E6812B"
             android:hint="@string/SignUp"
             android:text="@string/Register"
             android:textColor="#FFFFFF"
