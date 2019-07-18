@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.touristguide.Activity.Fragment_Activity;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
@@ -111,7 +112,8 @@ public class homeActivity extends AppCompatActivity {
 
                 switch (index) {
                     case 0: {
-                        //replacefragment(home_fragment);
+                        //replacefragment(home_fragment)
+                        replacefragment(new Fragment_Activity());
                         break;
                     }
 

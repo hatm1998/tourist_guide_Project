@@ -16,6 +16,10 @@
         <activity android:name=".authentication.SignUp" />
 
         <activity
+            android:name=".Contact_page"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
+
+        <activity
             android:name=".authentication.Login"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
         <activity
