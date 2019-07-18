@@ -16,6 +16,7 @@ public class MyMessageService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
+        //shaima
       //  Toast.makeText(getApplicationContext() , remoteMessage.gett)
         shownotification(remoteMessage.getNotification().getTitle() , remoteMessage.getNotification().getBody());
     }
