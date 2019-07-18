@@ -23,4 +23,12 @@
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
     </style>
+    <style name="PauseDialog" parent="Theme.AppCompat.Light.NoActionBar.FullScreen">
+        <item name="android:windowAnimationStyle">@style/PauseDialogAnimation</item>
+    </style>
+
+    <style name="PauseDialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/up_signup</item>
+        <item name="android:windowExitAnimation">@anim/down_signup</item>
+    </style>
 </resources>

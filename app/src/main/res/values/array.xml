@@ -8,9 +8,9 @@
         <item>#9affffff</item>
     </string-array>
     <string-array name="colorful">
-        <item>#E91E63</item>
-        <item>#1976D2</item>
-        <item>#FF5722</item>
-        <item>#607D8B</item>
+        <item>#FFAF30</item>
+        <item>#FFAF30</item>
+        <item>#FFAF30</item>
+        <item>#FFAF30</item>
     </string-array>
 </resources>

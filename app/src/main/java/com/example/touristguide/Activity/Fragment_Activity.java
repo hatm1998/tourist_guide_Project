@@ -36,12 +36,12 @@ public class Fragment_Activity extends Fragment {
         list=new ArrayList<>();
 
         int img[]={R.drawable.deadsea
-        ,R.drawable.deadsea
-        ,R.drawable.deadsea
-       ,R.drawable.deadsea
-                ,R.drawable.deadsea
-                ,R.drawable.deadsea
-                ,R.drawable.deadsea};
+        ,R.drawable.ffffff
+        ,R.drawable.f
+       ,R.drawable.ff
+                ,R.drawable.fff
+                ,R.drawable.ffff
+                ,R.drawable.fffff};
         String name[]={
                 "ziad Al kasaji"
                 ,"mohmmed Al kasaji "
@@ -50,8 +50,16 @@ public class Fragment_Activity extends Fragment {
                 ,"Hatem "
                 ,"HAZEM "
                 ,"Azooz "};
+        String name2[]={
+                "البــــــــحر الميــت"
+                ,"جــــــــــــرش"
+                ,"عجـــــــــلون"
+                ,"وادــــــــــي رم"
+                ,"الطفـــــــــيلة "
+                ,"العقــــــــــبة "
+                ,"عمــــــــــــان"};
         for(int i=0;i<img.length;i++)
-           list.add(new setGovernorates(img[i],name[i]));
+           list.add(new setGovernorates(img[i],name2[i]));
         adapter_activity=new Adapter_Activity(getActivity(),list);
         Rev_activity.setLayoutManager(new GridLayoutManager(getActivity(),1));
         Rev_activity.setNestedScrollingEnabled(false);

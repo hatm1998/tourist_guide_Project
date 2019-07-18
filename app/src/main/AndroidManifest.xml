@@ -14,7 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ShareItem.Add_new_post"></activity>
-        <activity android:name=".authentication.SignUp" />
+        <activity android:name=".authentication.SignUp"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
+            android:windowSoftInputMode="stateHidden"/>
 
         <activity
             android:name=".Contact_page"
@@ -26,7 +28,8 @@
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
-        <activity android:name=".homeActivity">
+        <activity android:name=".homeActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
