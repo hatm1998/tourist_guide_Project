@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -19,11 +20,15 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.touristguide.Activity.Fragment_Activity;
 import com.example.touristguide.ShareItem.Add_new_post;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -37,10 +42,10 @@ public class Navigation_Drawer extends AppCompatActivity
     private Button logout; // test button
     private FirebaseFirestore firebaseFirestore;
 
+    private View headerView;
     private FloatingActionButton fab;
     private NavigationTabBar navigationTabBar;
-    private CircleImageView Menu_profile_image;
-    private TextView menu_txt_username;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,18 +53,11 @@ public class Navigation_Drawer extends AppCompatActivity
         setContentView(R.layout.activity_navigation__drawer);
         firebaseFirestore = FirebaseFirestore.getInstance();
 
-        Menu_profile_image = findViewById(R.id.menu_img_profile);
-        menu_txt_username = findViewById(R.id.menu_txt_username);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -69,9 +67,8 @@ public class Navigation_Drawer extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 //
 
-        View headerView = navigationView.getHeaderView(0);
-        TextView navUsername = (TextView) headerView.findViewById(R.id.menu_txt_username);
-        navUsername.setText("Your Text Here");
+         headerView = navigationView.getHeaderView(0);
+
 
 
 
@@ -266,6 +263,24 @@ public class Navigation_Drawer extends AppCompatActivity
         if (mAuth.getCurrentUser() == null) {
 
             sendtologin();
+        }
+        else
+        {
+            firebaseFirestore.collection("User").document(mAuth.getCurrentUser().getUid())
+                    .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if(task.isSuccessful())
+                    {
+                        TextView navUsername = (TextView) headerView.findViewById(R.id.menu_txt_username);
+                        navUsername.setText(task.getResult().get("Username").toString());
+
+                        CircleImageView navImageprofile = headerView.findViewById(R.id.menu_img_profile);
+                        Picasso.get().load(task.getResult().get("Image_User").toString()).into(navImageprofile);
+
+                    }
+                }
+            });
         }
 
     }
