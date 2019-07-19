@@ -52,7 +52,7 @@ public class Navigation_Drawer extends AppCompatActivity
         menu_txt_username = findViewById(R.id.menu_txt_username);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        FloatingActionButton fab = findViewById(R.id.fab);
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
