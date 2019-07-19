@@ -20,5 +20,18 @@
     <string name="camera">Camera</string>
     <string name="contact">Contact With</string>
     <string name="next">Next</string>
+    <string name="title_activity_navigation__drawer">Navigation_Drawer</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_YourAccount">Your Account</string>
+    <string name="menu_BookMark">BookMark</string>
+    <string name="menu_Event">Event</string>
+    <string name="menu_AboutUS">About US</string>
+    <string name="menu_LogOut">Log Out</string>
 
 </resources>
