@@ -10,7 +10,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.touristguide.Navigation_Drawer;
+import com.example.touristguide.homeActivity;
 import com.example.touristguide.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -70,7 +70,7 @@ public class Login extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 finish();
-                                Intent intent = new Intent(getApplicationContext(), Navigation_Drawer.class);
+                                Intent intent = new Intent(getApplicationContext(), homeActivity.class);
                                 startActivity(intent);
                             } else {
                                 Toast.makeText(getBaseContext(), task.getException().getMessage(), Toast.LENGTH_LONG).show();

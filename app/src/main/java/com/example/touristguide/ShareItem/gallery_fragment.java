@@ -1,5 +1,6 @@
 package com.example.touristguide.ShareItem;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,10 +8,12 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,25 +23,24 @@ import com.example.touristguide.R;
 import com.example.touristguide.Utilis.FilePath;
 import com.example.touristguide.Utilis.FileSearch;
 import com.example.touristguide.Utilis.GridImageAdapter;
-import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
-import com.nostra13.universalimageloader.cache.disc.naming.HashCodeFileNameGenerator;
-import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
+
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
-import com.nostra13.universalimageloader.core.decode.BaseImageDecoder;
-import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
 
-import java.io.File;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+
+
 import java.util.ArrayList;
 
 public class gallery_fragment extends Fragment {
 
     private GridView GallaryGrid;
     private ImageView ImagePic;
+    private ProgressBar mpProgressBar;
     private  TextView txt_next;
 
+    private ImageButton btn_imagescale;
     private String mappend = "file:/";
 
     private Spinner Sp_Dir;
@@ -48,15 +50,26 @@ public class gallery_fragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_gallery, container, false);
-        imageconfig();
         GallaryGrid = view.findViewById(R.id.GV_gallery_pic);
         ImagePic = view.findViewById(R.id.img_share);
+        btn_imagescale = view.findViewById(R.id.btn_gellery_photo_scale);
         txt_next = view.findViewById(R.id.txt_next_gellary);
-
+        mpProgressBar = view.findViewById(R.id.gallery_progress);
         Sp_Dir = view.findViewById(R.id.sp_Dirction);
 
         directories = new ArrayList<>();
-       // getActivity().imageLoader.init(ImageLoaderConfiguration.createDefault(getBaseCont‌​ext()));
+
+        btn_imagescale.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(ImagePic.getScaleType() == ImageView.ScaleType.FIT_CENTER)
+                {
+                    ImagePic.setScaleType(ImageView.ScaleType.FIT_XY);
+                }
+                else
+                    ImagePic.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            }
+        });
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getActivity())
 			.build();
         ImageLoader.getInstance().init(config);
@@ -114,13 +127,43 @@ public class gallery_fragment extends Fragment {
         GridImageAdapter adapter = new GridImageAdapter(getActivity() , R.layout.gridimageview,mappend,imgURL);
         GallaryGrid.setAdapter(adapter);
 
+        setImage(imgURL.get(0),ImagePic ,mappend);
+
+
+        GallaryGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                setImage(imgURL.get(i),ImagePic ,mappend);
+            }
+        });
+
     }
 
-    private void imageconfig()
+    private void setImage(String imageURI ,ImageView image , String mappend)
     {
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getContext())
-                .memoryCacheExtraOptions(480, 800) // default = device screen dimensions
-                .diskCacheExtraOptions(480, 800, null)
-                .build();
+        ImageLoader imageLoader = ImageLoader.getInstance();
+        imageLoader.displayImage(mappend + imageURI, image, new ImageLoadingListener() {
+            @Override
+            public void onLoadingStarted(String imageUri, View view) {
+                mpProgressBar.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                mpProgressBar.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                mpProgressBar.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onLoadingCancelled(String imageUri, View view) {
+                mpProgressBar.setVisibility(View.INVISIBLE);
+            }
+        });
     }
+
+
 }

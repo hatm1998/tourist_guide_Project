@@ -9,14 +9,14 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -39,21 +39,20 @@
                 android:id="@+id/sp_Dirction"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1" />
+                android:layout_weight="100" />
 
             <TextView
                 android:id="@+id/txt_next_gellary"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginEnd="20dp"
-                android:layout_weight="1"
+                android:layout_weight="0"
                 android:textColor="#FFFFFF"
                 android:textSize="24sp"
                 tools:layout_editor_absoluteX="48dp"
                 tools:layout_editor_absoluteY="18dp"
                 tools:text="@string/next" />
         </LinearLayout>
-
 
 
     </androidx.appcompat.widget.Toolbar>
@@ -73,12 +72,47 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
-        <ImageView
-            android:id="@+id/img_share"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            app:srcCompat="@drawable/common_full_open_on_phone" />
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/img_share"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:scaleType="fitCenter"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/common_full_open_on_phone" />
+
+            <ProgressBar
+                android:id="@+id/gallery_progress"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:scrollbarSize="1dp"
+                app:layout_constraintBottom_toBottomOf="@+id/img_share"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/img_share"
+                app:layout_constraintTop_toTopOf="@+id/img_share" />
+
+            <ImageButton
+                android:id="@+id/btn_gellery_photo_scale"
+                android:layout_width="46dp"
+                android:layout_height="37dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/style_btn_login_signup"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:srcCompat="@drawable/ic_code_black_24dp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <GridView
             android:id="@+id/GV_gallery_pic"
