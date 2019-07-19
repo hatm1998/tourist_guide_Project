@@ -28,7 +28,7 @@
             android:theme="@style/Base.Theme.AppCompat" />
         <activity
             android:name=".Navigation_Drawer"
-            android:theme="@style/Theme.Navigation">
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

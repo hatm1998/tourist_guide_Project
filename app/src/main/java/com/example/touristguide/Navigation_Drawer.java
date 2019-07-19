@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -19,12 +20,19 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.touristguide.Activity.Fragment_Activity;
 import com.example.touristguide.ShareItem.Add_new_post;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import devlight.io.library.ntb.NavigationTabBar;
 
 public class Navigation_Drawer extends AppCompatActivity
@@ -32,17 +40,24 @@ public class Navigation_Drawer extends AppCompatActivity
 
     private FirebaseAuth mAuth;
     private Button logout; // test button
+    private FirebaseFirestore firebaseFirestore;
 
+    private View headerView;
     private FloatingActionButton fab;
     private NavigationTabBar navigationTabBar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation__drawer);
+        firebaseFirestore = FirebaseFirestore.getInstance();
+
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -50,13 +65,12 @@ public class Navigation_Drawer extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+//
 
-        View headerView = navigationView.getHeaderView(0);
-        TextView navUsername = (TextView) headerView.findViewById(R.id.menu_txt_username);
-        navUsername.setText("Ziad Al-Kasaji");
+         headerView = navigationView.getHeaderView(0);
 
 
-        // Navigation Bar
+
 
 
         final String[] colors = getResources().getStringArray(R.array.colorful);
@@ -71,7 +85,7 @@ public class Navigation_Drawer extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent  = new Intent(getApplicationContext() , Add_new_post.class);
+                Intent intent = new Intent(Navigation_Drawer.this, Add_new_post.class);
                 startActivity(intent);
             }
         });
@@ -83,7 +97,6 @@ public class Navigation_Drawer extends AppCompatActivity
 
             }
         });
-
 
 
         ArrayList<NavigationTabBar.Model> models = new ArrayList<>();
@@ -119,6 +132,7 @@ public class Navigation_Drawer extends AppCompatActivity
                 ).title("Profile")
                         .build()
         );
+
 
         navigationTabBar.setModels(models);
 //        navigationTabBar.setViewPager(viewPager, 1); // WHEN YOU USE VIEWPAGER
@@ -161,7 +175,6 @@ public class Navigation_Drawer extends AppCompatActivity
 
                     case 1: {
                         //replacefragment(notifications_fragment);
-
                         break;
                     }
                     case 2: {
@@ -179,10 +192,8 @@ public class Navigation_Drawer extends AppCompatActivity
             }
         });
 
-
-
-
     }
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -197,7 +208,7 @@ public class Navigation_Drawer extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
 
-       // getMenuInflater().inflate(R.menu.navigation__drawer, menu);
+        getMenuInflater().inflate(R.menu.navigation__drawer, menu);
 
 
 
@@ -244,6 +255,7 @@ public class Navigation_Drawer extends AppCompatActivity
     }
 
 
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -252,9 +264,29 @@ public class Navigation_Drawer extends AppCompatActivity
 
             sendtologin();
         }
+        else
+        {
+            firebaseFirestore.collection("User").document(mAuth.getCurrentUser().getUid())
+                    .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if(task.isSuccessful())
+                    {
+                        TextView navUsername = (TextView) headerView.findViewById(R.id.menu_txt_username);
+                        navUsername.setText(task.getResult().get("Username").toString());
+
+                        CircleImageView navImageprofile = headerView.findViewById(R.id.menu_img_profile);
+                        Picasso.get().load(task.getResult().get("Image_User").toString()).into(navImageprofile);
+
+                    }
+                }
+            });
+        }
+
     }
 
-    public void  replacefragment(Fragment fragment) {
+
+    public void replacefragment(Fragment fragment) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.frameLayout, fragment);
 
@@ -269,6 +301,4 @@ public class Navigation_Drawer extends AppCompatActivity
         Intent intent = new Intent(this, Contact_page.class);
         startActivity(intent);
     }
-
-
 }
