@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".homeActivity">
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".homeActivity"
+    tools:showIn="@layout/app_bar_navigation__drawer">
 
     <devlight.io.library.ntb.NavigationTabBar
         android:id="@+id/ntb"
@@ -15,9 +17,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:ntb_active_color="#fff"
+        app:ntb_active_color="#A6000000"
         app:ntb_animation_duration="400"
-        app:ntb_bg_color="#FA8F17"
+        app:ntb_bg_color="#ABFA931B"
         app:ntb_icon_size_fraction="0.4"
         app:ntb_inactive_color="@color/common_google_signin_btn_text_dark_pressed"
         app:ntb_scaled="true"
@@ -37,24 +39,28 @@
         android:id="@+id/fab_add"
         android:layout_width="40dp"
         android:layout_height="40dp"
+        android:layout_marginTop="92dp"
+        android:layout_marginEnd="32dp"
         android:clickable="true"
         android:focusable="true"
         android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_add"
-        tools:layout_editor_absoluteX="76dp" />
+        app:srcCompat="@drawable/ic_add" />
 
     <FrameLayout
         android:id="@+id/frameLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="4dp"
         android:layout_marginBottom="1dp"
         app:layout_constraintBottom_toTopOf="@+id/ntb"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
     </FrameLayout>
 

@@ -58,8 +58,16 @@ public class Fragment_Activity extends Fragment {
                 ,"الطفـــــــــيلة "
                 ,"العقــــــــــبة "
                 ,"عمــــــــــــان"};
+        String name3[]={ "Dead Sea"
+                ,"Petra"
+                ,"Jerash"
+                ,"Ajloun"
+                ,"Wadi Rum"
+                ,"Tafileh"
+                ,"Aqaba"
+                ,"Amman"};
         for(int i=0;i<img.length;i++)
-           list.add(new setGovernorates(img[i],name2[i]));
+           list.add(new setGovernorates(img[i],name3[i]));
         adapter_activity=new Adapter_Activity(getActivity(),list);
         Rev_activity.setLayoutManager(new GridLayoutManager(getActivity(),1));
         Rev_activity.setNestedScrollingEnabled(false);

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">touristguide</string>
+    <string name="app_name">Safari</string>
     <string name="title_activity_login">Login</string>
     <string name="Email">Email</string>
     <string name="Pass">Password</string>

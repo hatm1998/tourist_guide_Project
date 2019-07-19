@@ -21,13 +21,10 @@ import com.example.touristguide.Activity.Fragment_Activity;
 import com.example.touristguide.ShareItem.Add_new_post;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 import devlight.io.library.ntb.NavigationTabBar;
 
 public class Navigation_Drawer extends AppCompatActivity
@@ -35,31 +32,17 @@ public class Navigation_Drawer extends AppCompatActivity
 
     private FirebaseAuth mAuth;
     private Button logout; // test button
-    private FirebaseFirestore firebaseFirestore;
 
     private FloatingActionButton fab;
     private NavigationTabBar navigationTabBar;
-    private CircleImageView Menu_profile_image;
-    private TextView menu_txt_username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation__drawer);
-        firebaseFirestore = FirebaseFirestore.getInstance();
 
-        Menu_profile_image = findViewById(R.id.menu_img_profile);
-        menu_txt_username = findViewById(R.id.menu_txt_username);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -67,13 +50,13 @@ public class Navigation_Drawer extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
-//
 
         View headerView = navigationView.getHeaderView(0);
         TextView navUsername = (TextView) headerView.findViewById(R.id.menu_txt_username);
-        navUsername.setText("Your Text Here");
+        navUsername.setText("Ziad Al-Kasaji");
 
 
+        // Navigation Bar
 
 
         final String[] colors = getResources().getStringArray(R.array.colorful);
@@ -88,7 +71,7 @@ public class Navigation_Drawer extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Navigation_Drawer.this, Add_new_post.class);
+                Intent intent  = new Intent(getApplicationContext() , Add_new_post.class);
                 startActivity(intent);
             }
         });
@@ -100,6 +83,7 @@ public class Navigation_Drawer extends AppCompatActivity
 
             }
         });
+
 
 
         ArrayList<NavigationTabBar.Model> models = new ArrayList<>();
@@ -135,7 +119,6 @@ public class Navigation_Drawer extends AppCompatActivity
                 ).title("Profile")
                         .build()
         );
-
 
         navigationTabBar.setModels(models);
 //        navigationTabBar.setViewPager(viewPager, 1); // WHEN YOU USE VIEWPAGER
@@ -178,6 +161,7 @@ public class Navigation_Drawer extends AppCompatActivity
 
                     case 1: {
                         //replacefragment(notifications_fragment);
+
                         break;
                     }
                     case 2: {
@@ -195,8 +179,10 @@ public class Navigation_Drawer extends AppCompatActivity
             }
         });
 
-    }
 
+
+
+    }
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -211,7 +197,7 @@ public class Navigation_Drawer extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
 
-        getMenuInflater().inflate(R.menu.navigation__drawer, menu);
+       // getMenuInflater().inflate(R.menu.navigation__drawer, menu);
 
 
 
@@ -258,7 +244,6 @@ public class Navigation_Drawer extends AppCompatActivity
     }
 
 
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -267,11 +252,9 @@ public class Navigation_Drawer extends AppCompatActivity
 
             sendtologin();
         }
-
     }
 
-
-    public void replacefragment(Fragment fragment) {
+    public void  replacefragment(Fragment fragment) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.frameLayout, fragment);
 
@@ -286,4 +269,6 @@ public class Navigation_Drawer extends AppCompatActivity
         Intent intent = new Intent(this, Contact_page.class);
         startActivity(intent);
     }
+
+
 }

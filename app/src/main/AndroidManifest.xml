@@ -12,10 +12,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".homeActivity"
-            android:label="@string/title_activity_navigation__drawer"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".ShareItem.Add_new_post" />
         <activity
             android:name=".authentication.SignUp"
@@ -32,7 +28,7 @@
             android:theme="@style/Base.Theme.AppCompat" />
         <activity
             android:name=".Navigation_Drawer"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
+            android:theme="@style/Theme.Navigation">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

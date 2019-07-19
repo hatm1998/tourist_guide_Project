@@ -11,8 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.touristguide.Contact_page;
+import com.example.touristguide.Navigation_Drawer;
 import com.example.touristguide.R;
-import com.example.touristguide.homeActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
@@ -124,7 +124,7 @@ public class SignUp extends AppCompatActivity {
                                         {
                                             Toast.makeText(getBaseContext(),"User was registered",Toast.LENGTH_LONG).show();
                                             finish();
-                                            Intent intent = new Intent(SignUp.this , homeActivity.class);
+                                            Intent intent = new Intent(SignUp.this , Navigation_Drawer.class);
                                             startActivity(intent);
                                         }
                                     }

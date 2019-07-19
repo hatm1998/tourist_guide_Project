@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#FFEC6B"
     android:gravity="center"
     android:orientation="vertical"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
@@ -15,7 +14,7 @@
         android:layout_height="125dp"
         android:layout_marginTop="40dp"
         android:layout_marginBottom="30dp"
-        android:src="@drawable/ic_action_name"
+        android:src="@drawable/ff"
         android:tint="#000000"
         app:civ_border_color="#000000"
         app:civ_border_width="2dp" />
@@ -24,6 +23,8 @@
         android:id="@+id/menu_txt_username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/mvboli"
+        android:text="Usre name"
         android:textAlignment="center"
         android:textColor="#000000"
         android:textSize="24sp" />

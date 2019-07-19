@@ -105,7 +105,7 @@ public class Contact_page extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 finish();
-                                Intent intent = new Intent(getApplicationContext(), homeActivity.class);
+                                Intent intent = new Intent(getApplicationContext(), Navigation_Drawer.class);
                                 startActivity(intent);
                             } else {
                                 Toast.makeText(getBaseContext(), task.getException().getMessage(), Toast.LENGTH_LONG).show();
