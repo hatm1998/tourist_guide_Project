@@ -20,6 +20,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.touristguide.Activity.Fragment_Activity;
 import com.example.touristguide.ShareItem.Add_new_post;
+import com.example.touristguide.authentication.Login;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -237,16 +238,19 @@ public class Navigation_Drawer extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_home) {
+        if (id == R.id.nav_event) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_bookmark) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_account) {
 
-        } else if (id == R.id.nav_tools) {
+        } else if (id == R.id.nav_aboutus) {
 
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_exit) {
 
+            mAuth.signOut();
+            finish();
+            sendtologin();
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
