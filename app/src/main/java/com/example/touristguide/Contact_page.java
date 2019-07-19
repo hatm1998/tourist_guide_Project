@@ -40,7 +40,13 @@ public class Contact_page extends AppCompatActivity {
         dialog=new Dialog(this,R.style.PauseDialog);
         dialog.setContentView(R.layout.activity_sign_up);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
+        final  TextView txt_login = dialog.findViewById(R.id.txt_Login_signup);
+        txt_login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(),"Login",Toast.LENGTH_SHORT).show();
+            }
+        });
         ImageView close=dialog.findViewById(R.id.btn_close_signuppage);
         close.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,8 +86,7 @@ public class Contact_page extends AppCompatActivity {
         dialog.show();
     }
 
-    private void check__For_Login(TextView txt_email, TextView txt_pass)
-    {
+    private void check__For_Login(TextView txt_email, TextView txt_pass) {
         String Email=txt_email.getText().toString().trim();
         String password=txt_pass.getText().toString().trim();
 
