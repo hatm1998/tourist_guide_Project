@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -12,15 +13,25 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.touristguide.R;
 import com.example.touristguide.Utilis.Adapter_Activity;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.Nullable;
 
 public class Fragment_Activity extends Fragment {
 
     private Fragment fragment;
-    private RecyclerView Rev_activity;
+    private GridView Rev_activity;
     private ArrayList<setGovernorates> list;
     private Adapter_Activity adapter_activity ;
+    private FirebaseFirestore firebaseFirestore;
 
     public Fragment_Activity() {
         // Required empty public constructor
@@ -33,44 +44,38 @@ public class Fragment_Activity extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_activity, container, false);
         Rev_activity= (view.findViewById(R.id.Rev_Activity));
+        firebaseFirestore = FirebaseFirestore.getInstance();
+
         list=new ArrayList<>();
 
-        int img[]={R.drawable.deadsea
-        ,R.drawable.ffffff
-        ,R.drawable.f
-       ,R.drawable.ff
-                ,R.drawable.fff
-                ,R.drawable.ffff
-                ,R.drawable.fffff};
-        String name[]={
-                "ziad Al kasaji"
-                ,"mohmmed Al kasaji "
-                ,"Basil Al kasaji "
-                ,"Suhail Al kasaji "
-                ,"Hatem "
-                ,"HAZEM "
-                ,"Azooz "};
-        String name2[]={
-                "البــــــــحر الميــت"
-                ,"جــــــــــــرش"
-                ,"عجـــــــــلون"
-                ,"وادــــــــــي رم"
-                ,"الطفـــــــــيلة "
-                ,"العقــــــــــبة "
-                ,"عمــــــــــــان"};
-        String name3[]={ "Dead Sea"
-                ,"Petra"
-                ,"Jerash"
-                ,"Ajloun"
-                ,"Wadi Rum"
-                ,"Tafileh"
-                ,"Aqaba"
-                ,"Amman"};
-        for(int i=0;i<img.length;i++)
-           list.add(new setGovernorates(img[i],name3[i]));
-        adapter_activity=new Adapter_Activity(getActivity(),list);
-        Rev_activity.setLayoutManager(new GridLayoutManager(getActivity(),1));
-        Rev_activity.setNestedScrollingEnabled(false);
+
+
+        final List <String> img = new ArrayList();
+        final List<String> cityname  =  new ArrayList<>();
+        final List <String> ID = new ArrayList();
+      Query query =  firebaseFirestore.collection("Cities");
+
+      query.addSnapshotListener(getActivity(), new EventListener<QuerySnapshot>() {
+          @Override
+          public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+
+
+              if (!queryDocumentSnapshots.isEmpty()) {
+
+                  for (DocumentChange documentChange : queryDocumentSnapshots.getDocumentChanges()) {
+
+                      if (documentChange.getType() == DocumentChange.Type.ADDED) {
+                          cityname.add(documentChange.getDocument().getId());
+                          img.add( documentChange.getDocument().getString("Image"));
+                          ID.add(documentChange.getDocument().getId());                      }
+                  }
+              }
+          }
+      });
+
+
+        adapter_activity=new Adapter_Activity(getContext(),img , cityname , ID);
+
         Rev_activity.setAdapter(adapter_activity);
 
         return view;

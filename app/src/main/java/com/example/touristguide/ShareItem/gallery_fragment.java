@@ -1,7 +1,11 @@
 package com.example.touristguide.ShareItem;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
@@ -38,11 +43,13 @@ public class gallery_fragment extends Fragment {
     private GridView GallaryGrid;
     private ImageView ImagePic;
     private ProgressBar mpProgressBar;
-    private  TextView txt_next;
+    private TextView txt_next;
 
+    private String imagePushURI;
     private ImageButton btn_imagescale;
     private String mappend = "file:/";
 
+    private Integer scaletype = 1;
     private Spinner Sp_Dir;
     private ArrayList<String> directories;
 
@@ -62,22 +69,29 @@ public class gallery_fragment extends Fragment {
         btn_imagescale.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(ImagePic.getScaleType() == ImageView.ScaleType.FIT_CENTER)
-                {
+                if (ImagePic.getScaleType() == ImageView.ScaleType.FIT_CENTER) {
                     ImagePic.setScaleType(ImageView.ScaleType.FIT_XY);
-                }
-                else
+                    scaletype = 2;
+                } else {
                     ImagePic.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                    scaletype = 1;
+                }
             }
         });
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getActivity())
-			.build();
+                .build();
         ImageLoader.getInstance().init(config);
 
         txt_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+
+                Intent intent = new Intent(getActivity(), Next_Info_Item.class);
+
+                intent.putExtra("URI", imagePushURI);
+                intent.putExtra("Scale", scaletype);
+                getActivity().startActivity(intent);
             }
         });
 
@@ -85,17 +99,15 @@ public class gallery_fragment extends Fragment {
         return view;
     }
 
-    private void init()
-    {
+    private void init() {
         FilePath filePath = new FilePath();
 
-        if(FileSearch.getDirection(filePath.Picture) != null)
-        {
+        if (FileSearch.getDirection(filePath.Picture) != null) {
             directories = FileSearch.getDirection(filePath.Picture);
         }
         directories.add(filePath.CAMERA);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item, directories);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, directories);
         adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         Sp_Dir.setAdapter(adapter);
 
@@ -103,7 +115,7 @@ public class gallery_fragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-            setupGridView(directories.get(i));
+                setupGridView(directories.get(i));
 
             }
 
@@ -114,9 +126,8 @@ public class gallery_fragment extends Fragment {
         });
     }
 
-    private void setupGridView(String SelectedDir)
-    {
-        final ArrayList<String> imgURL = FileSearch.getFilepaths(SelectedDir);
+    private void setupGridView(String SelectedDir) {
+        final ArrayList<String> imgURL = FileSearch.getpicpaths(SelectedDir) ;
 
 
         // set the grid column width
@@ -124,23 +135,25 @@ public class gallery_fragment extends Fragment {
         int imagewidth = Gridwidht / 3; //  <----- this is number of columns GridView
         GallaryGrid.setColumnWidth(imagewidth);
 
-        GridImageAdapter adapter = new GridImageAdapter(getActivity() , R.layout.gridimageview,mappend,imgURL);
-        GallaryGrid.setAdapter(adapter);
+        GridImageAdapter adapter = new GridImageAdapter(getActivity(), R.layout.gridimageview, mappend, imgURL);
 
-        setImage(imgURL.get(0),ImagePic ,mappend);
+
+            GallaryGrid.setAdapter(adapter);
+            setImage(imgURL.get(0), ImagePic, mappend);
 
 
         GallaryGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                setImage(imgURL.get(i),ImagePic ,mappend);
+                setImage(imgURL.get(i), ImagePic, mappend);
+
+
             }
         });
 
     }
 
-    private void setImage(String imageURI ,ImageView image , String mappend)
-    {
+    private void setImage(final String imageURI, ImageView image, String mappend) {
         ImageLoader imageLoader = ImageLoader.getInstance();
         imageLoader.displayImage(mappend + imageURI, image, new ImageLoadingListener() {
             @Override
@@ -156,6 +169,8 @@ public class gallery_fragment extends Fragment {
             @Override
             public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                 mpProgressBar.setVisibility(View.INVISIBLE);
+
+                imagePushURI = imageURI;
             }
 
             @Override

@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
@@ -19,49 +20,42 @@
         app:layout_constraintStart_toStartOf="parent"
         app:ntb_active_color="#A6000000"
         app:ntb_animation_duration="400"
-        app:ntb_bg_color="#ABFA931B"
+        app:ntb_bg_color="#80FACB85"
         app:ntb_icon_size_fraction="0.4"
         app:ntb_inactive_color="@color/common_google_signin_btn_text_dark_pressed"
         app:ntb_scaled="true"
         app:ntb_swiped="true"
         app:ntb_tinted="true" />
 
-    <Button
-        android:id="@+id/btn_logout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="logout"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_add"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="92dp"
-        android:layout_marginEnd="32dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="44dp"
+        android:layout_marginBottom="32dp"
         android:clickable="true"
-        android:focusable="true"
+        android:src="@drawable/ic_add"
         android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_add" />
+        app:layout_constraintBottom_toTopOf="@+id/ntb"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-    <FrameLayout
-        android:id="@+id/frameLayout"
+    <LinearLayout
+        android:id="@+id/linearLayout5"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginBottom="1dp"
+        android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/ntb"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-    </FrameLayout>
+        <FrameLayout
+            android:id="@+id/frameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="2">
+
+        </FrameLayout>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

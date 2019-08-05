@@ -36,7 +36,7 @@
     <!-- Navigation Drawer . -->
     <style name="Theme.Navigation" parent="Theme.AppCompat.Light.NoActionBar.FullScreen">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">#A7FA931B</item>
+        <item name="colorPrimary">#ABFA931B</item>
         <!--اللون الأساسي-->
         <item name="colorPrimaryDark">#FFFFFF</item>
         <!--لون الابتدائية الظلام-->

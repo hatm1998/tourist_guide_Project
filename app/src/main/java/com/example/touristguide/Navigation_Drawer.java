@@ -75,7 +75,7 @@ public class Navigation_Drawer extends AppCompatActivity
 
 
         final String[] colors = getResources().getStringArray(R.array.colorful);
-        logout = findViewById(R.id.btn_logout);
+
         navigationTabBar = findViewById(R.id.ntb);
         mAuth = FirebaseAuth.getInstance();
         fab = findViewById(R.id.fab_add);
@@ -90,14 +90,7 @@ public class Navigation_Drawer extends AppCompatActivity
                 startActivity(intent);
             }
         });
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mAuth.signOut();
-                sendtologin();
 
-            }
-        });
 
 
         ArrayList<NavigationTabBar.Model> models = new ArrayList<>();

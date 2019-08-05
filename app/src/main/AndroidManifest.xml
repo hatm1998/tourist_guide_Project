@@ -12,10 +12,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Material_Chip_View"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
-            ></activity>
-        <activity android:name=".Navigation_Drawer" />
         <activity android:name=".ShareItem.Add_new_post" />
         <activity
             android:name=".authentication.SignUp"
@@ -31,15 +27,14 @@
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
         <activity
-            android:name=".signuptest"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
+            android:name=".Navigation_Drawer"
+            android:theme="@style/Theme.Navigation">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <service android:name=".Notification.MyMessageService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
