@@ -8,5 +8,7 @@
     F1C40F
     <color name="ntb_bg_color">#ECF0F1</color>
     <color name="Back">#000000</color>
+    <color name="changeBackgroundColor">#E7AA43</color>
+    <color name="changeSelectedBackgroundColor">#1A1B16</color>
 
 </resources>
