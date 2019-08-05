@@ -1,4 +1,4 @@
-package com.example.touristguide;
+package com.example.touristguide.Utilis;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -14,6 +14,7 @@ import android.widget.ScrollView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.touristguide.R;
 import com.nex3z.flowlayout.FlowLayout;
 import com.robertlevonyan.views.chip.Chip;
 

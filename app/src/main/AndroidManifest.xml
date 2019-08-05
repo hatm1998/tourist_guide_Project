@@ -18,7 +18,7 @@
         <activity android:name=".CityActivity.City_Main"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"/>
 
-        <activity android:name=".Material_Chip_View"
+        <activity android:name=".Utilis.Material_Chip_View"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
           />
         <activity
