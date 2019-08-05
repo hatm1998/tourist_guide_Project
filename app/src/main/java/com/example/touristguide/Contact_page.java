@@ -24,7 +24,8 @@ import com.google.firebase.auth.FirebaseAuth;
 public class Contact_page extends AppCompatActivity {
 
     private Dialog dialog;
-    private   FirebaseAuth mAuth;
+    private FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,36 +36,20 @@ public class Contact_page extends AppCompatActivity {
 
 
     // Action -> Sign Up Button
-    public void btn_signUp(View view){
+    public void btn_signUp(View view) {
         //finish();
-        dialog=new Dialog(this,R.style.PauseDialog);
-        dialog.setContentView(R.layout.activity_sign_up);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        final  TextView txt_login = dialog.findViewById(R.id.txt_Login_signup);
-        txt_login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getApplicationContext(),"Login",Toast.LENGTH_SHORT).show();
-            }
-        });
-        ImageView close=dialog.findViewById(R.id.btn_close_signuppage);
-        close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.dismiss();
-            }
-        });
 
-        dialog.show();
+        Intent intent = new Intent(Contact_page.this, signuptest.class);
+        startActivity(intent);
     }
 
     // Action -> Login Button
-    public void btn_login(View view){
-        dialog=new Dialog(this,R.style.PauseDialog);
+    public void btn_login(View view) {
+        dialog = new Dialog(this, R.style.PauseDialog);
         dialog.setContentView(R.layout.activity_login);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-      final  TextView txt_email = dialog.findViewById(R.id.txt_email);
-       final  TextView txt_pass = dialog.findViewById(R.id.txt_pass);
+        final TextView txt_email = dialog.findViewById(R.id.txt_email);
+        final TextView txt_pass = dialog.findViewById(R.id.txt_pass);
         Button btn_login = dialog.findViewById(R.id.btn_login);
 
         mAuth = FirebaseAuth.getInstance();
@@ -73,10 +58,10 @@ public class Contact_page extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                check__For_Login(txt_email,txt_pass);
+                check__For_Login(txt_email, txt_pass);
             }
         });
-        ImageView close=dialog.findViewById(R.id.btn_close_loginpage);
+        ImageView close = dialog.findViewById(R.id.btn_close_loginpage);
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -87,21 +72,18 @@ public class Contact_page extends AppCompatActivity {
     }
 
     private void check__For_Login(TextView txt_email, TextView txt_pass) {
-        String Email=txt_email.getText().toString().trim();
-        String password=txt_pass.getText().toString().trim();
+        String Email = txt_email.getText().toString().trim();
+        String password = txt_pass.getText().toString().trim();
 
-        if(TextUtils.isEmpty(Email) && TextUtils.isEmpty(password)) {
+        if (TextUtils.isEmpty(Email) && TextUtils.isEmpty(password)) {
             txt_email.setError(getResources().getString(R.string.Field_empty));
             txt_pass.setError(getResources().getString(R.string.Field_empty));
-        }
-        else if(TextUtils.isEmpty(Email))
-        {
+        } else if (TextUtils.isEmpty(Email)) {
             txt_email.setError(getResources().getString(R.string.Field_empty));
 
-        }else if(TextUtils.isEmpty(password))
-        {
+        } else if (TextUtils.isEmpty(password)) {
             txt_pass.setError(getResources().getString(R.string.Field_empty));
-        }else {
+        } else {
 
             // Success Login
             mAuth.signInWithEmailAndPassword(Email, password)
