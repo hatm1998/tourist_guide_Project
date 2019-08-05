@@ -13,12 +13,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ShareItem.Add_new_post" />
-        <activity android:name=".signuptest"/>
+        <activity android:name=".signuptest"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"/>
         <activity android:name=".CityActivity.City_Main"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"/>
 
         <activity android:name=".Material_Chip_View"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"/>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
+          />
         <activity
             android:name=".authentication.SignUp"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"

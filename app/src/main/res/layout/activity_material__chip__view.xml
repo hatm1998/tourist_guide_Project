@@ -110,10 +110,4 @@
         </LinearLayout>
     </ScrollView>
 
-    <com.google.android.material.chip.Chip
-        android:id="@+id/chip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="39dp"
-        tools:layout_editor_absoluteY="177dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

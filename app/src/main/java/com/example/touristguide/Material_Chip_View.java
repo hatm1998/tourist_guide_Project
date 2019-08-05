@@ -54,7 +54,7 @@ public class Material_Chip_View extends AppCompatActivity {
            ,"Nature"
            ,"Arts"};
         // add Message
-      /* final FlowLayout layout=(FlowLayout)(findViewById(R.id.flayout));
+       final FlowLayout layout=(FlowLayout)(findViewById(R.id.flayout));
         LinearLayout.LayoutParams styleSend = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
         styleSend.gravity= Gravity.RIGHT;
@@ -100,7 +100,7 @@ public class Material_Chip_View extends AppCompatActivity {
             layout.addView(chip);
         }
 
-*/
+
 
     }
     private void open_Animation(){
