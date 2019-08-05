@@ -29,7 +29,7 @@
                 android:id="@+id/img_close_gallery"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="0"
                 android:tint="#00D50505"
                 app:srcCompat="@android:drawable/ic_menu_close_clear_cancel"
                 tools:layout_editor_absoluteX="16dp"
@@ -39,19 +39,18 @@
                 android:id="@+id/sp_Dirction"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="100" />
+                android:layout_weight="1" />
 
             <TextView
                 android:id="@+id/txt_next_gellary"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginEnd="20dp"
-                android:layout_weight="0"
-                android:textColor="#FFFFFF"
-                android:textSize="24sp"
-                tools:layout_editor_absoluteX="48dp"
-                tools:layout_editor_absoluteY="18dp"
-                tools:text="@string/next" />
+                android:layout_gravity="center"
+                android:layout_weight="4"
+                android:gravity="center"
+                android:text="@string/next"
+                android:textAlignment="center" />
+
         </LinearLayout>
 
 
