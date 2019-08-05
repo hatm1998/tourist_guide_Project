@@ -19,7 +19,7 @@ import com.example.touristguide.Activity.setGovernorates;
 import com.example.touristguide.CityActivity.City_Main;
 import com.example.touristguide.Navigation_Drawer;
 import com.example.touristguide.R;
-import com.jgabrielfreitas.core.BlurImageView;
+
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

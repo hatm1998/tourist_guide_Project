@@ -5,7 +5,7 @@
     android:id="@+id/cordinate_City"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorChipBackground"
+    android:background="@color/ntb_bg_color"
     android:orientation="vertical">
 
 

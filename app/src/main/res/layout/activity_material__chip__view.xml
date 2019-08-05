@@ -89,7 +89,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/mvboli"
-                android:text="@string/DearTourist"
+                android:text="DearTourist"
                 android:textAlignment="center"
                 android:textColor="#A61A1B16"
                 android:textSize="16sp" />
