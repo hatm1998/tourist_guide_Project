@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
@@ -42,8 +43,7 @@ public class GridVideoAdpter extends ArrayAdapter<String>{
     }
 
     private static class ViewHolder{
-        VideoView image;
-        ProgressBar mProgressBar;
+        ImageView image;
     }
 
     @NonNull
@@ -59,8 +59,14 @@ public class GridVideoAdpter extends ArrayAdapter<String>{
         if(convertView == null){
             convertView = mInflater.inflate(layoutResource, parent, false);
             holder = new ViewHolder();
-            holder.mProgressBar = (ProgressBar) convertView.findViewById(R.id.gridVideoProgressbar);
             holder.image =  convertView.findViewById(R.id.videoshare);
+
+            //Toast.makeText(getContext(),imgURLs.get(position),Toast.LENGTH_SHORT).show();
+          //  holder.image.setImageURI(Uri.parse("file:/"+imgURLs.get(position)));
+
+            ImageLoader imageLoader = ImageLoader.getInstance();
+            imageLoader.displayImage("file:/" + imgURLs.get(position), holder.image);
+
 
             convertView.setTag(holder);
         }
@@ -71,8 +77,6 @@ public class GridVideoAdpter extends ArrayAdapter<String>{
         String imgURL = getItem(position);
 
 
-       holder.image.setVideoURI(Uri.parse(mAppend + imgURL));
-holder.image.pause();
 
 
         return convertView;

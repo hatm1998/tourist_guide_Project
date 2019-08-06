@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.MediaController;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -24,6 +25,8 @@ import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.graphics.drawable.DrawerArrowDrawable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.touristguide.R;
@@ -44,16 +47,18 @@ import java.util.ArrayList;
 public class camera_fragment extends Fragment {
 
     private GridView GallaryGrid;
-    private VideoView ImagePic;
-    private ProgressBar mpProgressBar;
+    public static VideoView ImagePic;
+
     private TextView txt_next;
 
     private String imagePushURI;
-    private ImageButton btn_imagescale;
+    private ImageButton btn_video_vol;
     private String mappend = "file:/";
 
     private Integer scaletype = 1;
+    private boolean voice = true;
     private Spinner Sp_Dir;
+    private MediaController mediaController;
     private ArrayList<String> directories;
 
     @Nullable
@@ -62,17 +67,29 @@ public class camera_fragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_camera, container, false);
         GallaryGrid = view.findViewById(R.id.GV_gallery_pic);
         ImagePic = view.findViewById(R.id.img_share);
-        btn_imagescale = view.findViewById(R.id.btn_gellery_photo_scale);
+        btn_video_vol = view.findViewById(R.id.btn_video_volume);
         txt_next = view.findViewById(R.id.txt_next_gellary);
-        mpProgressBar = view.findViewById(R.id.gallery_progress);
+        ImagePic.setMediaController(mediaController);
+        ImagePic.pause();
         Sp_Dir = view.findViewById(R.id.sp_Dirction);
 
         directories = new ArrayList<>();
 
-        btn_imagescale.setOnClickListener(new View.OnClickListener() {
+
+
+        btn_video_vol.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (voice) {
+                    ImagePic.setOnPreparedListener(PreparedListener);
+                    btn_video_vol.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_volume_off_black_24dp));
 
+                    voice = false;
+
+                } else {
+                    btn_video_vol.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_volume_up));
+                    voice = true;
+                }
             }
         });
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getActivity())
@@ -94,7 +111,7 @@ public class camera_fragment extends Fragment {
 
         setImage("https://firebasestorage.googleapis.com/v0/b/touristguide-81502.appspot.com/o/Petra%20Documentary_%20Lost%20City%20Of%20Stone%20-%20Documentary%20HD%200s%20-%2060s%20(6xQaEZbVras).mp4?alt=media&token=6bb6f1e4-22c5-4415-93b2-03e17e690dc5", ImagePic, mappend);
 
-        //init();
+        init();
         return view;
     }
 
@@ -103,6 +120,7 @@ public class camera_fragment extends Fragment {
 
         if (FileSearch.getDirection(filePath.Picture) != null) {
             directories = FileSearch.getDirection(filePath.Picture);
+
         }
         directories.add(filePath.CAMERA);
 
@@ -126,7 +144,7 @@ public class camera_fragment extends Fragment {
     }
 
     private void setupGridView(String SelectedDir) {
-        final ArrayList<String> imgURL = FileSearch.getVideopaths(SelectedDir) ;
+        final ArrayList<String> imgURL = FileSearch.getVideopaths(SelectedDir);
 
 
         // set the grid column width
@@ -138,7 +156,10 @@ public class camera_fragment extends Fragment {
 
 
         GallaryGrid.setAdapter(adapter);
-        setImage("https://firebasestorage.googleapis.com/v0/b/touristguide-81502.appspot.com/o/Petra%20Documentary_%20Lost%20City%20Of%20Stone%20-%20Documentary%20HD%200s%20-%2060s%20(6xQaEZbVras).mp4?alt=media&token=6bb6f1e4-22c5-4415-93b2-03e17e690dc5", ImagePic, mappend);
+        if (imgURL.size() > 0)
+            setImage(imgURL.get(0), ImagePic, mappend);
+        else
+            Toast.makeText(getActivity(), R.string.ErrorFilePic, Toast.LENGTH_SHORT).show();
 
 
         GallaryGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -149,31 +170,23 @@ public class camera_fragment extends Fragment {
 
             }
         });
+        ImagePic.pause();
 
     }
 
     private void setImage(final String imageURI, VideoView image, String mappend) {
-      image.setVideoURI(Uri.parse(imageURI));
-
-      image.setOnInfoListener(new MediaPlayer.OnInfoListener() {
-          @Override
-          public boolean onInfo(MediaPlayer mediaPlayer, int i, int i1) {
-
-
-              if (i == mediaPlayer.MEDIA_INFO_BUFFERING_START)
-              {
-                  mpProgressBar.setVisibility(View.VISIBLE);
-              }
-              else if (i == mediaPlayer.MEDIA_INFO_BUFFERING_END)
-              {
-                  mpProgressBar.setVisibility(View.INVISIBLE);
-              }
-              return false;
-          }
-      });
-      image.requestFocus();
-      image.start();
+        image.setVideoURI(Uri.parse(imageURI));
+        image.requestFocus();
+        image.start();
     }
 
+    MediaPlayer.OnPreparedListener PreparedListener = new MediaPlayer.OnPreparedListener() {
+        @Override
+        public void onPrepared(MediaPlayer mediaPlayer) {
+
+
+            mediaPlayer.setLooping(true);
+        }
+    };
 
 }

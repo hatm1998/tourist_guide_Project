@@ -18,6 +18,8 @@ public class FileSearch {
             if (listfile[i].isDirectory()) {
 
                 pathArray.add(listfile[i].getAbsolutePath());
+
+
             }
         }
         return pathArray;
@@ -32,12 +34,12 @@ public class FileSearch {
 
         for (int i = 0; i < listfile.length; i++) {
             if (listfile[i].isFile()) {
-
+                Log.d("PathFiles", listfile[i].getParent());
                 if (!listfile[i].getAbsolutePath().contains(".mp4")) {
                     pathArray.add(listfile[i].getAbsolutePath());
-                    Log.d("ImagePathAb", listfile[i].getAbsolutePath());
+
                 }
-                }
+            }
         }
         return pathArray;
 
@@ -54,7 +56,7 @@ public class FileSearch {
 
                 if (listfile[i].getAbsolutePath().contains(".mp4")) {
                     pathArray.add(listfile[i].getAbsolutePath());
-                    Log.d("ImagePathAb", listfile[i].getAbsolutePath());
+
                 }
             }
         }

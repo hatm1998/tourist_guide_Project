@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -133,6 +134,8 @@ public class gallery_fragment extends Fragment {
         GallaryGrid.setAdapter(adapter);
         if (imgURL.size() > 0)
             setImage(imgURL.get(0), ImagePic, mappend);
+        else
+            Toast.makeText(getActivity(), R.string.ErrorFileVideo, Toast.LENGTH_SHORT).show();
 
 
         GallaryGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {

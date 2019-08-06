@@ -27,13 +27,13 @@
             android:id="@+id/tab_gallery_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/gallery" />
+            android:text="@string/Picture" />
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/tab_camera_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/camera" />
+            android:text="@string/Video" />
 
     </com.google.android.material.tabs.TabLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
