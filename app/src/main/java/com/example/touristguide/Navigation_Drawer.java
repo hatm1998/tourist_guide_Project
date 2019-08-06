@@ -20,12 +20,11 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.touristguide.Activity.Fragment_Activity;
 import com.example.touristguide.ShareItem.Add_new_post;
-import com.example.touristguide.authentication.Login;
+import com.example.touristguide.notification_saved.notification_page;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -168,6 +167,7 @@ public class Navigation_Drawer extends AppCompatActivity
                     }
 
                     case 1: {
+                        replacefragment(new notification_page());
                         //replacefragment(notifications_fragment);
                         break;
                     }

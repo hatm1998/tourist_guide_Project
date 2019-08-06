@@ -2,10 +2,7 @@ package com.example.touristguide.ShareItem;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +14,6 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
-
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,13 +23,10 @@ import com.example.touristguide.R;
 import com.example.touristguide.Utilis.FilePath;
 import com.example.touristguide.Utilis.FileSearch;
 import com.example.touristguide.Utilis.GridImageAdapter;
-
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.FailReason;
-
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
-
 
 import java.util.ArrayList;
 
@@ -127,7 +119,7 @@ public class gallery_fragment extends Fragment {
     }
 
     private void setupGridView(String SelectedDir) {
-        final ArrayList<String> imgURL = FileSearch.getpicpaths(SelectedDir) ;
+        final ArrayList<String> imgURL = FileSearch.getpicpaths(SelectedDir);
 
 
         // set the grid column width
@@ -138,7 +130,8 @@ public class gallery_fragment extends Fragment {
         GridImageAdapter adapter = new GridImageAdapter(getActivity(), R.layout.gridimageview, mappend, imgURL);
 
 
-            GallaryGrid.setAdapter(adapter);
+        GallaryGrid.setAdapter(adapter);
+        if (imgURL.size() > 0)
             setImage(imgURL.get(0), ImagePic, mappend);
 
 
