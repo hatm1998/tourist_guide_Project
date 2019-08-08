@@ -13,16 +13,19 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.touristguide.Activity.Fragment_Activity;
+import com.example.touristguide.Profile.Profile_Page;
 import com.example.touristguide.ShareItem.Add_new_post;
 import com.example.touristguide.notification_saved.notification_page;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -54,10 +57,10 @@ public class Navigation_Drawer extends AppCompatActivity
         firebaseFirestore = FirebaseFirestore.getInstance();
 
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        final Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
+      final AppBarLayout AppBar=findViewById(R.id.AppBarID);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -167,8 +170,9 @@ public class Navigation_Drawer extends AppCompatActivity
                     }
 
                     case 1: {
-                        replacefragment(new notification_page());
                         //replacefragment(notifications_fragment);
+                        replacefragment(new notification_page());
+
                         break;
                     }
                     case 2: {
@@ -177,6 +181,10 @@ public class Navigation_Drawer extends AppCompatActivity
                     }
                     case 3: {
                         // replacefragment(profile_fragment);
+
+                        replacefragment(new Profile_Page());
+                        AppBar.setLayoutParams(new CoordinatorLayout.LayoutParams(0,0));
+
                         break;
                     }
 
@@ -187,7 +195,10 @@ public class Navigation_Drawer extends AppCompatActivity
         });
 
     }
+    private void hideAppBar(final AppBarLayout appBar) {
 
+
+    }
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

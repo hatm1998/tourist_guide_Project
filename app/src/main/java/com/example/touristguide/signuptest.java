@@ -19,7 +19,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
-
+import com.example.touristguide.Utilis.Material_Chip_View;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -61,7 +61,7 @@ public class signuptest extends AppCompatActivity {
                  close_Animation();
                new Timer().schedule(new TimerTask(){
                    public void run() {
-                       startActivity(new Intent(getApplicationContext(), com.example.touristguide.Material_Chip_View.class));
+                       startActivity(new Intent(getApplicationContext(), Material_Chip_View.class));
                       // Animatoo.animateZoom(context);
                        Animatoo.animateFade(context);
 

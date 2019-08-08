@@ -1,21 +1,16 @@
-package com.example.touristguide;
+package com.example.touristguide.Utilis;
 
-import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.nex3z.flowlayout.FlowLayout;
-import com.robertlevonyan.views.chip.Chip;
+import com.example.touristguide.R;
 
 
 public class Material_Chip_View extends AppCompatActivity {
