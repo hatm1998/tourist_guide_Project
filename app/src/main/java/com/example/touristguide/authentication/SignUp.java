@@ -3,6 +3,7 @@ package com.example.touristguide.authentication;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -146,6 +147,7 @@ public class SignUp extends AppCompatActivity {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
                 ImageUri = result.getUri();
+                //Log.d("IMGEURI",String.valueOf(ImageUri));
                 profile_Image.setImageURI(ImageUri);
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 Exception error = result.getError();

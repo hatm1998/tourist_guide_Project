@@ -1,38 +1,52 @@
 package com.example.touristguide.Utilis;
 
+import android.location.Location;
+
+import java.util.ArrayList;
 import java.util.Date;
 
-public class Post  {
+public class Post {
 
-    String UserID , Desc , Image ;
-    Date date;
+    private String Image, Desc, UserID;
+    private ArrayList<String> Categories;
+    private Date Date;
+    public Location Loc;
 
-    public Post()
-    {
+
+    public Post() {
 
     }
 
-    public String getUserID() {
-        return UserID;
-    }
-
-    public String getDesc() {
-        return Desc;
+    public Post(String image, String desc, String userID, ArrayList<String> categories, java.util.Date date, Location location) {
+        Image = image;
+        Desc = desc;
+        UserID = userID;
+        Categories = categories;
+        Date = date;
+        this.Loc = location;
     }
 
     public String getImage() {
         return Image;
     }
 
-    public Date getDate() {
-        return date;
+    public String getDesc() {
+        return Desc;
     }
 
-    public Post(String userID, String desc, String image, Date date) {
+    public String getUserID() {
+        return UserID;
+    }
 
-        UserID = userID;
-        Desc = desc;
-        Image = image;
-        this.date = date;
+    public ArrayList<String> getCategories() {
+        return Categories;
+    }
+
+    public java.util.Date getDate() {
+        return Date;
+    }
+
+    public android.location.Location getLocation() {
+        return Loc;
     }
 }

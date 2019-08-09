@@ -55,7 +55,7 @@ public class Fragment_Activity extends Fragment {
         final List <String> ID = new ArrayList();
       Query query =  firebaseFirestore.collection("Cities");
 
-      query.addSnapshotListener(getActivity(), new EventListener<QuerySnapshot>() {
+      query.addSnapshotListener( new EventListener<QuerySnapshot>() {
           @Override
           public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
 

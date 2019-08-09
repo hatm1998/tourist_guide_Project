@@ -119,12 +119,37 @@ public class City_Main extends AppCompatActivity {
         Post_list_view.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
 
 
-        for (int x = 0; x < 5; x++) {
+         Query SecoundQuery = firebaseFirestore.collection("post").orderBy("Date", Query.Direction.DESCENDING);
+
+        SecoundQuery.addSnapshotListener( new EventListener<QuerySnapshot>() {
+
+            @Override
+            public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
+                if (!documentSnapshots.isEmpty()) {
+                    for (DocumentChange documentChange : documentSnapshots.getDocumentChanges()) {
+
+                        if (documentChange.getType() == DocumentChange.Type.ADDED) {
+
+
+                            Post post = documentChange.getDocument().toObject(Post.class);
+
+                            postList.add(post);
+
+                            place_recycle_view.notifyDataSetChanged();
+
+
+                        }
+                    }
+                }
+            }
+        });
+
+      /*  for (int x = 0; x < 5; x++) {
             Post post = new Post();
             postList.add(post);
             place_recycle_view.notifyDataSetChanged();
         }
-
+*/
 
         CollapsingToolbarLayout collapsingToolbarLayout = findViewById(R.id.col_city);
 

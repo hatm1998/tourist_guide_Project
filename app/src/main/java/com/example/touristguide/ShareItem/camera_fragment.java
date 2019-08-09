@@ -51,7 +51,7 @@ public class camera_fragment extends Fragment {
 
     private TextView txt_next;
 
-    private String imagePushURI;
+    private static String imagePushURI;
     private ImageButton btn_video_vol;
     private String mappend = "file:/";
 
@@ -74,7 +74,6 @@ public class camera_fragment extends Fragment {
         Sp_Dir = view.findViewById(R.id.sp_Dirction);
 
         directories = new ArrayList<>();
-
 
 
         btn_video_vol.setOnClickListener(new View.OnClickListener() {
@@ -109,9 +108,11 @@ public class camera_fragment extends Fragment {
             }
         });
 
-        setImage("https://firebasestorage.googleapis.com/v0/b/touristguide-81502.appspot.com/o/Petra%20Documentary_%20Lost%20City%20Of%20Stone%20-%20Documentary%20HD%200s%20-%2060s%20(6xQaEZbVras).mp4?alt=media&token=6bb6f1e4-22c5-4415-93b2-03e17e690dc5", ImagePic, mappend);
+
+        //  setImage("https://firebasestorage.googleapis.com/v0/b/touristguide-81502.appspot.com/o/Petra%20Documentary_%20Lost%20City%20Of%20Stone%20-%20Documentary%20HD%200s%20-%2060s%20(6xQaEZbVras).mp4?alt=media&token=6bb6f1e4-22c5-4415-93b2-03e17e690dc5", ImagePic, mappend);
 
         init();
+       // Log.d("VideoURI", imagePushURI);
         return view;
     }
 
@@ -158,6 +159,7 @@ public class camera_fragment extends Fragment {
         GallaryGrid.setAdapter(adapter);
         if (imgURL.size() > 0)
             setImage(imgURL.get(0), ImagePic, mappend);
+
         else
             Toast.makeText(getActivity(), R.string.ErrorFilePic, Toast.LENGTH_SHORT).show();
 
@@ -176,6 +178,8 @@ public class camera_fragment extends Fragment {
 
     private void setImage(final String imageURI, VideoView image, String mappend) {
         image.setVideoURI(Uri.parse(imageURI));
+
+        imagePushURI = imageURI;
         image.requestFocus();
         image.start();
     }

@@ -28,6 +28,17 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
+    <string-array name="Categort">
+        <item>Medical tourism</item>
+        <item>Culture</item>
+        <item>Entertainment</item>
+        <item>Shopping</item>
+        <item>Desert</item>
+        <item>Beach</item>
+        <item>Nature</item>
+        <item>Arts</item>
+
+    </string-array>
     <string name="menu_YourAccount">Your Account</string>
     <string name="menu_BookMark">BookMark</string>
     <string name="menu_Event">Event</string>
@@ -37,8 +48,9 @@
     <string name="Video">Video</string>
     <string name="ErrorFileVideo">This Folder has not contain a Video</string>
     <string name="ErrorFilePic">This Folder has not contain a Picture</string>
-
+    <string name="OK">OK</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="post">Add New Post</string>
 
 </resources>
