@@ -19,12 +19,12 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class post_recycle_adapter extends RecyclerView.Adapter<post_recycle_adapter.ViewHolder> {
+public class adapter_Post_inprofile extends RecyclerView.Adapter<adapter_Post_inprofile.ViewHolder> {
 
     private List<Post> Post_List;
     private Context context;
 
-    public post_recycle_adapter(List<Post> post_List) {
+    public adapter_Post_inprofile(List<Post> post_List) {
         this.Post_List = post_List;
     }
 
@@ -33,13 +33,13 @@ public class post_recycle_adapter extends RecyclerView.Adapter<post_recycle_adap
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.post_virtecal, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.style_post_in_profile, parent, false);
 
 
 
         context = parent.getContext();
 
-        return new post_recycle_adapter.ViewHolder(view);
+        return new adapter_Post_inprofile.ViewHolder(view);
     }
 
     @Override

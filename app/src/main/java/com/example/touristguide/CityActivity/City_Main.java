@@ -191,6 +191,19 @@ public class City_Main extends AppCompatActivity {
             }
         });
 
+
+        Post_list_view.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
+            @Override
+            public void onViewAttachedToWindow(View view) {
+
+            }
+
+            @Override
+            public void onViewDetachedFromWindow(View view) {
+
+            }
+        });
+
       /*  for (int x = 0; x < 5; x++) {
             Post post = new Post();
             postList.add(post);

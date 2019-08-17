@@ -43,7 +43,7 @@ public class Adapter_sightseeing extends PagerAdapter {
         final ImageView img_place=inflate.findViewById(R.id.img_hoz_place);
 
         txt_place_name.setText(List.get(position).getName());
-        Picasso.get().load(List.get(position).getImage()).into(img_place,new Callback() {
+        Picasso.get().load(List.get(position).getImage()).resizeDimen(R.dimen.image_size,R.dimen.image_size) .into(img_place,new Callback() {
             @Override
             public void onSuccess() {
              //   progress_city.setVisibility(View.GONE);
