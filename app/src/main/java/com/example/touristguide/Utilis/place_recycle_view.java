@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.touristguide.CityActivity.sightseeing.Places;
 import com.example.touristguide.R;
 import com.squareup.picasso.Picasso;
 

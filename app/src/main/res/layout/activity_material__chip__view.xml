@@ -56,11 +56,11 @@
         app:srcCompat="@drawable/buttom" />
 
     <Button
-        android:id="@+id/btn_next_chippage"
+        android:id="@+id/btn_Go_chippage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="36dp"
-        android:background="@drawable/buttonnext"
+        android:background="@drawable/style_buttongo"
         app:layout_constraintBottom_toBottomOf="@+id/img_top_chippage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -74,7 +74,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="25dp"
         android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_next_chippage"
+        app:layout_constraintBottom_toTopOf="@id/btn_Go_chippage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/img_down_chippage">
@@ -88,10 +88,10 @@
                 android:id="@+id/textView3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/mvboli"
-                android:text="DearTourist"
+                android:fontFamily="@font/simsun"
+                android:text="DearTourist Please Choose the Place you want to visit"
                 android:textAlignment="center"
-                android:textColor="#A61A1B16"
+                android:textColor="#1A1B16"
                 android:textSize="16sp" />
 
             <com.nex3z.flowlayout.FlowLayout

@@ -1,6 +1,7 @@
 package com.example.touristguide;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -15,7 +16,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.touristguide.authentication.SignUp;
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -26,12 +27,12 @@ public class Contact_page extends AppCompatActivity {
 
     private Dialog dialog;
     private FirebaseAuth mAuth;
-
+    private Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_page);
-
+        context=this;
 
     }
 
@@ -40,8 +41,9 @@ public class Contact_page extends AppCompatActivity {
     public void btn_signUp(View view) {
         //finish();
 
-        Intent intent = new Intent(Contact_page.this, SignUp.class);
+        Intent intent = new Intent(Contact_page.this, signuptest.class);
         startActivity(intent);
+        Animatoo.animateFade(context);
     }
 
     // Action -> Login Button

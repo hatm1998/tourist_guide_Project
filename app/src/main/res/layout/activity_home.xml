@@ -9,53 +9,33 @@
     tools:context=".homeActivity"
     tools:showIn="@layout/app_bar_navigation__drawer">
 
-    <devlight.io.library.ntb.NavigationTabBar
-        android:id="@+id/ntb"
-        android:layout_width="0dp"
-        android:layout_height="55dp"
-        android:layout_gravity="bottom"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:ntb_active_color="#A6000000"
-        app:ntb_animation_duration="400"
-        app:ntb_bg_color="#80FACB85"
-        app:ntb_icon_size_fraction="0.4"
-        app:ntb_inactive_color="@color/common_google_signin_btn_text_dark_pressed"
-        app:ntb_scaled="true"
-        app:ntb_swiped="true"
-        app:ntb_tinted="true" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_add"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="44dp"
-        android:layout_marginBottom="32dp"
-        android:clickable="true"
-        android:src="@drawable/ic_add"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/ntb"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <LinearLayout
-        android:id="@+id/linearLayout5"
-        android:layout_width="0dp"
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/ntb"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <FrameLayout
-            android:id="@+id/frameLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="2">
+    </FrameLayout>
 
-        </FrameLayout>
-    </LinearLayout>
+    <devlight.io.library.ntb.NavigationTabBar
+        android:id="@+id/ntb"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:layout_gravity="bottom"
+        android:background="#FAE3C0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:ntb_active_color="#A6000000"
+        app:ntb_animation_duration="400"
+        app:ntb_bg_color="#FAE3C0"
+        app:ntb_icon_size_fraction="0.4"
+        app:ntb_inactive_color="@color/common_google_signin_btn_text_dark_pressed"
+        app:ntb_scaled="true"
+        app:ntb_swiped="true"
+        app:ntb_tinted="true" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginBottom="-2dp"
     android:orientation="vertical">
 
     <ScrollView
@@ -19,31 +20,105 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:background="@drawable/ballonwadi">
+                android:layout_height="wrap_content"
+                android:background="@drawable/ballonwadi"
+                android:scaleY="1.2">
 
-                <EditText
-                    android:id="@+id/editText"
+                <ImageView
                     android:layout_width="0dp"
-                    android:layout_height="51dp"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginEnd="24dp"
-                    android:layout_marginBottom="8dp"
-                    android:background="@drawable/style_menu_btn_search"
-                    android:drawableLeft="@drawable/menu_search"
-                    android:editable="false"
-                    android:ems="10"
-                    android:hint="Where Do you Want to go ?"
-                    android:inputType="textPersonName"
-                    android:paddingStart="10dp"
-                    android:textAlignment="center"
-                    android:textSize="18sp"
+                    android:layout_height="0dp"
+                    android:background="#6A1A1B16"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+
+                <LinearLayout
+                    android:id="@+id/layout_weather"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="35dp"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/img_ic_status__Activity_page"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ballonwadi"
+                        android:tint="#000000"
+                        app:civ_border_color="#D0FFFFFF"
+                        app:civ_border_width="1dp" />
+
+                    <TextView
+                        android:id="@+id/txtLastUpdate_Activity_page"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="8dp"
+                        android:gravity="center"
+                        android:text="- - - - - - - - -"
+                        android:textColor="#D0FFFFFF"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/txtDescription_Activity_page"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="- - - - - - -"
+                        android:textColor="#D1FFFFFF"
+                        android:textSize="25sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/txtHumidity_Activity_page"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="- - - - -"
+                        android:textColor="#D1FFFFFF"
+                        android:textSize="25sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/txtCelsius_Activity_page"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginEnd="10dp"
+                            android:gravity="center"
+                            android:text="- - -"
+                            android:textColor="#D1FFFFFF"
+                            android:textSize="30sp"
+                            android:textStyle="bold" />
+
+                        <Button
+                            android:id="@+id/btn_refresh_location_Activity_page"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/ic_refresh"
+                            android:text="R"
+                            android:textColor="#D1FFFFFF" />
+                    </LinearLayout>
+
+                </LinearLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -52,7 +127,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:numColumns="2">
+                android:background="@drawable/style_layout_comp_eventdisplay"
+                android:numColumns="2"
+                android:paddingStart="5dp"
+                android:paddingTop="5dp"
+                android:paddingEnd="5dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
 
             </GridView>
 

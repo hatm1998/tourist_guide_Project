@@ -16,8 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.touristguide.R;
 import com.squareup.picasso.Picasso;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
 
 public class post_recycle_adapter extends RecyclerView.Adapter<post_recycle_adapter.ViewHolder> {

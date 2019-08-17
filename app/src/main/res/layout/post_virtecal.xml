@@ -1,143 +1,204 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginStart="10dp"
     android:layout_marginTop="5dp"
+    android:layout_marginEnd="10dp"
     android:layout_marginBottom="5dp"
-    android:background="#FFFFFF"
-    android:orientation="vertical">
+    android:orientation="vertical" >
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="match_parent">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/f" />
-
-        <TextView
-            android:id="@+id/textView10"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <Button
+            android:id="@+id/btn_LocationPost_profile"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_gravity="center"
-            android:layout_marginStart="10dp"
-            android:layout_weight="1"
-            android:text="UserName"
-            android:textSize="14sp" />
-
-        <TextView
-            android:id="@+id/textView11"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center|end"
-            android:layout_weight="1"
-            android:paddingEnd="10dp"
-            android:text="Date"
-            android:textAlignment="viewEnd"
-            android:textSize="14sp" />
-    </LinearLayout>
-
-    <ImageView
-        android:id="@+id/post_image_View"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginTop="10dp"
-        android:scaleType="fitXY"
-        app:srcCompat="@drawable/fff" />
-
-    <VideoView
-        android:id="@+id/Video_post_view"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:visibility="visible" />
-
-    <TextView
-        android:id="@+id/txt_post_desc"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginBottom="5dp"
-        android:text="Good descriptive writing creates an impression in the reader's mind of an event, a place, a person, or a thing. The writing will be such that it will set a mood or describe something in such detail that if the reader saw it, they would recognize it." />
-
-    <View
-        android:id="@+id/view11"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_marginTop="5dp"
-        android:background="@color/colorPrimaryDark" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/textView13"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-
-            android:layout_weight="0"
-            android:clickable="true"
-            android:drawableStart="@drawable/ic_favorite"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:paddingStart="5dp"
-            android:text="Like"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="4dp"
+            android:background="@drawable/style_btnlocation_profile"
+            android:drawableStart="@drawable/ic_location_on"
+            android:gravity="center"
+            android:paddingStart="6dp"
             android:textAlignment="center"
-            android:textSize="18sp" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/textView14"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:layout_weight="0"
-            android:clickable="true"
-            android:drawableStart="@drawable/ic_comment"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:paddingStart="5dp"
-            android:text="Comment"
-            android:textAlignment="center"
-            android:textSize="18sp" />
-
-        <View
-            android:id="@+id/view6"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1" />
-
-        <TextView
-            android:id="@+id/textView15"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginBottom="5dp"
-            android:layout_weight="0"
-            android:clickable="true"
-            android:drawableStart="@drawable/menu_bookmark"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:paddingStart="5dp"
-            android:text="Save"
+            android:orientation="vertical"
             android:textAlignment="center"
-            android:textSize="18sp" />
-    </LinearLayout>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-    <View
-        android:id="@+id/view12"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@color/colorPrimaryDark" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="3dp"
+                android:orientation="horizontal">
 
-</LinearLayout>
+                <FrameLayout
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="4dp">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/Pic_User_profile"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/ziad"
+                        android:tint="#000000"
+                        app:civ_border_color="#000000"
+                        app:civ_border_width="1dp" />
+
+                    <ProgressBar
+                        android:id="@+id/progress_picuser_inpost_profile"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_gravity="center"
+                        android:theme="@style/AppTheme.NoActionBar"
+                        android:visibility="visible" />
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="4dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/Name_User_profile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/simsun"
+                        android:gravity="center"
+                        android:text="Zaid Al-Kasaji" />
+
+                    <TextView
+                        android:id="@+id/DatePost_profile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="5dp"
+                        android:drawableStart="@drawable/arrow"
+                        android:fontFamily="@font/mvboli"
+                        android:gravity="center"
+                        android:text="31/1 at 11:30 PM ."
+                        android:textColor="#DF020202"
+                        android:textSize="10sp" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:id="@+id/view10"
+                android:layout_width="match_parent"
+                android:layout_height="1sp"
+                android:background="#FACB85" />
+
+            <ImageView
+                android:id="@+id/post_image_View"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="10dp"
+                android:scaleType="fitXY"
+                app:srcCompat="@drawable/fff" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <VideoView
+                    android:id="@+id/Video_post_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_centerInParent="true"
+                    android:visibility="visible" />
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/view7"
+                android:layout_width="match_parent"
+                android:layout_height="1sp"
+                android:background="#FACB85" />
+
+            <TextView
+                android:id="@+id/txt_post_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="2dp"
+                android:fontFamily="@font/himalaya"
+                android:text="become an accepted part of many culturesing.[1] This makes texting a quick and easy ❤❤😊 "
+                android:textSize="20sp" />
+
+            <View
+                android:id="@+id/view9"
+                android:layout_width="match_parent"
+                android:layout_height="1sp"
+                android:background="#FACB85" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btn_likePost_profile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/style_btn_profile"
+                        android:drawableStart="@drawable/heart"
+                        android:paddingStart="20dp"
+                        android:text="Like"
+                        android:textAlignment="center" />
+
+                    <Button
+                        android:id="@+id/btn_CommentPost_profile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/style_btn_profile"
+                        android:drawableStart="@drawable/comment"
+                        android:paddingStart="20dp"
+                        android:text="Comment"
+                        android:textAlignment="center" />
+
+                    <Button
+                        android:id="@+id/btn_SharePost_profile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/style_btn_profile"
+                        android:drawableStart="@drawable/share"
+                        android:paddingStart="20dp"
+                        android:text="Share" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

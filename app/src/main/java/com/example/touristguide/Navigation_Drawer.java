@@ -1,5 +1,6 @@
 package com.example.touristguide;
 
+
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -19,9 +20,10 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.example.touristguide.Activity.Fragment_Activity;
+import com.example.touristguide.Event.Event_Activity.Event_Page;
 import com.example.touristguide.Profile.Profile_Page;
-import com.example.touristguide.ShareItem.Add_new_post;
 import com.example.touristguide.notification_saved.notification_page;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -80,18 +82,17 @@ public class Navigation_Drawer extends AppCompatActivity
 
         navigationTabBar = findViewById(R.id.ntb);
         mAuth = FirebaseAuth.getInstance();
-        fab = findViewById(R.id.fab_add);
 
         // replace fragment Activity .
         replacefragment(new Fragment_Activity());
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Navigation_Drawer.this, Add_new_post.class);
-                startActivity(intent);
-            }
-        });
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(Navigation_Drawer.this, Add_new_post.class);
+//                startActivity(intent);
+//            }
+//        });
 
 
 
@@ -243,7 +244,8 @@ public class Navigation_Drawer extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_event) {
-            // Handle the camera action
+            startActivity(new Intent(this, Event_Page.class));
+            Animatoo.animateFade(this);
         } else if (id == R.id.nav_bookmark) {
 
         } else if (id == R.id.nav_account) {

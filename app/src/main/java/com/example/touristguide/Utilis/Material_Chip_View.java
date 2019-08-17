@@ -1,40 +1,75 @@
 package com.example.touristguide.Utilis;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.InputType;
+import android.view.Gravity;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ScrollView;
+import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 
 import com.example.touristguide.R;
+import com.nex3z.flowlayout.FlowLayout;
+
+import java.util.ArrayList;
 
 
 public class Material_Chip_View extends AppCompatActivity {
 
     private ImageView img_top,img_Down;
-    private Button btn_next;
+    private Button btn_GO;
     private ScrollView scrollView;
+    // Selected Item .
+    private ArrayList<String> Selected_Chip;
+    private Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_material__chip__view);
-
+        context=this;
         img_top=findViewById(R.id.img_top_chippage);
         img_Down=findViewById(R.id.img_down_chippage);
-        btn_next=findViewById(R.id.btn_next_chippage);
+        btn_GO=findViewById(R.id.btn_Go_chippage);
         scrollView=findViewById(R.id.scroll_chippage);
+        Selected_Chip=new ArrayList<>();
 
         open_Animation();
 
 
-        btn_next.setOnClickListener(new View.OnClickListener() {
+        btn_GO.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                close_Animation();
+               if(Selected_Chip.isEmpty())
+                {
+
+                    new AlertDialog.Builder(context)
+                            .setTitle("Sorry!")
+
+                            .setMessage("You have not chosen places to visit ? ")
+                            .setNegativeButton("Back",null)
+                            .setPositiveButton("Skip", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    close_Animation();
+                                }
+                            })
+                            .show();
+               }else
+               {
+                   Toast.makeText(context,Selected_Chip.toString(),Toast.LENGTH_LONG).show();
+               }
             }
         });
 
@@ -48,55 +83,34 @@ public class Material_Chip_View extends AppCompatActivity {
            ,"Beaches"
            ,"Nature"
            ,"Arts"};
-        // add Message
-      /* final FlowLayout layout=(FlowLayout)(findViewById(R.id.flayout));
-        LinearLayout.LayoutParams styleSend = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT);
-        styleSend.gravity= Gravity.RIGHT;
+        // add Chips View .
+      final FlowLayout layout=(FlowLayout)(findViewById(R.id.flayout));
+        final float scale = getResources().getDisplayMetrics().density;
 
-        for(int i=0;i<chip_Name.length;i++) {
-            final Chip chip = new Chip(this);
-            chip.setSelected(true);
-            chip.setSelectable(true);
-            chip.changeBackgroundColor(Color.parseColor("#E7A942"));
-            chip.changeSelectedBackgroundColor(Color.parseColor("#A61A1B16"));
-            Log.i("YELLOW",Color.parseColor("#E7A942")+"");
-            chip.setChipText(chip_Name[i]);
-//            app:mcv_closeColor="@color/customCloseIconColor"
-//            app:mcv_selectedBackgroundColor="@color/customSelectedChipColor"
-//            app:mcv_textColor="@color/customTitleColor"
-
-            chip.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    chip.setSelectable(true);
-                }
-            });
-            layout.addView(chip);
-        }
-        for(int i=0;i<chip_Name.length;i++) {
-            final Chip chip = new Chip(this);
-            chip.setSelected(true);
-            chip.setSelectable(true);
-            chip.changeBackgroundColor(Color.parseColor("#E7A942"));
-            chip.changeSelectedBackgroundColor(Color.parseColor("#A61A1B16"));
-            Log.i("YELLOW",Color.parseColor("#E7A942")+"");
-            chip.setChipText(chip_Name[i]);
-//            app:mcv_closeColor="@color/customCloseIconColor"
-//            app:mcv_selectedBackgroundColor="@color/customSelectedChipColor"
-//            app:mcv_textColor="@color/customTitleColor"
-
-            chip.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    chip.setSelectable(true);
-                }
-            });
-            layout.addView(chip);
-        }
-
-*/
-
+  for(int i=0;i<chip_Name.length;i++)
+  {
+      final ToggleButton chip=new ToggleButton(this);
+      chip.setTextOff(chip_Name[i]);
+      chip.setTextOn(chip_Name[i]);
+      chip.setChecked(false);
+      chip.setInputType(InputType.TYPE_TEXT_VARIATION_NORMAL);
+      chip.setGravity(Gravity.START | Gravity.CENTER);
+      Drawable style_chips=(Drawable)getResources().getDrawable(R.drawable.custom_chips_places);
+      chip.setBackground(style_chips);
+      Typeface typeface = ResourcesCompat.getFont(context, R.font.mvboli);
+      chip.setTypeface(typeface);
+      chip.setPadding((int) (5 * scale + 0.5f),0,(int) (30 * scale + 0.5f),0);
+      chip.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+             if(chip.isChecked())
+                  Selected_Chip.add(chip.getText().toString());
+          else
+                  Selected_Chip.remove(chip.getText().toString());
+          }
+      });
+      layout.addView(chip,new FlowLayout.LayoutParams(FlowLayout.LayoutParams.WRAP_CONTENT,(int)(33 * scale + 0.5f)));
+  }
     }
     private void open_Animation(){
 
@@ -111,7 +125,7 @@ public class Material_Chip_View extends AppCompatActivity {
 
         img_Down.setAnimation(slide_down);
         img_top.setAnimation(slide_up);
-        btn_next.setAnimation(slide_up);
+        btn_GO.setAnimation(slide_up);
         scrollView.setAnimation(bounce);
     }
     private void close_Animation(){
@@ -128,7 +142,7 @@ public class Material_Chip_View extends AppCompatActivity {
 
         img_Down.setAnimation(slide_down);
         img_top.setAnimation(slide_up);
-        btn_next.setAnimation(slide_up);
+        btn_GO.setAnimation(slide_up);
         scrollView.setAnimation(bounce);
     }
 
