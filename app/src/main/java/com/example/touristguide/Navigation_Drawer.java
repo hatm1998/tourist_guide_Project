@@ -60,7 +60,7 @@ public class Navigation_Drawer extends AppCompatActivity
         DrawerLayout drawer = findViewById(R.id.drawer_layout);;
 
         mAuth = FirebaseAuth.getInstance();
-        firebaseFirestore = FirebaseFirestore.getInstance();
+        firebaseFirestore = FirebaseFirestore.getInstance() ;
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer,  R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
