@@ -4,6 +4,7 @@ package com.example.touristguide;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -56,23 +57,26 @@ public class Navigation_Drawer extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation__drawer);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);;
+
+        mAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
-
-
-
-
-      final AppBarLayout AppBar=findViewById(R.id.AppBarID);
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer,  R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+
+
+        drawer = findViewById(R.id.drawer_layout);
+
+        final AppBarLayout AppBar=findViewById(R.id.AppBarID);
+
+        NavigationView navigationView = findViewById(R.id.nav_view);
+
         navigationView.setNavigationItemSelectedListener(this);
 //
 
-         headerView = navigationView.getHeaderView(0);
-
+        headerView = navigationView.getHeaderView(0);
 
 
 
@@ -80,7 +84,6 @@ public class Navigation_Drawer extends AppCompatActivity
         final String[] colors = getResources().getStringArray(R.array.colorful);
 
         navigationTabBar = findViewById(R.id.ntb);
-        mAuth = FirebaseAuth.getInstance();
 
         // replace fragment Activity .
         replacefragment(new Fragment_Activity());
@@ -287,7 +290,8 @@ public class Navigation_Drawer extends AppCompatActivity
                         CircleImageView navImageprofile = headerView.findViewById(R.id.menu_img_profile);
                         Picasso.get().load(task.getResult().get("Image_User").toString()).into(navImageprofile);
 
-                    }
+                    }else
+                        Log.d("Error" , task.getException().getMessage());
                 }
             });
         }

@@ -63,7 +63,7 @@ public class Adapter_Activity extends BaseAdapter {
 
         ImageView imageView = view.findViewById(R.id.img_cardactivity);
 
-        Picasso.get().load(Imgcate.get(position)).into(imageView);
+        Picasso.get().load(Imgcate.get(position)).resizeDimen(R.dimen.image_size,R.dimen.image_size).into(imageView);
         final TextView textView = view.findViewById(R.id.txtname_cardactivity);
         textView.setText(namecate.get(position));
 

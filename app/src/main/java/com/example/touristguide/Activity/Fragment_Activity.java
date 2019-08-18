@@ -20,7 +20,9 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.core.app.ActivityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import com.example.touristguide.R;
@@ -28,6 +30,7 @@ import com.example.touristguide.Utilis.Adapter_Activity;
 import com.example.touristguide.weather.Common.Common;
 import com.example.touristguide.weather.Helper.Helper;
 import com.example.touristguide.weather.Model.OpenWeatherMap;
+
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -91,6 +94,11 @@ public class Fragment_Activity extends Fragment   {
 
 
 
+
+
+
+
+
         // Refresh location .
         btnrefresh.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,6 +107,8 @@ public class Fragment_Activity extends Fragment   {
                         R.anim.click_btn_refresh);
                 btnrefresh.setAnimation(anim);
                 Get_Current_Location();
+
+
             }
         });
 

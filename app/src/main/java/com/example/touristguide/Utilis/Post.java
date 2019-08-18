@@ -2,6 +2,8 @@ package com.example.touristguide.Utilis;
 
 import android.location.Location;
 
+import com.google.firebase.firestore.GeoPoint;
+
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -10,14 +12,14 @@ public class Post {
     private String Image, Desc, UserID;
     private ArrayList<String> Categories;
     private Date Date;
-    public Location Loc;
+    public GeoPoint Loc;
 
 
     public Post() {
 
     }
 
-    public Post(String image, String desc, String userID, ArrayList<String> categories, java.util.Date date, Location location) {
+    public Post(String image, String desc, String userID, ArrayList<String> categories, java.util.Date date, GeoPoint location) {
         Image = image;
         Desc = desc;
         UserID = userID;
@@ -29,6 +31,7 @@ public class Post {
     public String getImage() {
         return Image;
     }
+    
 
     public String getDesc() {
         return Desc;
@@ -46,7 +49,7 @@ public class Post {
         return Date;
     }
 
-    public android.location.Location getLocation() {
+    public GeoPoint getLocation() {
         return Loc;
     }
 }

@@ -7,6 +7,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -14,6 +15,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -40,6 +42,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.gson.Gson;
@@ -66,14 +69,14 @@ public class City_Main extends AppCompatActivity {
 
     // Component Weather Information
     private CircleImageView img_ic_status;
-    private TextView txtLastUpdate,txtDescription,txtHumidity,txtCelsius;
+    private TextView txtLastUpdate, txtDescription, txtHumidity, txtCelsius;
     private Button btnrefresh;
 
 
     // Component Get Weather .
-    private  OpenWeatherMap openWeatherMap ;
+    private OpenWeatherMap openWeatherMap;
 
-    private RecyclerView  Post_list_view;
+    private RecyclerView Post_list_view;
     private List<Post> postList;
     private FloatingActionButton fab;
 
@@ -88,20 +91,38 @@ public class City_Main extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.header_main_city);
 
-        img_ic_status=findViewById(R.id.img_ic_status_display_City);
-        txtLastUpdate=findViewById(R.id.txtLastUpdate_display_City);
-        txtDescription=findViewById(R.id.txtDescription_display_City);
-        txtHumidity=findViewById(R.id.txtHumidity_display_City);
-        txtCelsius=findViewById(R.id.txtCelsius_display_City);
-        btnrefresh=findViewById(R.id.btn_refresh_location_display_City);
+        final Intent intent = getIntent();
+        final String CityID = intent.getStringExtra("Ads_id");
+        firebaseFirestore = FirebaseFirestore.getInstance();
+
+
+        img_ic_status = findViewById(R.id.img_ic_status_display_City);
+        txtLastUpdate = findViewById(R.id.txtLastUpdate_display_City);
+        txtDescription = findViewById(R.id.txtDescription_display_City);
+        txtHumidity = findViewById(R.id.txtHumidity_display_City);
+        txtCelsius = findViewById(R.id.txtCelsius_display_City);
+        btnrefresh = findViewById(R.id.btn_refresh_location_display_City);
+
 
         openWeatherMap = new OpenWeatherMap();
 
-       final  double lat=31.704870,lng=35.801819;
 
+        final GeoPoint[] geoPoint = new GeoPoint[1];
+
+
+        firebaseFirestore.collection("Cities").document(CityID)
+                .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    geoPoint[0] = (GeoPoint) task.getResult().get("Location");
+                    new GetWeather().execute(Common.apiRequest(String.valueOf(geoPoint[0].getLatitude()), String.valueOf(geoPoint[0].getLongitude())));
+                } else
+                    Log.d("Error Location", task.getException().getMessage());
+
+            }
+        });
         //  GetWeather
-        new GetWeather().execute(Common.apiRequest(String.valueOf(lat),String.valueOf(lng)));
-
 
 
         // Refresh Weather .
@@ -111,33 +132,33 @@ public class City_Main extends AppCompatActivity {
                 Animation anim = AnimationUtils.loadAnimation(getApplicationContext(),
                         R.anim.click_btn_refresh);
                 btnrefresh.setAnimation(anim);
-                new GetWeather().execute(Common.apiRequest(String.valueOf(lat),String.valueOf(lng)));
+                new GetWeather().execute(Common.apiRequest(String.valueOf(geoPoint[0].getLatitude())
+                        , String.valueOf(geoPoint[0].getLongitude())));
+
             }
         });
 
         // get sightseeing from FireBase .
 
-        List_sightseeing=new ArrayList<>();
-        pager_sightseeing=findViewById(R.id.Vpage_in_main_city);
+        List_sightseeing = new ArrayList<>();
+        pager_sightseeing = findViewById(R.id.Vpage_in_main_city);
         pager_sightseeing.setClipToPadding(false);
         pager_sightseeing.setPadding(70, 0, 70, 0);
         pager_sightseeing.setPageMargin(20);
-        adapter_sightseeing=new Adapter_sightseeing(this,List_sightseeing);
+        adapter_sightseeing = new Adapter_sightseeing(this, List_sightseeing);
         pager_sightseeing.setAdapter(adapter_sightseeing);
         pager_sightseeing.setCurrentItem(1);
 
-        final Intent intent = getIntent();
-        final String CityID = intent.getStringExtra("Ads_id");
         progressBar = findViewById(R.id.header_city_progress);
         postList = new ArrayList<>();
         fab = findViewById(R.id.fab_add_Post);
-        firebaseFirestore = FirebaseFirestore.getInstance();
+
 
         Post_list_view = findViewById(R.id.RC_City_post);
 
         final Query firstQuery = firebaseFirestore.collection("Cities").document(CityID).collection("places");
 
-        firstQuery.addSnapshotListener( new EventListener<QuerySnapshot>() {
+        firstQuery.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                 for (DocumentChange documentChange : queryDocumentSnapshots.getDocumentChanges()) {
@@ -153,11 +174,10 @@ public class City_Main extends AppCompatActivity {
         });
 
 
-
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(City_Main.this , Add_new_post.class);
+                Intent intent = new Intent(City_Main.this, Add_new_post.class);
                 startActivity(intent);
 
             }
@@ -171,9 +191,9 @@ public class City_Main extends AppCompatActivity {
         Post_list_view.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
 
 
-         Query SecoundQuery = firebaseFirestore.collection("post").orderBy("Date", Query.Direction.DESCENDING);
+        Query SecoundQuery = firebaseFirestore.collection("post").orderBy("Date", Query.Direction.DESCENDING);
 
-        SecoundQuery.addSnapshotListener( new EventListener<QuerySnapshot>() {
+        SecoundQuery.addSnapshotListener(new EventListener<QuerySnapshot>() {
 
             @Override
             public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
@@ -248,8 +268,7 @@ public class City_Main extends AppCompatActivity {
 
     }
 
-    private class GetWeather extends AsyncTask<String,Void,String> {
-
+    private class GetWeather extends AsyncTask<String, Void, String> {
 
 
         @Override
@@ -274,21 +293,22 @@ public class City_Main extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            if(s.contains("Error: Not found city")){
+            if (s.contains("Error: Not found city")) {
                 //  progress.dismiss();
                 return;
             }
             Gson gson = new Gson();
-            Type mType = new TypeToken<OpenWeatherMap>(){}.getType();
-            openWeatherMap = gson.fromJson(s,mType);
+            Type mType = new TypeToken<OpenWeatherMap>() {
+            }.getType();
+            openWeatherMap = gson.fromJson(s, mType);
             // progress.dismiss();
 
             //  txtCity.setText(String.format("%s,%s",openWeatherMap.getName(),openWeatherMap.getSys().getCountry()));
             txtLastUpdate.setText(String.format("Last Updated: %s", Common.getDateNow()));
-            txtDescription.setText(String.format("%s",openWeatherMap.getWeather().get(0).getDescription()));
-            txtHumidity.setText(String.format("%d%%",openWeatherMap.getMain().getHumidity()));
+            txtDescription.setText(String.format("%s", openWeatherMap.getWeather().get(0).getDescription()));
+            txtHumidity.setText(String.format("%d%%", openWeatherMap.getMain().getHumidity()));
             // txtTime.setText(String.format("%s/%s",Common.unixTimeStampToDateTime(openWeatherMap.getSys().getSunrise()),Common.unixTimeStampToDateTime(openWeatherMap.getSys().getSunset())));
-            txtCelsius.setText(String.format("%.2f °C",openWeatherMap.getMain().getTemp()));
+            txtCelsius.setText(String.format("%.2f °C", openWeatherMap.getMain().getTemp()));
             Picasso.get()
                     .load(Common.getImage(openWeatherMap.getWeather().get(0).getIcon()))
                     .into(img_ic_status);
@@ -296,6 +316,7 @@ public class City_Main extends AppCompatActivity {
         }
 
     }
+
     public class MYLocationListener implements LocationListener {
 
         @Override
