@@ -24,7 +24,7 @@ import java.util.regex.Pattern;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class signuptest extends AppCompatActivity {
+public class signup extends AppCompatActivity {
 
 
 

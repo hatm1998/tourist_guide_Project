@@ -13,23 +13,28 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestManager;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.touristguide.CityActivity.sightseeing.Adapter_sightseeing;
+import com.example.touristguide.CityActivity.sightseeing.Places;
 import com.example.touristguide.R;
 import com.example.touristguide.ShareItem.Add_new_post;
-import com.example.touristguide.CityActivity.sightseeing.Places;
-import com.example.touristguide.Utilis.Post;
-import com.example.touristguide.Utilis.post_recycle_adapter;
+import com.example.touristguide.video_player.VideoPlayerRecyclerAdapter;
+import com.example.touristguide.video_player.VideoPlayerRecyclerView;
+import com.example.touristguide.video_player.models.Post;
+import com.example.touristguide.video_player.util.VerticalSpacingItemDecorator;
 import com.example.touristguide.weather.Common.Common;
 import com.example.touristguide.weather.Helper.Helper;
 import com.example.touristguide.weather.Model.OpenWeatherMap;
@@ -52,32 +57,37 @@ import com.squareup.picasso.Picasso;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.List;
-
-import javax.annotation.Nullable;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class City_Main extends AppCompatActivity {
+
     private FirebaseFirestore firebaseFirestore;
 
     private ImageView header_Image;
 
     private ProgressBar progressBar;
 
-    private post_recycle_adapter post_recycle_view;
 
-    // Component Weather Information
+
+    private LinearLayout city_item;
+  //  private post_recycle_adapter post_recycle_view;
+
+    // Component Weather Information -> (City) .
     private CircleImageView img_ic_status;
     private TextView txtLastUpdate, txtDescription, txtHumidity, txtCelsius;
     private Button btnrefresh;
 
 
-    // Component Get Weather .
+    // Component Get Weather -> (City).
     private OpenWeatherMap openWeatherMap;
 
-    private RecyclerView Post_list_view;
-    private List<Post> postList;
+    // get All Post -> (City)
+    private VideoPlayerRecyclerView Post_list_view;
+    private ArrayList<Post> posts ;
+    private VideoPlayerRecyclerAdapter adapter_Post;
+
+    // Button Add Image Or Video
     private FloatingActionButton fab;
 
     // Component sightseeing .
@@ -95,17 +105,18 @@ public class City_Main extends AppCompatActivity {
         final String CityID = intent.getStringExtra("Ads_id");
         firebaseFirestore = FirebaseFirestore.getInstance();
 
-
+        city_item = findViewById(R.id.city_item);
         img_ic_status = findViewById(R.id.img_ic_status_display_City);
         txtLastUpdate = findViewById(R.id.txtLastUpdate_display_City);
         txtDescription = findViewById(R.id.txtDescription_display_City);
         txtHumidity = findViewById(R.id.txtHumidity_display_City);
         txtCelsius = findViewById(R.id.txtCelsius_display_City);
         btnrefresh = findViewById(R.id.btn_refresh_location_display_City);
-
+        fab = findViewById(R.id.fab_add_Post);
 
         openWeatherMap = new OpenWeatherMap();
 
+        firebaseFirestore = FirebaseFirestore.getInstance();
 
         final GeoPoint[] geoPoint = new GeoPoint[1];
 
@@ -150,11 +161,6 @@ public class City_Main extends AppCompatActivity {
         pager_sightseeing.setCurrentItem(1);
 
         progressBar = findViewById(R.id.header_city_progress);
-        postList = new ArrayList<>();
-        fab = findViewById(R.id.fab_add_Post);
-
-
-        Post_list_view = findViewById(R.id.RC_City_post);
 
         final Query firstQuery = firebaseFirestore.collection("Cities").document(CityID).collection("places");
 
@@ -186,14 +192,27 @@ public class City_Main extends AppCompatActivity {
 
         // ---------------------- ** ------------------------ //
 
-        post_recycle_view = new post_recycle_adapter(postList);
-        Post_list_view.setAdapter(post_recycle_view);
-        Post_list_view.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
+        //replacefragment(home_fragment)
+
+       // Add All Post From FireBase -> City .
+        Post_list_view = findViewById(R.id.RC_City_post);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        Post_list_view.setLayoutManager(layoutManager);
+        Post_list_view.setNestedScrollingEnabled(false);
+        VerticalSpacingItemDecorator itemDecorator = new VerticalSpacingItemDecorator(10);
+        Post_list_view.addItemDecoration(itemDecorator);
+        posts = new ArrayList<>();
+        Post_list_view.setPosts(posts);
+        adapter_Post = new VideoPlayerRecyclerAdapter(posts, initGlide());
+        Post_list_view.setAdapter(adapter_Post);
 
 
-        Query SecoundQuery = firebaseFirestore.collection("post").orderBy("Date", Query.Direction.DESCENDING);
 
-        SecoundQuery.addSnapshotListener(new EventListener<QuerySnapshot>() {
+
+        Query SecoundQuery = firebaseFirestore.collection("post")
+                .orderBy("Date", Query.Direction.DESCENDING);
+
+        SecoundQuery.addSnapshotListener( new EventListener<QuerySnapshot>() {
 
             @Override
             public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
@@ -203,33 +222,14 @@ public class City_Main extends AppCompatActivity {
                         if (documentChange.getType() == DocumentChange.Type.ADDED) {
 
                             Post post = documentChange.getDocument().toObject(Post.class);
-                            postList.add(post);
-                            post_recycle_view.notifyDataSetChanged();
+                                posts.add(post);
+                                adapter_Post.notifyDataSetChanged();
                         }
                     }
                 }
             }
         });
 
-
-        Post_list_view.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
-            @Override
-            public void onViewAttachedToWindow(View view) {
-
-            }
-
-            @Override
-            public void onViewDetachedFromWindow(View view) {
-
-            }
-        });
-
-      /*  for (int x = 0; x < 5; x++) {
-            Post post = new Post();
-            postList.add(post);
-            place_recycle_view.notifyDataSetChanged();
-        }
-*/
 
         CollapsingToolbarLayout collapsingToolbarLayout = findViewById(R.id.col_city);
 
@@ -243,7 +243,7 @@ public class City_Main extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
 
         header_Image = findViewById(R.id.header_img_city);
-        firebaseFirestore = FirebaseFirestore.getInstance();
+
 
         firebaseFirestore.collection("Cities").document(CityID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -260,14 +260,20 @@ public class City_Main extends AppCompatActivity {
 
                     }
                 });
-
-
             }
         });
 
 
     }
 
+    private RequestManager initGlide(){
+        RequestOptions options = new RequestOptions()
+                .placeholder(R.drawable.white_background)
+                .error(R.drawable.white_background);
+
+        return Glide.with(this)
+                .setDefaultRequestOptions(options);
+    }
     private class GetWeather extends AsyncTask<String, Void, String> {
 
 

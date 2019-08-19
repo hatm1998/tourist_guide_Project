@@ -1,17 +1,15 @@
-package com.example.touristguide.Utilis;
-
-import android.location.Location;
+package com.example.touristguide.video_player.models;
 
 import com.google.firebase.firestore.GeoPoint;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class Post {
 
-    private String Image, Desc, UserID;
+    private String  Desc, UserID;
+    private String media_url;
     private ArrayList<String> Categories;
-    private Date Date;
+    private java.util.Date Date;
     public GeoPoint Loc;
 
 
@@ -19,19 +17,25 @@ public class Post {
 
     }
 
-    public Post(String image, String desc, String userID, ArrayList<String> categories, java.util.Date date, GeoPoint location) {
-        Image = image;
+    public Post(
+                String media_url ,
+                String desc,
+                String userID,
+                ArrayList<String> categories,
+                java.util.Date date,
+                GeoPoint location) {
         Desc = desc;
         UserID = userID;
         Categories = categories;
         Date = date;
         this.Loc = location;
+        this.media_url = media_url;
     }
 
-    public String getImage() {
-        return Image;
+
+    public String getMedia_url() {
+        return media_url;
     }
-    
 
     public String getDesc() {
         return Desc;
@@ -53,3 +57,13 @@ public class Post {
         return Loc;
     }
 }
+
+
+
+
+
+
+
+
+
+

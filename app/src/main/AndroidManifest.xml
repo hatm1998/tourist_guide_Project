@@ -19,7 +19,7 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"></activity>
         <activity android:name=".Event.Display_Event.Display_Event_page"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"/>
-        <activity android:name=".signuptest"
+        <activity android:name=".signup"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
         <activity android:name=".ShareItem.Add_new_post" />
         <activity android:name=".text_component" />

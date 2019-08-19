@@ -4,8 +4,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/RCV_post_inprofile"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+   <com.example.touristguide.video_player.VideoPlayerRecyclerView
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:id="@+id/recycler_view_Post_in_profile"
+       android:orientation="vertical">
+   </com.example.touristguide.video_player.VideoPlayerRecyclerView>
 </FrameLayout>

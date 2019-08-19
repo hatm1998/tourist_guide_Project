@@ -1,12 +1,9 @@
 package com.example.touristguide.ShareItem;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,33 +11,23 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.MediaController;
-import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.graphics.drawable.DrawerArrowDrawable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.touristguide.R;
 import com.example.touristguide.Utilis.FilePath;
 import com.example.touristguide.Utilis.FileSearch;
-import com.example.touristguide.Utilis.GridImageAdapter;
-
 import com.example.touristguide.Utilis.GridVideoAdpter;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
-
 
 import java.util.ArrayList;
 
@@ -104,6 +91,7 @@ public class camera_fragment extends Fragment {
 
                 intent.putExtra("URI", imagePushURI);
                 intent.putExtra("Scale", scaletype);
+
                 getActivity().startActivity(intent);
             }
         });
@@ -125,7 +113,7 @@ public class camera_fragment extends Fragment {
         }
         directories.add(filePath.CAMERA);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, directories);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, directories);
         adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         Sp_Dir.setAdapter(adapter);
 
@@ -155,10 +143,10 @@ public class camera_fragment extends Fragment {
 
         GridVideoAdpter adapter = new GridVideoAdpter(getActivity(), R.layout.gridvideoview, mappend, imgURL);
 
-
         GallaryGrid.setAdapter(adapter);
-        if (imgURL.size() > 0)
+        if (imgURL.size() > 0) {
             setImage(imgURL.get(0), ImagePic, mappend);
+        }
 
         else
             Toast.makeText(getActivity(), R.string.ErrorFilePic, Toast.LENGTH_SHORT).show();
@@ -178,7 +166,6 @@ public class camera_fragment extends Fragment {
 
     private void setImage(final String imageURI, VideoView image, String mappend) {
         image.setVideoURI(Uri.parse(imageURI));
-
         imagePushURI = imageURI;
         image.requestFocus();
         image.start();

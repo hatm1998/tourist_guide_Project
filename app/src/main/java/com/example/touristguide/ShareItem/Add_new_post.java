@@ -1,13 +1,12 @@
 package com.example.touristguide.ShareItem;
 
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
-
-import android.os.Bundle;
-import android.widget.Toast;
 
 import com.example.touristguide.R;
 import com.google.android.material.tabs.TabLayout;
@@ -75,7 +74,6 @@ public class Add_new_post extends AppCompatActivity {
                 case 1:
                     camera_fragment camera_fragment = new camera_fragment();
                     return camera_fragment;
-
                 default:
                     return null;
 

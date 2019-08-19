@@ -1,27 +1,18 @@
 package com.example.touristguide.Utilis;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.Toast;
-import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
 
 import com.example.touristguide.R;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import java.util.ArrayList;
-
 
 
 public class GridVideoAdpter extends ArrayAdapter<String>{
@@ -45,7 +36,6 @@ public class GridVideoAdpter extends ArrayAdapter<String>{
     private static class ViewHolder{
         ImageView image;
     }
-
     @NonNull
     @Override
     public View getView(int position,  View convertView, @NonNull ViewGroup parent) {
@@ -69,6 +59,7 @@ public class GridVideoAdpter extends ArrayAdapter<String>{
 
 
             convertView.setTag(holder);
+
         }
         else{
             holder = (ViewHolder) convertView.getTag();
@@ -81,4 +72,5 @@ public class GridVideoAdpter extends ArrayAdapter<String>{
 
         return convertView;
     }
+
 }

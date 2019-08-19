@@ -1,11 +1,5 @@
 package com.example.touristguide.ShareItem;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.app.ActivityCompat;
-
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -22,11 +16,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
 
 import com.example.touristguide.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -54,7 +53,6 @@ import java.util.Locale;
 import java.util.UUID;
 
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
-import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
 public class Next_Info_Item extends AppCompatActivity {
 
@@ -206,10 +204,11 @@ public class Next_Info_Item extends AppCompatActivity {
                                 imagepath.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Uri> task) {
-                                        String imageurl = task.getResult().toString();
+                                        String URL  = task.getResult().toString();
+                                        String media_url =task.getResult().toString();
                                         Date DT = new Date();
                                         HashMap<String, Object> postmap = new HashMap<>();
-                                        postmap.put("Image", imageurl);
+                                        postmap.put("media_url", URL);
                                         postmap.put("Desc", txt_Decription.getText().toString());
                                         postmap.put("Date", DT);
                                         postmap.put("Location", locationfinal);
