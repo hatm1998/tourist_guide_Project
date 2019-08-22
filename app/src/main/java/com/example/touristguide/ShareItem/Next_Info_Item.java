@@ -213,6 +213,7 @@ public class Next_Info_Item extends AppCompatActivity {
                                         postmap.put("Date", DT);
                                         postmap.put("Location", locationfinal);
                                         postmap.put("Categories", ListSelectedItem);
+                                        postmap.put("CityName" , Clocation.getText().toString());
                                         postmap.put("UserID", mAuth.getCurrentUser().getUid());
 
                                         firebaseFirestore.collection("post").add(postmap).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {

@@ -21,6 +21,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.ViewCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.viewpager.widget.ViewPager;
 
@@ -70,7 +72,8 @@ public class City_Main extends AppCompatActivity {
 
 
 
-    private LinearLayout city_item;
+    private LinearLayout cityItem ;
+
   //  private post_recycle_adapter post_recycle_view;
 
     // Component Weather Information -> (City) .
@@ -105,7 +108,7 @@ public class City_Main extends AppCompatActivity {
         final String CityID = intent.getStringExtra("Ads_id");
         firebaseFirestore = FirebaseFirestore.getInstance();
 
-        city_item = findViewById(R.id.city_item);
+        cityItem = findViewById(R.id.city_item);
         img_ic_status = findViewById(R.id.img_ic_status_display_City);
         txtLastUpdate = findViewById(R.id.txtLastUpdate_display_City);
         txtDescription = findViewById(R.id.txtDescription_display_City);
@@ -117,6 +120,10 @@ public class City_Main extends AppCompatActivity {
         openWeatherMap = new OpenWeatherMap();
 
         firebaseFirestore = FirebaseFirestore.getInstance();
+
+        Post_list_view = findViewById(R.id.RC_City_post);
+        GridLayoutManager layoutManager = new GridLayoutManager(getBaseContext(),1);
+        Post_list_view.setLayoutManager(layoutManager);
 
         final GeoPoint[] geoPoint = new GeoPoint[1];
 
@@ -195,17 +202,17 @@ public class City_Main extends AppCompatActivity {
         //replacefragment(home_fragment)
 
        // Add All Post From FireBase -> City .
-        Post_list_view = findViewById(R.id.RC_City_post);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        Post_list_view.setLayoutManager(layoutManager);
-        Post_list_view.setNestedScrollingEnabled(false);
+
+
+
+
         VerticalSpacingItemDecorator itemDecorator = new VerticalSpacingItemDecorator(10);
         Post_list_view.addItemDecoration(itemDecorator);
         posts = new ArrayList<>();
         Post_list_view.setPosts(posts);
+
         adapter_Post = new VideoPlayerRecyclerAdapter(posts, initGlide());
         Post_list_view.setAdapter(adapter_Post);
-
 
 
 

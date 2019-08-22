@@ -155,6 +155,8 @@
                 android:layout_marginEnd="5dp"
                 android:layout_marginBottom="2dp"
                 android:fontFamily="@font/himalaya"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
                 android:text="become an accepted part of many culturesing.[1] This makes texting a quick and easy ❤❤😊 "
                 android:textSize="20sp" />
 

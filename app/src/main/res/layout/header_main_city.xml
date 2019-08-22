@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/ntb_bg_color"
+    android:fitsSystemWindows="false"
     android:orientation="vertical">
 
 
@@ -13,7 +14,7 @@
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fitsSystemWindows="false">
+        android:fitsSystemWindows="true">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/col_city"
@@ -25,7 +26,8 @@
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
                 <ImageView
                     android:id="@+id/header_img_city"
@@ -55,27 +57,33 @@
                     android:layout_marginBottom="25dp"
                     android:orientation="vertical">
 
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/img_ic_status_display_City"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/ballonwadi"
-                        android:tint="#000000"
-                        app:civ_border_color="#D0FFFFFF"
-                        app:civ_border_width="1dp" />
-
-                    <TextView
-                        android:id="@+id/txtLastUpdate_display_City"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginTop="8dp"
                         android:gravity="center"
-                        android:text="txtLastUpdate"
-                        android:textColor="#D0FFFFFF"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/btn_refresh_location_display_City"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/ic_refresh"
+                            android:text="R"
+                            android:textColor="#D1FFFFFF" />
+
+                        <TextView
+                            android:id="@+id/txtCelsius_display_City"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginEnd="10dp"
+                            android:gravity="center"
+                            android:text="txtCelsius"
+                            android:textColor="#D1FFFFFF"
+                            android:textSize="30sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
 
                     <TextView
                         android:id="@+id/txtDescription_display_City"
@@ -99,33 +107,27 @@
                         android:textSize="25sp"
                         android:textStyle="bold" />
 
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/txtLastUpdate_display_City"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:layout_marginTop="8dp"
                         android:gravity="center"
-                        android:orientation="horizontal">
+                        android:text="txtLastUpdate"
+                        android:textColor="#D0FFFFFF"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
 
-                        <TextView
-                            android:id="@+id/txtCelsius_display_City"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginEnd="10dp"
-                            android:gravity="center"
-                            android:text="txtCelsius"
-                            android:textColor="#D1FFFFFF"
-                            android:textSize="30sp"
-                            android:textStyle="bold" />
-
-                        <Button
-                            android:id="@+id/btn_refresh_location_display_City"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:background="@drawable/ic_refresh"
-                            android:text="R"
-                            android:textColor="#D1FFFFFF" />
-                    </LinearLayout>
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/img_ic_status_display_City"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ballonwadi"
+                        android:tint="#000000"
+                        app:civ_border_color="#D0FFFFFF"
+                        app:civ_border_width="1dp" />
 
                 </LinearLayout>
 
@@ -134,7 +136,8 @@
                     style="?android:attr/progressBarStyle"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="invisible" />
+                    android:visibility="invisible"
+                    />
             </FrameLayout>
 
 
@@ -154,64 +157,73 @@
         android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="30dp"
         android:fillViewport="true"
-        android:scaleY="1.08"
-        android:scrollbars="vertical"
+        android:overScrollMode="ifContentScrolls"
+        android:scrollbars="none"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
             android:id="@+id/city_item"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
-
-            <androidx.viewpager.widget.ViewPager
-                android:id="@+id/Vpage_in_main_city"
-                android:layout_width="match_parent"
-                android:layout_height="150dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="40dp"
+                android:layout_gravity="bottom"
                 android:layout_marginTop="10dp"
-                android:layout_marginEnd="40dp"
-                android:layout_marginBottom="15dp"
-                android:orientation="horizontal">
+                android:nestedScrollingEnabled="false"
+                android:orientation="vertical">
 
-                <Button
-                    android:id="@+id/btn_header_city_rest"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/style_btn_service_left"
-                    android:drawableTop="@drawable/ic_restaurant"
-                    android:inputType="text"
-                    android:text="Resturent" />
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/btn_header_city_hospital"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginEnd="4dp"
-                    android:layout_weight="1"
-                    android:background="@color/colorPrimaryDark"
-                    android:drawableTop="@drawable/ic_local_hospital"
-                    android:inputType="text"
-                    android:text="Hospital" />
+                    <Button
+                        android:id="@+id/btn_header_city_rest"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/style_btn_service_left"
+                        android:drawableTop="@drawable/ic_restaurant"
+                        android:inputType="text"
+                        android:text="Resturent" />
 
-                <Button
-                    android:id="@+id/btn_city_hotels"
+                    <Button
+                        android:id="@+id/btn_header_city_hospital"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginEnd="4dp"
+                        android:layout_weight="1"
+                        android:background="@color/colorPrimaryDark"
+                        android:drawableTop="@drawable/ic_local_hospital"
+                        android:inputType="text"
+                        android:text="Hospital" />
+
+                    <Button
+                        android:id="@+id/btn_city_hotels"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/style_btn_service_right"
+                        android:drawableTop="@drawable/ic_local_hotel"
+                        android:inputType="text"
+                        android:text="Hotels" />
+                </LinearLayout>
+
+                <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/Vpage_in_main_city"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/style_btn_service_right"
-                    android:drawableTop="@drawable/ic_local_hotel"
-                    android:inputType="text"
-                    android:text="Hotels" />
+                    android:layout_height="150dp"
+                    android:layout_marginTop="10dp"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
             </LinearLayout>
 
             <View
@@ -224,9 +236,8 @@
             <com.example.touristguide.video_player.VideoPlayerRecyclerView
                 android:id="@+id/RC_City_post"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:isScrollContainer="false"
-                android:nestedScrollingEnabled="false"
+                android:layout_height="1000dp"
+                android:nestedScrollingEnabled="true"
                 android:orientation="vertical"
                 android:visibility="visible"></com.example.touristguide.video_player.VideoPlayerRecyclerView>
 
@@ -246,7 +257,7 @@
         android:clickable="true"
         app:backgroundTint="#FACB85"
         app:layout_anchor="@+id/nestedScrollView"
-        app:layout_anchorGravity="bottom|end"
+        app:layout_anchorGravity="end|bottom"
         app:srcCompat="@drawable/ic_add" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

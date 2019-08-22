@@ -1,8 +1,10 @@
 package com.example.touristguide.video_player;
 
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.RequestManager;
 import com.example.touristguide.R;
 import com.example.touristguide.video_player.models.Post;
+import com.google.common.base.MoreObjects;
 
 import java.util.ArrayList;
 
@@ -35,7 +38,8 @@ public class VideoPlayerRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
-        viewHolder.setIsRecyclable(false);
+
+        viewHolder.setIsRecyclable(true);
         ((VideoPlayerViewHolder)viewHolder).onBind(posts.get(i), requestManager);
     }
     

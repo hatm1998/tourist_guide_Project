@@ -59,6 +59,8 @@ dependencies {
     implementation 'com.github.chrisbanes:PhotoView:2.3.0'
     implementation 'com.google.code.gson:gson:2.7'
 
+
+    implementation 'com.github.eddydn:AdvancedNestedScrollView:1.1'
     // ----- new video player components.
     implementation "com.android.support:appcompat-v7:$supportVersion"
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -32,7 +33,7 @@ public class Fragment_Post extends Fragment {
 
     private VideoPlayerRecyclerView mRecyclerView;
     private ArrayList<Post> posts = new ArrayList<>();
-    private   VideoPlayerRecyclerAdapter adapter;
+    private VideoPlayerRecyclerAdapter adapter;
     private FirebaseAuth mAuth;
 
     private FirebaseFirestore firebaseFirestore;
@@ -49,24 +50,26 @@ public class Fragment_Post extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_post_inprofile, container, false);
 
+        Toast.makeText(getContext(),"CreateView",Toast.LENGTH_LONG).show();
         mRecyclerView = view.findViewById(R.id.recycler_view_Post_in_profile);
         mAuth = FirebaseAuth.getInstance();
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this.getContext());
         mRecyclerView.setLayoutManager(layoutManager);
         VerticalSpacingItemDecorator itemDecorator = new VerticalSpacingItemDecorator(10);
         mRecyclerView.addItemDecoration(itemDecorator);
 
 
         mRecyclerView.setPosts(posts);
-         adapter = new VideoPlayerRecyclerAdapter(posts, initGlide());
+        adapter = new VideoPlayerRecyclerAdapter(posts, initGlide());
         mRecyclerView.setAdapter(adapter);
 
 
         firebaseFirestore = FirebaseFirestore.getInstance();
         Query SecoundQuery = firebaseFirestore.collection("post")
-                .orderBy("Date", Query.Direction.DESCENDING);
+                .whereEqualTo("UserID", mAuth.getCurrentUser().getUid());
+                //.orderBy("Date", Query.Direction.DESCENDING);
 
-        SecoundQuery.addSnapshotListener( new EventListener<QuerySnapshot>() {
+        SecoundQuery.addSnapshotListener(new EventListener<QuerySnapshot>() {
 
             @Override
             public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
@@ -76,11 +79,9 @@ public class Fragment_Post extends Fragment {
                         if (documentChange.getType() == DocumentChange.Type.ADDED) {
 
                             Post post = documentChange.getDocument().toObject(Post.class);
-                            if (post.getUserID().equals(mAuth.getCurrentUser().getUid()))
-                            {
-                                posts.add(post);
-                                adapter.notifyDataSetChanged();
-                            }
+                            posts.add(post);
+                            adapter.notifyDataSetChanged();
+
 
                         }
                     }
@@ -94,8 +95,14 @@ public class Fragment_Post extends Fragment {
         return view;
     }
 
+    @Override
+    public void onPause() {
+        mRecyclerView.releasePlayer();
+        Toast.makeText(getContext(),"Fragment pause",Toast.LENGTH_LONG).show();
+        super.onPause();
+    }
 
-    private RequestManager initGlide(){
+    private RequestManager initGlide() {
         RequestOptions options = new RequestOptions()
                 .placeholder(R.drawable.white_background)
                 .error(R.drawable.white_background);
@@ -107,7 +114,7 @@ public class Fragment_Post extends Fragment {
 
     @Override
     public void onDestroyView() {
-        if(mRecyclerView!=null)
+        if (mRecyclerView != null)
             mRecyclerView.releasePlayer();
         super.onDestroyView();
     }

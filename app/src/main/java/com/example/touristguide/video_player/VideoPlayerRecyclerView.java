@@ -13,11 +13,13 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 
 import com.bumptech.glide.RequestManager;
 import com.example.touristguide.R;
@@ -50,6 +52,7 @@ public class VideoPlayerRecyclerView extends RecyclerView {
     private static final String TAG = "VideoPlayerRecyclerView";
 
     private enum VolumeState {ON, OFF};
+
 
     // ui
     private ImageView thumbnail, volumeControl;
@@ -306,6 +309,10 @@ public class VideoPlayerRecyclerView extends RecyclerView {
         DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(
                 context, Util.getUserAgent(context, "RecyclerView VideoPlayer"));
         String mediaUrl = posts.get(targetPosition).getMedia_url();
+        if (!mediaUrl.contains(".mp4")) {
+            progressBar.setVisibility(View.GONE);
+            volumeControl.setVisibility(View.GONE);
+        }
         if (mediaUrl != null) {
             MediaSource videoSource = new ExtractorMediaSource.Factory(dataSourceFactory)
                     .createMediaSource(Uri.parse(mediaUrl));

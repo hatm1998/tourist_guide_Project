@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -51,25 +52,29 @@ public class Navigation_Drawer extends AppCompatActivity
     private View headerView;
     private FloatingActionButton fab;
     private NavigationTabBar navigationTabBar;
+    private int posFragment = 0;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation__drawer);
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);;
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+
+
+
 
         mAuth = FirebaseAuth.getInstance();
-        firebaseFirestore = FirebaseFirestore.getInstance() ;
+        firebaseFirestore = FirebaseFirestore.getInstance();
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer,  R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                this, drawer, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
 
         drawer = findViewById(R.id.drawer_layout);
 
-        final AppBarLayout AppBar=findViewById(R.id.AppBarID);
+        final AppBarLayout AppBar = findViewById(R.id.AppBarID);
 
         NavigationView navigationView = findViewById(R.id.nav_view);
 
@@ -77,8 +82,6 @@ public class Navigation_Drawer extends AppCompatActivity
 //
 
         headerView = navigationView.getHeaderView(0);
-
-
 
 
         final String[] colors = getResources().getStringArray(R.array.colorful);
@@ -95,7 +98,6 @@ public class Navigation_Drawer extends AppCompatActivity
 //                startActivity(intent);
 //            }
 //        });
-
 
 
         ArrayList<NavigationTabBar.Model> models = new ArrayList<>();
@@ -164,44 +166,46 @@ public class Navigation_Drawer extends AppCompatActivity
 
             @Override
             public void onEndTabSelected(NavigationTabBar.Model model, int index) {
+                if (index != posFragment)
+                    switch (index) {
+                        case 0: {
+                            Fragment_Activity activity = new Fragment_Activity();
+                            replacefragment(activity);
+                            posFragment = index;
+                            break;
+                        }
 
-                switch (index) {
-                    case 0: {
-                        //replacefragment(home_fragment)
-                        replacefragment(new Fragment_Activity());
-                        break;
+                        case 1: {
+                            notification_page notification_page = new notification_page();
+                            replacefragment(notification_page);
+                            posFragment = index;
+                            break;
+                        }
+                        case 2: {
+                            posFragment = index;
+                            break;
+                        }
+                        case 3: {
+                            Profile_Page profile_page = new Profile_Page();
+                            replacefragment(profile_page);
+                            AppBar.setLayoutParams(new CoordinatorLayout.LayoutParams(0, 0));
+                            posFragment = index;
+                            break;
+                        }
+
+
                     }
-
-                    case 1: {
-                        //replacefragment(notifications_fragment);
-                        replacefragment(new notification_page());
-
-                        break;
-                    }
-                    case 2: {
-                        // replacefragment(category_fragment);
-                        break;
-                    }
-                    case 3: {
-                        // replacefragment(profile_fragment);
-
-                        replacefragment(new Profile_Page());
-                        AppBar.setLayoutParams(new CoordinatorLayout.LayoutParams(0,0));
-
-                        break;
-                    }
-
-
-                }
                 return;
             }
         });
 
     }
+
     private void hideAppBar(final AppBarLayout appBar) {
 
 
     }
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -217,7 +221,6 @@ public class Navigation_Drawer extends AppCompatActivity
         // Inflate the menu; this adds items to the action bar if it is present.
 
         getMenuInflater().inflate(R.menu.navigation__drawer, menu);
-
 
 
         return true;
@@ -267,7 +270,6 @@ public class Navigation_Drawer extends AppCompatActivity
     }
 
 
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -275,23 +277,20 @@ public class Navigation_Drawer extends AppCompatActivity
         if (mAuth.getCurrentUser() == null) {
 
             sendtologin();
-        }
-        else
-        {
+        } else {
             firebaseFirestore.collection("User").document(mAuth.getCurrentUser().getUid())
                     .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                    if(task.isSuccessful())
-                    {
+                    if (task.isSuccessful()) {
                         TextView navUsername = (TextView) headerView.findViewById(R.id.menu_txt_username);
                         navUsername.setText(task.getResult().get("Username").toString());
 
                         CircleImageView navImageprofile = headerView.findViewById(R.id.menu_img_profile);
                         Picasso.get().load(task.getResult().get("Image_User").toString()).into(navImageprofile);
 
-                    }else
-                        Log.d("Error" , task.getException().getMessage());
+                    } else
+                        Log.d("Error", task.getException().getMessage());
                 }
             });
         }
@@ -300,11 +299,12 @@ public class Navigation_Drawer extends AppCompatActivity
 
 
     public void replacefragment(Fragment fragment) {
+
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.frameLayout, fragment);
-
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         fragmentTransaction.commit();
+
 
     }
 

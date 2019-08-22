@@ -10,7 +10,7 @@ public class Post {
     private String media_url;
     private ArrayList<String> Categories;
     private java.util.Date Date;
-    public GeoPoint Loc;
+    public GeoPoint loc;
 
 
     public Post() {
@@ -28,7 +28,7 @@ public class Post {
         UserID = userID;
         Categories = categories;
         Date = date;
-        this.Loc = location;
+        this.loc = location;
         this.media_url = media_url;
     }
 
@@ -54,7 +54,7 @@ public class Post {
     }
 
     public GeoPoint getLocation() {
-        return Loc;
+        return loc;
     }
 }
 

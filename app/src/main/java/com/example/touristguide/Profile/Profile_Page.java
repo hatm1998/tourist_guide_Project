@@ -5,8 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -29,26 +31,35 @@ public class Profile_Page extends Fragment {
 
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
-    private ViewPager ViewPager;
+    private  ViewPager ViewPager;
     private CircleImageView profileimage;
     private TextView Txt_UserName;
     FirebaseAuth mAuth;
     FirebaseFirestore firebaseFirestore;
+   static Fragment_Post fragment_post = new Fragment_Post();
+   static Fragment_Picture fragment_Picture = new Fragment_Picture();
+    View view;
 
     public Profile_Page() {
         // Required empty public constructor
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_profile, container, false);
+        view = inflater.inflate(R.layout.fragment_profile, container, false);
         mAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
         profileimage = view.findViewById(R.id.Frag_profile_image);
         Txt_UserName = view.findViewById(R.id.frag_txt_username);
+
 
         firebaseFirestore.collection("User").document(mAuth.getCurrentUser().getUid())
                 .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -60,19 +71,36 @@ public class Profile_Page extends Fragment {
             }
         });
 
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getActivity().getSupportFragmentManager());
+        Toast.makeText(getContext(),"View Was Created",Toast.LENGTH_LONG).show();
+        mSectionsPagerAdapter = new SectionsPagerAdapter(this.getChildFragmentManager());
 
         ViewPager = (ViewPager) view.findViewById(R.id.viewpager_inprofile);
         ViewPager.setAdapter(mSectionsPagerAdapter);
 
-        final TabLayout tabLayout = (TabLayout) view.findViewById(R.id.Tab_inprofile);
+
+         TabLayout tabLayout = (TabLayout) view.findViewById(R.id.Tab_inprofile);
+
 
         ViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(ViewPager));
         return view;
     }
 
+
+
+
+
+
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        Toast.makeText(getContext(), "OutState", Toast.LENGTH_LONG).show();
+        super.onSaveInstanceState(outState);
+
+    }
+
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
+
 
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -85,10 +113,10 @@ public class Profile_Page extends Fragment {
 
             switch (position) {
                 case 0:
-                    Fragment_Picture fragment_Picture = new Fragment_Picture();
+
                     return fragment_Picture;
                 case 1:
-                    Fragment_Post fragment_post = new Fragment_Post();
+
                     return fragment_post;
 
                 default:

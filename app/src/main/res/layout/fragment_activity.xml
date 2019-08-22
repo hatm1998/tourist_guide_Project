@@ -74,7 +74,7 @@
                     <TextView
                         android:id="@+id/txtDescription_Activity_page"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="50dp"
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:gravity="center"
@@ -140,6 +140,7 @@
                 android:paddingStart="5dp"
                 android:paddingTop="5dp"
                 android:paddingEnd="5dp"
+                android:scrollbarTrackVertical="@null"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent">
 
