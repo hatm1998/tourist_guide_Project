@@ -23,9 +23,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
+import com.example.touristguide.About_Us.About_Us;
 import com.example.touristguide.Activity.Fragment_Activity;
 import com.example.touristguide.Event.Event_Activity.Event_Page;
 import com.example.touristguide.Profile.Profile_Page;
+import com.example.touristguide.Setting_Account.Setting_Account;
 import com.example.touristguide.notification_saved.notification_page;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -53,13 +55,13 @@ public class Navigation_Drawer extends AppCompatActivity
     private FloatingActionButton fab;
     private NavigationTabBar navigationTabBar;
     private int posFragment = 0;
-
+    public  static DrawerLayout drawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation__drawer);
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        drawer = findViewById(R.id.drawer_layout);
 
 
 
@@ -254,8 +256,12 @@ public class Navigation_Drawer extends AppCompatActivity
         } else if (id == R.id.nav_bookmark) {
 
         } else if (id == R.id.nav_account) {
+            Intent intent = new Intent(this, Setting_Account.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_aboutus) {
+            Intent intent = new Intent(this, About_Us.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_exit) {
 

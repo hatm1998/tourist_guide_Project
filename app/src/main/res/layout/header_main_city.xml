@@ -153,10 +153,11 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:fillViewport="true"
         android:overScrollMode="ifContentScrolls"
         android:scrollbars="none"
@@ -222,31 +223,34 @@
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
                     android:layout_marginTop="10dp"
-                    app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+                    android:layout_weight="1"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior" >
+
+                </androidx.viewpager.widget.ViewPager>
+
+                <View
+                    android:id="@+id/view8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="2dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@color/colorPrimaryDark" />
+
+                <com.example.touristguide.video_player.VideoPlayerRecyclerView
+                    android:id="@+id/RC_City_post"
+                    android:layout_width="match_parent"
+                    android:layout_height="1000dp"
+                    android:layout_weight="1"
+                    android:nestedScrollingEnabled="true"
+                    android:orientation="vertical"
+                    android:visibility="visible"></com.example.touristguide.video_player.VideoPlayerRecyclerView>
 
             </LinearLayout>
-
-            <View
-                android:id="@+id/view8"
-                android:layout_width="wrap_content"
-                android:layout_height="2dp"
-                android:layout_marginBottom="5dp"
-                android:background="@color/colorPrimaryDark" />
-
-            <com.example.touristguide.video_player.VideoPlayerRecyclerView
-                android:id="@+id/RC_City_post"
-                android:layout_width="match_parent"
-                android:layout_height="1000dp"
-                android:nestedScrollingEnabled="true"
-                android:orientation="vertical"
-                android:visibility="visible"></com.example.touristguide.video_player.VideoPlayerRecyclerView>
 
 
         </LinearLayout>
 
 
     </androidx.core.widget.NestedScrollView>
-
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_add_Post"

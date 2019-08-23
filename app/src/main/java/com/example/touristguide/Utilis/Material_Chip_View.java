@@ -3,6 +3,7 @@ package com.example.touristguide.Utilis;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -20,10 +21,15 @@ import android.widget.ToggleButton;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 
+import com.example.touristguide.Navigation_Drawer;
 import com.example.touristguide.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 import com.nex3z.flowlayout.FlowLayout;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class Material_Chip_View extends AppCompatActivity {
@@ -34,6 +40,8 @@ public class Material_Chip_View extends AppCompatActivity {
     // Selected Item .
     private ArrayList<String> Selected_Chip;
     private Context context;
+    private FirebaseFirestore firebaseFirestore;
+    private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +52,8 @@ public class Material_Chip_View extends AppCompatActivity {
         btn_GO=findViewById(R.id.btn_Go_chippage);
         scrollView=findViewById(R.id.scroll_chippage);
         Selected_Chip=new ArrayList<>();
-
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
         open_Animation();
 
 
@@ -68,6 +77,12 @@ public class Material_Chip_View extends AppCompatActivity {
                             .show();
                }else
                {
+                   HashMap<String , Object> categoreis = new HashMap<>();
+                   categoreis.put("Categories" , Selected_Chip);
+                   firebaseFirestore.collection("User").document(mAuth.getCurrentUser().getUid())
+                           .update("Categories",Selected_Chip);
+                   Intent intent = new Intent(Material_Chip_View.this, Navigation_Drawer.class);
+                   startActivity(intent);
                    Toast.makeText(context,Selected_Chip.toString(),Toast.LENGTH_LONG).show();
                }
             }

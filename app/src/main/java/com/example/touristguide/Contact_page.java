@@ -42,7 +42,7 @@ public class Contact_page extends AppCompatActivity {
     public void btn_signUp(View view) {
         //finish();
 
-        Intent intent = new Intent(Contact_page.this, SignUp.class);
+        Intent intent = new Intent(Contact_page.this, signup.class);
         startActivity(intent);
         Animatoo.animateFade(context);
     }

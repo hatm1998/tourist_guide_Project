@@ -8,26 +8,32 @@
         >
         <item  android:title="@string/menu_Event"
             android:id="@+id/nav_event"
+            android:iconTint="#ffffff"
             android:icon="@drawable/menu_event"
+
             />
         <item
             android:id="@+id/nav_bookmark"
             android:icon="@drawable/menu_bookmark"
+            android:iconTint="#ffffff"
             android:title="@string/menu_BookMark" />
         <item
             android:id="@+id/nav_account"
             android:icon="@drawable/menu_person"
+            android:iconTint="#ffffff"
             android:title="@string/menu_YourAccount" />
     </group>
     <group    android:checkableBehavior="none">
         <item
             android:id="@+id/nav_aboutus"
+            android:iconTint="#ffffff"
             android:icon="@drawable/menu_aboutus"
             android:title="@string/menu_AboutUS" />
 
         <item
 
             android:id="@+id/nav_exit"
+            android:iconTint="#ffffff"
             android:icon="@drawable/menu_exit"
             android:title="@string/menu_LogOut"
             ></item>

@@ -11,6 +11,7 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,9 +23,11 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.core.app.ActivityCompat;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import com.example.touristguide.Navigation_Drawer;
 import com.example.touristguide.R;
 import com.example.touristguide.Utilis.Adapter_Activity;
 import com.example.touristguide.weather.Common.Common;
@@ -59,7 +62,7 @@ public class Fragment_Activity extends Fragment   {
     // Component Weather Information
     private CircleImageView img_ic_status;
     private TextView txtLastUpdate,txtDescription,txtHumidity,txtCelsius;
-    private Button btnrefresh;
+    private Button btnrefresh , btn_open_nav;
 
     // Component Current Location .
     private LocationManager locationManager;
@@ -86,6 +89,16 @@ public class Fragment_Activity extends Fragment   {
         txtCelsius=view.findViewById(R.id.txtCelsius_Activity_page);
         btnrefresh=view.findViewById(R.id.btn_refresh_location_Activity_page);
         Rev_activity= (view.findViewById(R.id.Rev_Activity));
+        btn_open_nav = view.findViewById(R.id.btn_open_nav);
+
+
+        btn_open_nav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation_Drawer.drawer.openDrawer(GravityCompat.START);
+
+            }
+        });
 
         openWeatherMap = new OpenWeatherMap();
 

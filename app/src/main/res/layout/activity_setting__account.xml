@@ -4,87 +4,51 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Utilis.Material_Chip_View">
+    tools:context=".Setting_Account.Setting_Account">
 
     <ImageView
-        android:id="@+id/img_down_chippage"
+        android:id="@+id/imageView17"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:scaleType="fitXY"
         android:scaleX="1.03"
         android:scrollX="-3dp"
         android:scrollY="6dp"
+        android:src="@drawable/top"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/top" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/img_signuppage"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_marginTop="16dp"
-        android:src="@drawable/f"
+        android:id="@+id/img_setting"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:paddingTop="15dp"
+        android:src="@drawable/ic_person_black_24dp"
         android:tint="#000000"
         app:civ_border_color="#000000"
         app:civ_border_width="2dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/img_down_chippage" />
 
-    <ImageView
-        android:id="@+id/img_top_chippage"
+    <ScrollView
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:scaleType="fitXY"
-        android:scaleX="1.03"
-        android:scrollX="3dp"
-        android:scrollY="-6dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layout_main_signup_page"
-        app:srcCompat="@drawable/buttom" />
-
-    <Button
-        android:id="@+id/btn_next_chippage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="36dp"
-        android:background="@drawable/buttonnext"
-        app:layout_constraintBottom_toBottomOf="@+id/img_top_chippage"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layout_main_signup_page" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout_main_signup_page"
-        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_next_chippage"
+        android:layout_marginTop="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_setting_save"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/img_signuppage">
+        app:layout_constraintTop_toBottomOf="@+id/img_setting">
 
-        <ScrollView
-            android:id="@+id/scroll_chippage"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="3dp"
-            android:layout_marginBottom="3dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -135,7 +99,7 @@
                                 android:paddingEnd="5dp">
 
                                 <com.google.android.material.textfield.TextInputEditText
-                                    android:id="@+id/txt_Username_signup_page"
+                                    android:id="@+id/txt_Username_Account_Setting"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content" />
                             </com.google.android.material.textfield.TextInputLayout>
@@ -246,7 +210,7 @@
                                 android:paddingEnd="5dp">
 
                                 <com.google.android.material.textfield.TextInputEditText
-                                    android:id="@+id/txt_phone_signup_page"
+                                    android:id="@+id/txt_phone_account_page"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content" />
                             </com.google.android.material.textfield.TextInputLayout>
@@ -302,10 +266,10 @@
                                 android:paddingEnd="5dp">
 
                                 <com.google.android.material.textfield.TextInputEditText
-                                    android:id="@+id/txt_password_signup_page"
+                                    android:id="@+id/txt_password_account_page"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:inputType="textPassword" />
+                                    android:inputType="textPassword"/>
                             </com.google.android.material.textfield.TextInputLayout>
                         </LinearLayout>
 
@@ -316,89 +280,51 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal">
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="vertical">
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="50dp"
-                        android:background="@drawable/left"
-                        app:layout_constraintBottom_toBottomOf="@+id/scroll_chippage"
-                        app:layout_constraintEnd_toStartOf="@+id/scroll_chippage"
-                        app:layout_constraintTop_toTopOf="@+id/scroll_chippage"
-                        app:srcCompat="@drawable/left" />
-
-                    <androidx.cardview.widget.CardView
+                    <TextView
+                        android:id="@+id/textView3"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginEnd="20dp"
-                        android:layout_marginBottom="15dp"
-                        app:cardBackgroundColor="#FFFFFF"
-                        app:cardCornerRadius="25dp">
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/simsun"
+                        android:text="DearTourist Please Choose the Place you want to visit"
+                        android:textAlignment="center"
+                        android:textColor="#1A1B16"
+                        android:textSize="16sp" />
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                    <com.nex3z.flowlayout.FlowLayout
+                        android:id="@+id/flayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="20sp"
+                        app:flChildSpacing="6dp"
+                        app:flChildSpacingForLastRow="align"
+                        app:flFlow="true"
+                        app:flRowSpacing="8dp"
+                        app:flRowVerticalGravity="bottom">
 
-                            <ImageView
-                                android:id="@+id/img_share"
-                                android:layout_width="35dp"
-                                android:layout_height="match_parent"
-                                android:layout_marginStart="5dp"
-                                app:srcCompat="@drawable/ic_check_black_25dp"
-                                tools:ignore="VectorDrawableCompat" />
 
-                            <com.google.android.material.textfield.TextInputLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="5dp"
-                                android:layout_marginEnd="5dp"
-                                android:hint="@string/Confrimation_pass"
-                                android:paddingStart="5dp"
-                                android:paddingEnd="5dp"
-                                app:passwordToggleEnabled="true">
-
-                                <com.google.android.material.textfield.TextInputEditText
-                                    android:id="@+id/txt_confirm_pass_signup_page"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:inputType="textPassword" />
-                            </com.google.android.material.textfield.TextInputLayout>
-                        </LinearLayout>
-
-                    </androidx.cardview.widget.CardView>
-
+                    </com.nex3z.flowlayout.FlowLayout>
                 </LinearLayout>
 
             </LinearLayout>
-        </ScrollView>
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <LinearLayout
-        android:id="@+id/Relayout_signuppage"
-        android:layout_width="wrap_content"
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/btn_setting_save"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
+        android:layout_gravity="bottom"
+        android:background="#E6813B"
+        android:text="@string/Save"
+        android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <TextView
-            android:id="@+id/txt_Aleady_a_member"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"
-            android:text="@string/Aleady_a_member"
-            android:textAlignment="textEnd"
-            android:textColor="#FFFFFF" />
-
-        <TextView
-            android:id="@+id/txt_Login_signup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="7dp"
-            android:text="@string/Login"
-            android:textColor="#7F261E" />
-    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

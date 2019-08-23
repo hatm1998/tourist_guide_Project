@@ -35,6 +35,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -65,7 +66,7 @@ public class Next_Info_Item extends AppCompatActivity {
     private ConstraintLayout linerVideo;
     private boolean[] Checkeditem;
     private Button addpost;
-    private Location locationfinal;
+    private GeoPoint locationfinal;
     private VideoView mVideo;
     private FirebaseFirestore firebaseFirestore;
     private StorageReference storageReference;
@@ -204,8 +205,8 @@ public class Next_Info_Item extends AppCompatActivity {
                                 imagepath.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Uri> task) {
-                                        String URL  = task.getResult().toString();
-                                        String media_url =task.getResult().toString();
+                                        String URL = task.getResult().toString();
+                                        String media_url = task.getResult().toString();
                                         Date DT = new Date();
                                         HashMap<String, Object> postmap = new HashMap<>();
                                         postmap.put("media_url", URL);
@@ -213,7 +214,7 @@ public class Next_Info_Item extends AppCompatActivity {
                                         postmap.put("Date", DT);
                                         postmap.put("Location", locationfinal);
                                         postmap.put("Categories", ListSelectedItem);
-                                        postmap.put("CityName" , Clocation.getText().toString());
+                                        postmap.put("CityName", Clocation.getText().toString());
                                         postmap.put("UserID", mAuth.getCurrentUser().getUid());
 
                                         firebaseFirestore.collection("post").add(postmap).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
@@ -240,7 +241,7 @@ public class Next_Info_Item extends AppCompatActivity {
                 public void onSuccess(Location location) {
 
                     try {
-                        locationfinal = location;
+                        locationfinal = new GeoPoint(location.getLatitude(), location.getLongitude());
                         Geocoder geocoder = new Geocoder(Next_Info_Item.this, Locale.getDefault());
                         List<Address> address = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
 
