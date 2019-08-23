@@ -1,6 +1,7 @@
 package com.example.touristguide.video_player;
 
 
+import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -21,11 +22,13 @@ public class VideoPlayerRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
 
     private ArrayList<Post> posts;
     private RequestManager requestManager;
+    private Context context;
 
 
-    public VideoPlayerRecyclerAdapter(ArrayList<Post> posts, RequestManager requestManager) {
+    public VideoPlayerRecyclerAdapter(Context context ,ArrayList<Post> posts, RequestManager requestManager) {
         this.posts = posts;
         this.requestManager = requestManager;
+        this.context=context;
     }
 
     @NonNull
@@ -40,26 +43,12 @@ public class VideoPlayerRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
 
         viewHolder.setIsRecyclable(true);
-        ((VideoPlayerViewHolder)viewHolder).onBind(posts.get(i), requestManager);
+        ((VideoPlayerViewHolder)viewHolder).onBind(context,posts.get(i), requestManager);
     }
-    
+
     @Override
     public int getItemCount() {
         return posts.size();
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

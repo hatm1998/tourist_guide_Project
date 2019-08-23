@@ -1,12 +1,14 @@
 package com.example.touristguide.CityActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
@@ -64,6 +66,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class City_Main extends AppCompatActivity {
 
+    private Context  context;
     private FirebaseFirestore firebaseFirestore;
 
     private ImageView header_Image;
@@ -74,7 +77,7 @@ public class City_Main extends AppCompatActivity {
 
     private LinearLayout cityItem ;
 
-  //  private post_recycle_adapter post_recycle_view;
+    //  private post_recycle_adapter post_recycle_view;
 
     // Component Weather Information -> (City) .
     private CircleImageView img_ic_status;
@@ -97,13 +100,12 @@ public class City_Main extends AppCompatActivity {
     private ViewPager pager_sightseeing;
     private ArrayList<Places> List_sightseeing;
     private Adapter_sightseeing adapter_sightseeing;
-
     @SuppressLint("WrongConstant")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.header_main_city);
-
+        context=this;
         final Intent intent = getIntent();
         final String CityID = intent.getStringExtra("Ads_id");
         firebaseFirestore = FirebaseFirestore.getInstance();
@@ -201,7 +203,7 @@ public class City_Main extends AppCompatActivity {
 
         //replacefragment(home_fragment)
 
-       // Add All Post From FireBase -> City .
+        // Add All Post From FireBase -> City .
 
 
 
@@ -210,11 +212,16 @@ public class City_Main extends AppCompatActivity {
         Post_list_view.addItemDecoration(itemDecorator);
         posts = new ArrayList<>();
         Post_list_view.setPosts(posts);
-
-        adapter_Post = new VideoPlayerRecyclerAdapter(posts, initGlide());
+        adapter_Post = new VideoPlayerRecyclerAdapter(context,posts, initGlide());
         Post_list_view.setAdapter(adapter_Post);
 
+        final float scale = getResources().getDisplayMetrics().density;
 
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        final  int height = displayMetrics.heightPixels;
+        int width = displayMetrics.widthPixels;
+        Log.i("kasaji",height+"   dp : "+((height)* scale + 0.5f));
 
         Query SecoundQuery = firebaseFirestore.collection("post")
                 .orderBy("Date", Query.Direction.DESCENDING);
@@ -229,8 +236,8 @@ public class City_Main extends AppCompatActivity {
                         if (documentChange.getType() == DocumentChange.Type.ADDED) {
 
                             Post post = documentChange.getDocument().toObject(Post.class);
-                                posts.add(post);
-                                adapter_Post.notifyDataSetChanged();
+                            posts.add(post);
+                            adapter_Post.notifyDataSetChanged();
                         }
                     }
                 }

@@ -60,14 +60,14 @@ public class Fragment_Post extends Fragment {
 
 
         mRecyclerView.setPosts(posts);
-        adapter = new VideoPlayerRecyclerAdapter(posts, initGlide());
+        adapter = new VideoPlayerRecyclerAdapter(getActivity(),posts, initGlide());
         mRecyclerView.setAdapter(adapter);
 
 
         firebaseFirestore = FirebaseFirestore.getInstance();
         Query SecoundQuery = firebaseFirestore.collection("post")
                 .whereEqualTo("UserID", mAuth.getCurrentUser().getUid());
-                //.orderBy("Date", Query.Direction.DESCENDING);
+        //.orderBy("Date", Query.Direction.DESCENDING);
 
         SecoundQuery.addSnapshotListener(new EventListener<QuerySnapshot>() {
 

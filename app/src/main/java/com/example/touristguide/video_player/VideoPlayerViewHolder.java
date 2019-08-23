@@ -1,6 +1,7 @@
 package com.example.touristguide.video_player;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.transition.CircularPropagation;
@@ -12,9 +13,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.RequestManager;
+import com.example.touristguide.Commnets.Bottom_Sheet_Comment;
 import com.example.touristguide.R;
 import com.example.touristguide.text_component;
 import com.example.touristguide.video_player.models.Post;
@@ -41,6 +44,7 @@ public class VideoPlayerViewHolder extends RecyclerView.ViewHolder {
     ProgressBar progressBar;
     View parent;
     RequestManager requestManager;
+    Button btn_Comment;
 
     public VideoPlayerViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -53,17 +57,24 @@ public class VideoPlayerViewHolder extends RecyclerView.ViewHolder {
         progressBar = itemView.findViewById(R.id.progress_picuser_inpost_profile);
         volumeControl = itemView.findViewById(R.id.volume_control);
         btn_Location = itemView.findViewById(R.id.btn_LocationPost_profile);
+        btn_Comment=itemView.findViewById(R.id.btn_CommentPost_profile);
         firebaseFirestore = FirebaseFirestore.getInstance();
     }
 
-    public void onBind(final Post post, RequestManager requestManager) {
+    public void onBind(final Context context , final Post post, RequestManager requestManager) {
         this.requestManager = requestManager;
         parent.setTag(this);
         this.requestManager
                 .load(post.getMedia_url())
                 .into(post_image_View);
 
-
+        btn_Comment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bottom_Sheet_Comment Comment = new Bottom_Sheet_Comment(context);
+                Comment.show(((FragmentActivity)context).getSupportFragmentManager(), "Comment");
+            }
+        });
 
         Desc.setText(post.getDesc());
         firebaseFirestore.collection("User").document(post.getUserID()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {

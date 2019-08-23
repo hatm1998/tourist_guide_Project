@@ -179,37 +179,49 @@
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
 
-                    <Button
+                    <ToggleButton
                         android:id="@+id/btn_likePost_profile"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:background="@drawable/style_btn_profile"
-                        android:drawableStart="@drawable/heart"
-                        android:paddingStart="20dp"
-                        android:text="Like"
-                        android:textAlignment="center" />
+                        android:background="@drawable/custom_btn_love"
+                        android:textAlignment="center"
+                        android:textOff=" "
+                        android:textOn=" " />
+
+                    <View
+                        android:id="@+id/view6"
+                        android:layout_width="1sp"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="3dp"
+                        android:layout_marginBottom="3dp"
+                        android:background="#FACB85" />
 
                     <Button
                         android:id="@+id/btn_CommentPost_profile"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:background="@drawable/style_btn_profile"
-                        android:drawableStart="@drawable/comment"
-                        android:paddingStart="20dp"
-                        android:text="Comment"
+                        android:background="@drawable/style_btn_comment"
                         android:textAlignment="center" />
 
-                    <Button
+                    <View
+                        android:id="@+id/view11"
+                        android:layout_width="1sp"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="3dp"
+                        android:layout_marginBottom="3dp"
+                        android:background="#FACB85" />
+
+                    <ToggleButton
                         android:id="@+id/btn_SharePost_profile"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:background="@drawable/style_btn_profile"
-                        android:drawableStart="@drawable/share"
-                        android:paddingStart="20dp"
-                        android:text="Share" />
+                        android:background="@drawable/custom_btn_bookmark"
+                        android:text="Share"
+                        android:textOff=" "
+                        android:textOn=" " />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
