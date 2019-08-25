@@ -38,6 +38,7 @@ public class Profile_Page extends Fragment {
     FirebaseFirestore firebaseFirestore;
    static Fragment_Post fragment_post = new Fragment_Post();
    static Fragment_Picture fragment_Picture = new Fragment_Picture();
+   private int state = 0;
     View view;
 
     public Profile_Page() {
@@ -82,6 +83,7 @@ public class Profile_Page extends Fragment {
 
 
         ViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(ViewPager));
         return view;
     }
@@ -113,10 +115,14 @@ public class Profile_Page extends Fragment {
 
             switch (position) {
                 case 0:
-
+                    Toast.makeText(getContext(),"Postition : "+ position ,Toast.LENGTH_LONG).show();
+                    if (state == 1)
+                        fragment_post.mRecyclerView.videoPlayer.stop();
+                    state = position;
                     return fragment_Picture;
                 case 1:
 
+                    state = position;
                     return fragment_post;
 
                 default:

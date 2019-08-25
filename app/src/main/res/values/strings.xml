@@ -44,6 +44,13 @@
     <string name="About_Us_Desc">Safari is a tourist application, works to stimulate tourism within Jordan and expand tourism activity by providing activities and events for tourists and awareness of places marginalized tourist in Jordan</string>
     <string name="CopyRight">Designed by Tafila Technical University students</string>
     <string name="Save">Save</string>
+    <string name="Profile">Profile</string>
+    <string name="EditProfile">Edit Profile</string>
+    <string name="Privacy">Privacy</string>
+    <string name="Notification">Notification</string>
+    <string name="DontDistrub">Do not Distrub</string>
+    <string name="General">General</string>
+    <string name="Language">Language</string>
     <string-array name="Categort">
         <item>Medical tourism</item>
         <item>Culture</item>
@@ -53,6 +60,21 @@
         <item>Beach</item>
         <item>Nature</item>
         <item>Arts</item>
+
+    </string-array>
+
+    <string-array name="NotificationSettings">
+        <item>Events</item>
+        <item>Comment</item>
+        <item>Likes</item>
+
+    </string-array>
+
+    <string-array name="selectedNotification">
+        <item>Events</item>
+        <item>Comment</item>
+        <item>Likes</item>
+
 
     </string-array>
 

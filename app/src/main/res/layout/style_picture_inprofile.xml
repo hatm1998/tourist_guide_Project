@@ -16,6 +16,15 @@
         android:scaleType="fitXY"
         app:srcCompat="@drawable/f" />
 
+    <ImageView
+        android:id="@+id/img_player_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        app:srcCompat="@drawable/ic_slow_motion" />
+
     <ProgressBar
         android:id="@+id/progress_pic_profile"
         android:layout_width="50dp"

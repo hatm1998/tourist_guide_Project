@@ -31,7 +31,7 @@ public class Fragment_Post extends Fragment {
 
     private static final String TAG = "MainActivity";
 
-    private VideoPlayerRecyclerView mRecyclerView;
+    public VideoPlayerRecyclerView mRecyclerView;
     private ArrayList<Post> posts = new ArrayList<>();
     private VideoPlayerRecyclerAdapter adapter;
     private FirebaseAuth mAuth;
@@ -79,6 +79,7 @@ public class Fragment_Post extends Fragment {
                         if (documentChange.getType() == DocumentChange.Type.ADDED) {
 
                             Post post = documentChange.getDocument().toObject(Post.class);
+                            post.setPOSTID(documentChange.getDocument().getId());
                             posts.add(post);
                             adapter.notifyDataSetChanged();
 

@@ -7,6 +7,10 @@ import java.util.ArrayList;
 public class Post {
 
     private String  Desc, UserID;
+
+
+
+    private String POSTID;
     private String media_url;
     private ArrayList<String> Categories;
     private java.util.Date Date;
@@ -32,7 +36,13 @@ public class Post {
         this.media_url = media_url;
     }
 
+    public String getPOSTID() {
+        return POSTID;
+    }
 
+    public void setPOSTID(String POSTID) {
+        this.POSTID = POSTID;
+    }
     public String getMedia_url() {
         return media_url;
     }

@@ -55,7 +55,7 @@
                         android:id="@+id/Pic_User_profile"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:src="@drawable/ziad"
+                        android:src="@drawable/ic_person_black_24dp"
                         android:tint="#000000"
                         app:civ_border_color="#000000"
                         app:civ_border_width="1dp" />

@@ -139,7 +139,7 @@
                     </LinearLayout>
 
                     <Button
-                        android:id="@+id/button3"
+                        android:id="@+id/btn_comment_send"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -159,7 +159,8 @@
                 android:paddingStart="5dp"
                 android:paddingTop="5dp"
                 android:paddingEnd="5dp"
-                android:scrollbarTrackVertical="@null"
+                android:scrollbarThumbHorizontal="@null"
+                android:scrollbarThumbVertical="@null"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent">
 
