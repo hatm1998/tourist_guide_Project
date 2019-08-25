@@ -70,6 +70,10 @@
 
     </string-array>
 
+    <string name="facebook_app_id">226485184939883</string>
+    <string name="fb_login_protocol_scheme">fb226485184939883</string>
+
+
     <string-array name="selectedNotification">
         <item>Events</item>
         <item>Comment</item>

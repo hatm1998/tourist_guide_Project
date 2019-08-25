@@ -33,6 +33,8 @@ import com.example.touristguide.Profile.Profile_Page;
 import com.example.touristguide.Setting_Account.Setting_Account;
 import com.example.touristguide.Setting_Account.Settings;
 import com.example.touristguide.notification_saved.notification_page;
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
 import com.firebase.jobdispatcher.FirebaseJobDispatcher;
 import com.firebase.jobdispatcher.GooglePlayDriver;
 import com.firebase.jobdispatcher.Job;
@@ -72,6 +74,7 @@ public class Navigation_Drawer extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation__drawer);
         drawer = findViewById(R.id.drawer_layout);
+
 
 
         dispatcher = new FirebaseJobDispatcher(new GooglePlayDriver(getApplicationContext()));
