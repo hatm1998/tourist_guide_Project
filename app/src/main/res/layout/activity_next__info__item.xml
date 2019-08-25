@@ -108,7 +108,7 @@
 
                     android:drawableStart="@drawable/arrow"
                     android:foreground="?android:attr/selectableItemBackground"
-                    android:textAlignment="viewStart"
+                    android:textAlignment="center"
                     android:textSize="18sp"
                     tools:text="Set Categories" />
             </LinearLayout>
