@@ -15,14 +15,6 @@
       },
       "oauth_client": [
         {
-          "client_id": "151773899953-l0ddorkfmh27d9mcang072qqjkhktjon.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.touristguide",
-            "certificate_hash": "5be855fd6e7f9802ea23c65e7454e533fa9f560e"
-          }
-        },
-        {
           "client_id": "151773899953-vg4kqg87qupqh8n8fr8qr4geikajtf8e.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

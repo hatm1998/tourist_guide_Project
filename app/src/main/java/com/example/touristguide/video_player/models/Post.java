@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class Post {
 
-    private String  Desc, UserID;
+    private String  Desc, UserID,CityName;
 
 
 
@@ -14,7 +14,7 @@ public class Post {
     private String media_url;
     private ArrayList<String> Categories;
     private java.util.Date Date;
-    public GeoPoint loc;
+    private GeoPoint loc;
 
 
     public Post() {
@@ -23,17 +23,27 @@ public class Post {
 
     public Post(
                 String media_url ,
+                String CityName,
                 String desc,
                 String userID,
                 ArrayList<String> categories,
                 java.util.Date date,
-                GeoPoint location) {
-        Desc = desc;
-        UserID = userID;
-        Categories = categories;
+                GeoPoint loc) {
         Date = date;
-        this.loc = location;
+        Desc = desc;
+        Categories = categories;
+        this.CityName = CityName;
+        this.loc = loc;
+        UserID = userID;
         this.media_url = media_url;
+    }
+
+    public String getCityName() {
+        return CityName;
+    }
+
+    public GeoPoint getLoc() {
+        return loc;
     }
 
     public String getPOSTID() {
@@ -63,9 +73,6 @@ public class Post {
         return Date;
     }
 
-    public GeoPoint getLocation() {
-        return loc;
-    }
 }
 
 

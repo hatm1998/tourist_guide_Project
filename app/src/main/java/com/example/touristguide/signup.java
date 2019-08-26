@@ -19,7 +19,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.example.touristguide.Utilis.Material_Chip_View;
-import com.example.touristguide.authentication.SignUp;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
@@ -56,7 +55,7 @@ public class signup extends AppCompatActivity {
     private String UserID = null;
     private StorageReference storageReference;
     private Uri ImageUri = null;
-    private TextInputEditText txt_FullName, txt_Email, txt_Phone, txt_Password, txt_Re_Password;
+    private TextInputEditText txt_FullName, txt_Email,  txt_Password, txt_Re_Password;
     private static final Pattern PASSWORD_PATTERN =
             Pattern.compile("^" +
                     //"(?=.*[0-9])" +         //at least 1 digit
@@ -95,7 +94,6 @@ public class signup extends AppCompatActivity {
         // For Data
         txt_FullName = findViewById(R.id.txt_Username_signup_page);
         txt_Email = findViewById(R.id.txt_Email_account_setting);
-        txt_Phone = findViewById(R.id.txt_phone_signup_page);
         txt_Password = findViewById(R.id.txt_password_signup_page);
         txt_Re_Password = findViewById(R.id.txt_confirm_pass_signup_page);
 
@@ -121,7 +119,7 @@ public class signup extends AppCompatActivity {
     }
 
     private void confirm_Input() {
-        if (!validateEmail() | !validateUsername() | !validatePhone() | !validatePassword() | !validateRe_Password()) {
+        if (!validateEmail() | !validateUsername()  | !validatePassword() | !validateRe_Password()) {
             return;
         } else {
             // Close Animation .
@@ -161,7 +159,7 @@ public class signup extends AppCompatActivity {
                                 HashMap<String , String> userMap = new HashMap<>();
                                 userMap.put("Username" , txt_FullName.getText().toString());
                                 userMap.put("Image_User" ,imageurl);
-                                userMap.put("Phone" , txt_Phone.getText().toString());
+
 
                                 firebaseFirestore.collection("User") // add user info to firebase
                                         .document(UserID).set(userMap).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -223,20 +221,7 @@ public class signup extends AppCompatActivity {
         }
     }
 
-    private boolean validatePhone() {
-        String Phone = txt_Phone.getText().toString().trim();
 
-        if (Phone.isEmpty()) {
-            txt_Phone.setError("Field can't be empty");
-            return false;
-        } else if (!Phone.matches(Mobile_Pattern)) {
-            txt_Phone.setError("Invalid Number");
-            return false;
-        } else {
-            txt_Phone.setError(null);
-            return true;
-        }
-    }
 
     private boolean validatePassword() {
 //        String Password = txt_Password.getText().toString().trim();

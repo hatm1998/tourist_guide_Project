@@ -316,9 +316,11 @@ public class City_Main extends AppCompatActivity {
 
     }
 
+
     @Override
     public void onBackPressed() {
         Post_list_view.releasePlayer();
+        finish();
         super.onBackPressed();
 
     }

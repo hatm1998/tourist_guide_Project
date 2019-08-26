@@ -4,8 +4,11 @@ package com.example.touristguide.video_player;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
+import android.os.Message;
 import android.telecom.Call;
 import android.transition.CircularPropagation;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -40,6 +43,11 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONObject;
+
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.UUID;
@@ -55,7 +63,7 @@ public class VideoPlayerViewHolder extends RecyclerView.ViewHolder {
     TextView user_name, Desc;
     CircleImageView image_profile;
     ImageView post_image_View, volumeControl;
-    ProgressBar progressBar , mainImageProgress;
+    ProgressBar progressBar, mainImageProgress;
     FirebaseAuth mAuth;
     View parent;
     RequestManager requestManager;
@@ -83,18 +91,20 @@ public class VideoPlayerViewHolder extends RecyclerView.ViewHolder {
         numlike = itemView.findViewById(R.id.txt_num_like);
         mAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
+
     }
 
     public void onBind(final Context context, final Post post, RequestManager requestManager) {
         this.requestManager = requestManager;
         parent.setTag(this);
+
         if (post.getMedia_url().contains(".mp4"))
             this.requestManager
                     .load(post.getMedia_url())
                     .into(post_image_View);
         else
             Picasso.get().load(post.getMedia_url())
-                    .resize(200,200).into(post_image_View, new Callback() {
+                    .resize(200, 200).into(post_image_View, new Callback() {
                 @Override
                 public void onSuccess() {
                     mainImageProgress.setVisibility(View.GONE);
@@ -195,10 +205,35 @@ public class VideoPlayerViewHolder extends RecyclerView.ViewHolder {
                 } else {
                     HashMap<String, Object> exist = new HashMap<>();
                     firebaseFirestore.collection("post").document(post.getPOSTID())
-                            .collection("Fav").document(mAuth.getCurrentUser().getUid()).set(exist);
+                            .collection("Fav").document(mAuth.getCurrentUser().getUid())
+                            .set(exist).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            firebaseFirestore.collection("Token").document(post.getUserID())
+                                    .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                    Reqnot(task.getResult().get("Token").toString());
+
+                                    Toast.makeText(context,"ID : " + task.getResult().get("Token").toString(),Toast.LENGTH_LONG ).show();
+
+                                }
+                            });
+
+
+                        }
+
+                    });
+
                 }
+
+
             }
         });
+
+
+
+
         btn_Bookmark.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -209,6 +244,7 @@ public class VideoPlayerViewHolder extends RecyclerView.ViewHolder {
                     HashMap<String, Object> exist = new HashMap<>();
                     firebaseFirestore.collection("User").document(mAuth.getCurrentUser().getUid())
                             .collection("Bookmark").document(post.getPOSTID()).set(exist);
+
                 }
 
             }
@@ -228,13 +264,69 @@ public class VideoPlayerViewHolder extends RecyclerView.ViewHolder {
         btn_Location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String uri = String.format(Locale.ENGLISH, "http://maps.google.com/maps?q=loc:%f,%f", post.getLocation().getLatitude(), post.getLocation().getLongitude());
+                String uri = String.format(Locale.ENGLISH, "http://maps.google.com/maps?q=loc:%f,%f", post.getLoc().getLatitude(), post.getLoc().getLongitude());
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
                 parent.getContext().startActivity(intent);
             }
         });
 
 
+    }
+
+    private void Reqnot(String ID)
+    {
+        Notify notify = new Notify(ID);
+        notify.execute();
+
+    }
+    public class Notify extends AsyncTask<Void, Void, Void> {
+
+        private String ID;
+
+        Notify(String Reciver)
+        {
+            ID = Reciver;
+        }
+        @Override
+        protected Void doInBackground(Void... voids) {
+
+            try {
+
+                URL url = new URL("https://fcm.googleapis.com/fcm/send");
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+                conn.setUseCaches(false);
+                conn.setDoInput(true);
+                conn.setDoOutput(true);
+
+                conn.setRequestMethod("POST");
+                conn.setRequestProperty("Authorization", "key=AIzaSyARUYhU0qleq6Dlbj6ZQ9b0JXyB3bqsYIo");
+                conn.setRequestProperty("Content-Type", "application/json");
+
+                JSONObject json = new JSONObject();
+
+                json.put("to", ID);
+
+                JSONObject info = new JSONObject();
+                info.put("body", "Hatem Favourite of your post ");   // Notification title
+                info.put("title", "SafariAPP"); // Notification body
+                info.put("content_available", "true");
+                info.put("priority", "high");
+
+                json.put("notification", info);
+
+                OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
+                wr.write(json.toString());
+                wr.flush();
+                conn.getInputStream();
+
+                // Toast.makeText(getBaseContext(),"Done",Toast.LENGTH_LONG).show();
+
+            } catch (Exception e) {
+                Log.d("ErrorOne", "" + e);
+            }
+            return null;
+        }
     }
 
 

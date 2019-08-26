@@ -6,6 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".Setting_Account.Settings">
 
+    <ImageView
+        android:id="@+id/imageView13"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        android:scaleX="1.03"
+        android:scrollX="-3dp"
+        android:scrollY="6dp"
+        android:src="@drawable/top"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

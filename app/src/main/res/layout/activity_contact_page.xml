@@ -48,44 +48,37 @@
             android:layout_marginEnd="20dp"
             android:background="#828282" />
 
-        <TextView
-            android:id="@+id/textView2"
+        <ProgressBar
+            android:id="@+id/pr_Login_main"
+            style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="serif"
-            android:gravity="center"
-            android:text="@string/contact"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp" />
+            android:indeterminate="true"
+            android:indeterminateTint="@color/changeBackgroundColor"
+            android:visibility="gone" />
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="7dp"
-            android:paddingStart="50dp"
-            android:paddingEnd="50dp">
+            android:layout_gravity="center">
 
-            <com.facebook.login.widget.LoginButton
+            <Button
+                android:id="@+id/btn_Google_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/go"
+                android:textColor="@color/changeBackgroundColor"
+                android:textSize="10sp" />
+
+            <Button
                 android:id="@+id/btn_Facebook_login"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/fac" />
-
-            <ImageView
-                android:id="@+id/imageView14"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:srcCompat="@drawable/twi" />
-
-            <ImageView
-                android:id="@+id/imageView15"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:srcCompat="@drawable/go" />
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:background="@drawable/fac"
+                android:textAlignment="viewStart"
+                android:textSize="10sp" />
         </LinearLayout>
 
         <View

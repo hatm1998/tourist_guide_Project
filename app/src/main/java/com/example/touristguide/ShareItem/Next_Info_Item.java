@@ -1,5 +1,6 @@
 package com.example.touristguide.ShareItem;
 
+import android.app.Notification;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -27,6 +28,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 
+
 import com.example.touristguide.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -36,6 +38,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
+
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.RemoteMessage;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -220,8 +225,13 @@ public class Next_Info_Item extends AppCompatActivity {
                                         firebaseFirestore.collection("post").add(postmap).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                                             @Override
                                             public void onComplete(@NonNull Task<DocumentReference> task) {
+
+
+
+
                                                 Toast.makeText(getBaseContext(), "done , post was uploaded Successfully", Toast.LENGTH_LONG).show();
                                                 UploadProgress.setVisibility(View.INVISIBLE);
+                                                finish();
                                             }
                                         });
 

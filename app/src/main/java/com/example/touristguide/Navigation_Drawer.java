@@ -1,9 +1,11 @@
 package com.example.touristguide;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -13,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -28,10 +31,11 @@ import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.example.touristguide.About_Us.About_Us;
 import com.example.touristguide.Activity.Fragment_Activity;
 import com.example.touristguide.Event.Event_Activity.Event_Page;
-import com.example.touristguide.Notification.MyJobService;
+
 import com.example.touristguide.Profile.Profile_Page;
 import com.example.touristguide.Setting_Account.Setting_Account;
 import com.example.touristguide.Setting_Account.Settings;
+import com.example.touristguide.Utilis.LoacalHelper;
 import com.example.touristguide.notification_saved.notification_page;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
@@ -40,6 +44,7 @@ import com.firebase.jobdispatcher.GooglePlayDriver;
 import com.firebase.jobdispatcher.Job;
 import com.firebase.jobdispatcher.Lifetime;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -47,12 +52,23 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.RemoteMessage;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONObject;
+
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import devlight.io.library.ntb.NavigationTabBar;
+import io.paperdb.Paper;
 
 public class Navigation_Drawer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -70,12 +86,33 @@ public class Navigation_Drawer extends AppCompatActivity
     FirebaseJobDispatcher dispatcher;
 
     @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(LoacalHelper.onAttach(newBase, "en"));
+    }
+
+    private void updateView(String Language) {
+        Context context = LoacalHelper.setLocal(this, Language);
+
+
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation__drawer);
         drawer = findViewById(R.id.drawer_layout);
 
 
+        Paper.init(this);
+
+
+        String Language = Paper.book().read("language");
+
+        if (Language == null) {
+            Paper.book().write("language", "en");
+        }
+
+        updateView((String) Paper.book().read("language"));
 
         dispatcher = new FirebaseJobDispatcher(new GooglePlayDriver(getApplicationContext()));
 
@@ -87,9 +124,8 @@ public class Navigation_Drawer extends AppCompatActivity
         toggle.syncState();
 
 
-         SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-          SharedPreferences.Editor editor = mSharedPreferences.edit();
-
+        SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
 
 
         drawer = findViewById(R.id.drawer_layout);
@@ -110,14 +146,6 @@ public class Navigation_Drawer extends AppCompatActivity
 
         // replace fragment Activity .
         replacefragment(new Fragment_Activity());
-
-//        Job myJob = dispatcher.newJobBuilder()
-//                .setService(MyJobService.class) // the JobService that will be called
-//                .setLifetime(Lifetime.UNTIL_NEXT_BOOT)
-//                .setTag("my-unique-tag")        // uniquely identifies the job
-//                .build();
-//
-//        dispatcher.mustSchedule(myJob);
 
 
         ArrayList<NavigationTabBar.Model> models = new ArrayList<>();
@@ -198,6 +226,8 @@ public class Navigation_Drawer extends AppCompatActivity
                         case 1: {
                             notification_page notification_page = new notification_page();
                             replacefragment(notification_page);
+
+
                             posFragment = index;
                             break;
                         }
@@ -273,12 +303,15 @@ public class Navigation_Drawer extends AppCompatActivity
             Animatoo.animateFade(this);
         } else if (id == R.id.nav_bookmark) {
 
+
         } else if (id == R.id.nav_account) {
             Intent intent = new Intent(this, Settings.class);
             startActivity(intent);
 
         } else if (id == R.id.nav_aboutus) {
             Intent intent = new Intent(this, About_Us.class);
+
+
             startActivity(intent);
 
         } else if (id == R.id.nav_exit) {
@@ -292,6 +325,7 @@ public class Navigation_Drawer extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 
 
     @Override
@@ -317,9 +351,32 @@ public class Navigation_Drawer extends AppCompatActivity
                         Log.d("Error", task.getException().getMessage());
                 }
             });
+
+            FirebaseInstanceId.getInstance().getInstanceId()
+                    .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                            if (!task.isSuccessful()) {
+                                Log.d("ERRORS", "getInstanceId failed", task.getException());
+                                return;
+                            }
+
+
+                            // Get new Instance ID token
+                            String token = task.getResult().getToken();
+
+                            // Log and toast
+                            HashMap<String, String> tokenmap = new HashMap<>();
+                            tokenmap.put("Token", token);
+                            firebaseFirestore.collection("Token").document(mAuth.getCurrentUser().getUid()).set(tokenmap);
+                            Toast.makeText(Navigation_Drawer.this, token, Toast.LENGTH_SHORT).show();
+                        }
+                    });
         }
 
     }
+
+
 
 
     public void replacefragment(Fragment fragment) {

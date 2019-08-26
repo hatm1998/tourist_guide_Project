@@ -229,62 +229,6 @@
                             android:orientation="horizontal">
 
                             <ImageView
-                                android:id="@+id/imageView4"
-                                android:layout_width="35dp"
-                                android:layout_height="match_parent"
-                                android:layout_marginStart="5dp"
-                                app:srcCompat="@drawable/ic_phone_black_25dp"
-                                tools:ignore="VectorDrawableCompat" />
-
-                            <com.google.android.material.textfield.TextInputLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="5dp"
-                                android:layout_marginEnd="5dp"
-                                android:hint="@string/Phone"
-                                android:paddingStart="5dp"
-                                android:paddingEnd="5dp">
-
-                                <com.google.android.material.textfield.TextInputEditText
-                                    android:id="@+id/txt_phone_signup_page"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content" />
-                            </com.google.android.material.textfield.TextInputLayout>
-                        </LinearLayout>
-
-                    </androidx.cardview.widget.CardView>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="50dp"
-                        android:background="@drawable/left"
-                        app:layout_constraintBottom_toBottomOf="@+id/scroll_chippage"
-                        app:layout_constraintEnd_toStartOf="@+id/scroll_chippage"
-                        app:layout_constraintTop_toTopOf="@+id/scroll_chippage"
-                        app:srcCompat="@drawable/left" />
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginEnd="20dp"
-                        android:layout_marginBottom="15dp"
-                        app:cardBackgroundColor="#FFFFFF"
-                        app:cardCornerRadius="25dp">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="horizontal">
-
-                            <ImageView
                                 android:id="@+id/imageView5"
                                 android:layout_width="35dp"
                                 android:layout_height="match_parent"
