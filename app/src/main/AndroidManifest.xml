@@ -34,6 +34,7 @@
             android:name=".CityActivity.City_Main"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
         <activity android:name=".ShareItem.Next_Info_Item" />
+
         <activity
             android:name=".Utilis.Material_Chip_View"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
