@@ -78,5 +78,7 @@ dependencies {
 
     implementation "com.github.bumptech.glide:glide:$glideVersion"
     annotationProcessor "com.github.bumptech.glide:compiler:$glideVersion"
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
+    implementation 'com.hedgehog.ratingbar:app:1.1.2'
 
 }

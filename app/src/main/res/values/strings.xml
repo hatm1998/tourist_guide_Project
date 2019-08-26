@@ -44,6 +44,7 @@
     <string name="About_Us_Desc">Safari is a tourist application, works to stimulate tourism within Jordan and expand tourism activity by providing activities and events for tourists and awareness of places marginalized tourist in Jordan</string>
     <string name="CopyRight">Designed by Tafila Technical University students</string>
     <string name="Save">Save</string>
+    <string name="Google_Places_Key">AIzaSyBi2SZsin1lPcKpyPYKvYLsoVN81Fx747A</string>
     <string-array name="Categort">
         <item>Medical tourism</item>
         <item>Culture</item>
@@ -55,5 +56,4 @@
         <item>Arts</item>
 
     </string-array>
-
 </resources>

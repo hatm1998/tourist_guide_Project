@@ -9,8 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Setting_Account.Setting_Account"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" ></activity>
+        <activity android:name=".Places_Api.Display_Places_Option"></activity>
+        <activity android:name=".Navigation_Drawer" />
+        <activity
+            android:name=".Setting_Account.Setting_Account"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
         <activity
             android:name=".About_Us.About_Us"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
@@ -25,7 +28,7 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
         <activity
             android:name=".ShareItem.Add_new_post"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"></activity>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
         <activity android:name=".text_component" />
         <activity
             android:name=".CityActivity.City_Main"
@@ -48,7 +51,7 @@
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
         <activity
-            android:name=".Navigation_Drawer"
+            android:name=".test_places"
             android:theme="@style/Theme.Navigation">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -63,11 +66,10 @@
             </intent-filter>
         </service>
     </application>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
-
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
 </manifest>
