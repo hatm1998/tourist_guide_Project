@@ -36,6 +36,7 @@ import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.touristguide.CityActivity.sightseeing.Adapter_sightseeing;
 import com.example.touristguide.CityActivity.sightseeing.Places;
+import com.example.touristguide.Places_Api.Display_Places_Option;
 import com.example.touristguide.R;
 import com.example.touristguide.ShareItem.Add_new_post;
 import com.example.touristguide.video_player.VideoPlayerRecyclerAdapter;
@@ -316,6 +317,12 @@ public class City_Main extends AppCompatActivity {
 
     }
 
+    public  void open(View view){
+        Intent intent =new Intent(this, Display_Places_Option.class);
+        intent.putExtra("search",((Button)view).getText().toString());
+        Toast.makeText(this,((Button)view).getText().toString(),Toast.LENGTH_SHORT).show();
+        startActivity(intent);
+    }
 
     @Override
     public void onBackPressed() {

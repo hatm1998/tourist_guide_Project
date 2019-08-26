@@ -20,6 +20,8 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
+
+
             <TextView
                 android:id="@+id/txt_name_Resturant"
                 android:layout_width="match_parent"
@@ -34,6 +36,60 @@
                 android:layout_height="wrap_content"
                 android:text="ADDRESS PLACE"
                 android:textColor="#5A595A" />
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textView10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="Tet : "
+                    android:textColor="#424142" />
+
+                <TextView
+                    android:id="@+id/txtTel_Resturant"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="7dp"
+                    android:text="(06) 464 1261"
+                    android:textColor="#2680CA" />
+
+                <ImageButton
+                    android:id="@+id/btn_Tel_Resturant"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginBottom="2dp"
+                    android:background="@drawable/style_btn_share_eventdisplay"
+                    android:elevation="3dp"
+                    android:src="@drawable/iconphone" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textView14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="WebSite : "
+                    android:textColor="#424142" />
+
+                <TextView
+                    android:id="@+id/txtwebsite_Resturant"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="7dp"
+                    android:text="www.ammanhospital.com"
+                    android:textColor="#2680CA"
+                    android:textSize="12sp" />
+            </TableRow>
 
             <TableRow
                 android:layout_width="match_parent"
@@ -55,7 +111,26 @@
                     android:textColor="#2680CA" />
             </TableRow>
 
+            <Button
+                android:id="@+id/btn_location_Resturant"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="3dp"
+                android:background="@drawable/style_btn_share_eventdisplay"
+                android:drawableStart="@drawable/ic_location_on"
+                android:gravity="center"
+                android:inputType="text"
+                android:paddingEnd="4dp"
+                android:text="30 .0 Km"
+                android:textSize="12sp" />
         </LinearLayout>
+
+        <View
+            android:id="@+id/view13"
+            android:layout_width="3dp"
+            android:layout_height="match_parent" />
 
         <LinearLayout
             android:id="@+id/x"
@@ -83,6 +158,18 @@
                     android:layout_width="40dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center" />
+
+                <TextView
+                    android:id="@+id/txtnum_photo_Resturant"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|start"
+                    android:background="#95070000"
+                    android:fontFamily="sans-serif-smallcaps"
+                    android:paddingStart="10dp"
+                    android:text="Photo : 5"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp" />
             </FrameLayout>
 
             <TableRow
@@ -130,5 +217,6 @@
             </TableRow>
 
         </LinearLayout>
+
     </LinearLayout>
 </androidx.cardview.widget.CardView>

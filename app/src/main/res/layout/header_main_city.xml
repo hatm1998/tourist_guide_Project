@@ -200,7 +200,8 @@
                         android:background="@drawable/style_btn_service_left"
                         android:drawableTop="@drawable/ic_restaurant"
                         android:inputType="text"
-                        android:text="Resturent" />
+                        android:onClick="open"
+                        android:text="Restaurant" />
 
                     <Button
                         android:id="@+id/btn_header_city_hospital"
@@ -212,6 +213,7 @@
                         android:background="@color/colorPrimaryDark"
                         android:drawableTop="@drawable/ic_local_hospital"
                         android:inputType="text"
+                        android:onClick="open"
                         android:text="Hospital" />
 
                     <Button
@@ -222,6 +224,7 @@
                         android:background="@drawable/style_btn_service_right"
                         android:drawableTop="@drawable/ic_local_hotel"
                         android:inputType="text"
+                        android:onClick="open"
                         android:text="Hotels" />
                 </LinearLayout>
 
