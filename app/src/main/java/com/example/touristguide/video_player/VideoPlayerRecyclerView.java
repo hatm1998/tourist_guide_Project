@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.bumptech.glide.RequestManager;
+import com.example.touristguide.CityActivity.City_Main;
 import com.example.touristguide.R;
 import com.example.touristguide.video_player.models.Post;
 import com.google.android.exoplayer2.ExoPlaybackException;
@@ -51,7 +52,9 @@ import java.util.ArrayList;
 public class VideoPlayerRecyclerView extends RecyclerView {
     private static final String TAG = "VideoPlayerRecyclerView";
 
-    private enum VolumeState {ON, OFF};
+    private enum VolumeState {ON, OFF}
+
+    ;
 
 
     // ui
@@ -60,7 +63,7 @@ public class VideoPlayerRecyclerView extends RecyclerView {
     private View viewHolderParent;
     private FrameLayout frameLayout;
     private PlayerView videoSurfaceView;
-    private SimpleExoPlayer videoPlayer;
+    public SimpleExoPlayer videoPlayer;
 
     // vars
     private ArrayList<Post> posts = new ArrayList<>();
@@ -85,7 +88,7 @@ public class VideoPlayerRecyclerView extends RecyclerView {
     }
 
 
-    private void init(Context context){
+    private void init(final Context context) {
         this.context = context.getApplicationContext();
         Display display = ((WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
         Point point = new Point();
@@ -93,11 +96,12 @@ public class VideoPlayerRecyclerView extends RecyclerView {
         videoSurfaceDefaultHeight = point.x;
         screenDefaultHeight = point.y;
 
+
         videoSurfaceView = new PlayerView(this.context);
         videoSurfaceView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_ZOOM);
 
         BandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
-        TrackSelection.Factory videoTrackSelectionFactory =
+        final TrackSelection.Factory videoTrackSelectionFactory =
                 new AdaptiveTrackSelection.Factory(bandwidthMeter);
         TrackSelector trackSelector =
                 new DefaultTrackSelector(videoTrackSelectionFactory);
@@ -109,24 +113,27 @@ public class VideoPlayerRecyclerView extends RecyclerView {
         videoSurfaceView.setPlayer(videoPlayer);
         setVolumeControl(VolumeState.ON);
 
+
         addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
 
+
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                     Log.d(TAG, "onScrollStateChanged: called.");
-                    if(thumbnail != null){ // show the old thumbnail
+                    if (thumbnail != null) { // show the old thumbnail
                         thumbnail.setVisibility(VISIBLE);
                     }
 
                     // There's a special case when the end of the list has been reached.
                     // Need to handle that with this bit of logic
-                    if(!recyclerView.canScrollVertically(1)){
+                    if (!recyclerView.canScrollVertically(1)) {
                         playVideo(true);
-                    }
-                    else{
+                        // Toast.makeText(context, "Scrolled True " + recyclerView.getChildPosition(recyclerView), Toast.LENGTH_LONG).show();
+                    } else {
                         playVideo(false);
+                        //  Toast.makeText(context, "Scrolled false "  + recyclerView.getChildCount(), Toast.LENGTH_LONG).show();
                     }
                 }
 
@@ -135,12 +142,17 @@ public class VideoPlayerRecyclerView extends RecyclerView {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
+                Log.d("Postition Rec", "DY : " + dy + " : " + "Dx : " + dx);
+                if (dy > 0 && City_Main.nestedScrollView != null)
+                    City_Main.nestedScrollView.scrollTo(City_Main.nestedScrollView.getScrollX(), City_Main.nestedScrollView.getScrollY() + dy);
+
             }
         });
 
         addOnChildAttachStateChangeListener(new OnChildAttachStateChangeListener() {
             @Override
             public void onChildViewAttachedToWindow(View view) {
+
 
             }
 
@@ -192,7 +204,7 @@ public class VideoPlayerRecyclerView extends RecyclerView {
                         if (progressBar != null) {
                             progressBar.setVisibility(GONE);
                         }
-                        if(!isVideoViewAdded){
+                        if (!isVideoViewAdded) {
                             addVideoView();
                         }
                         break;
@@ -237,7 +249,7 @@ public class VideoPlayerRecyclerView extends RecyclerView {
 
         int targetPosition;
 
-        if(!isEndOfList){
+        if (!isEndOfList) {
             int startPosition = ((LinearLayoutManager) getLayoutManager()).findFirstVisibleItemPosition();
             int endPosition = ((LinearLayoutManager) getLayoutManager()).findLastVisibleItemPosition();
 
@@ -257,12 +269,10 @@ public class VideoPlayerRecyclerView extends RecyclerView {
                 int endPositionVideoHeight = getVisibleVideoSurfaceHeight(endPosition);
 
                 targetPosition = startPositionVideoHeight > endPositionVideoHeight ? startPosition : endPosition;
-            }
-            else {
+            } else {
                 targetPosition = startPosition;
             }
-        }
-        else{
+        } else {
             targetPosition = posts.size() - 1;
         }
 
@@ -331,6 +341,7 @@ public class VideoPlayerRecyclerView extends RecyclerView {
     /**
      * Returns the visible region of the video surface on the screen.
      * if some is cut off, it will return less than the @videoSurfaceDefaultHeight
+     *
      * @param playPosition
      * @return
      */
@@ -370,7 +381,7 @@ public class VideoPlayerRecyclerView extends RecyclerView {
 
     }
 
-    private void addVideoView(){
+    private void addVideoView() {
         frameLayout.addView(videoSurfaceView);
         isVideoViewAdded = true;
         videoSurfaceView.requestFocus();
@@ -379,8 +390,8 @@ public class VideoPlayerRecyclerView extends RecyclerView {
         thumbnail.setVisibility(GONE);
     }
 
-    private void resetVideoView(){
-        if(isVideoViewAdded){
+    private void resetVideoView() {
+        if (isVideoViewAdded) {
             removeVideoView(videoSurfaceView);
             playPosition = -1;
             videoSurfaceView.setVisibility(INVISIBLE);
@@ -404,7 +415,8 @@ public class VideoPlayerRecyclerView extends RecyclerView {
                 Log.d(TAG, "togglePlaybackState: enabling volume.");
                 setVolumeControl(VolumeState.ON);
 
-            } else if(volumeState == VolumeState.ON) {
+
+            } else if (volumeState == VolumeState.ON) {
                 Log.d(TAG, "togglePlaybackState: disabling volume.");
                 setVolumeControl(VolumeState.OFF);
 
@@ -412,26 +424,24 @@ public class VideoPlayerRecyclerView extends RecyclerView {
         }
     }
 
-    private void setVolumeControl(VolumeState state){
+    private void setVolumeControl(VolumeState state) {
         volumeState = state;
-        if(state == VolumeState.OFF){
+        if (state == VolumeState.OFF) {
             videoPlayer.setVolume(0f);
             animateVolumeControl();
-        }
-        else if(state == VolumeState.ON){
+        } else if (state == VolumeState.ON) {
             videoPlayer.setVolume(1f);
             animateVolumeControl();
         }
     }
 
-    private void animateVolumeControl(){
-        if(volumeControl != null){
+    private void animateVolumeControl() {
+        if (volumeControl != null) {
             volumeControl.bringToFront();
-            if(volumeState == VolumeState.OFF){
+            if (volumeState == VolumeState.OFF) {
                 requestManager.load(R.drawable.ic_volume_off_grey_24dp)
                         .into(volumeControl);
-            }
-            else if(volumeState == VolumeState.ON){
+            } else if (volumeState == VolumeState.ON) {
                 requestManager.load(R.drawable.ic_volume_up_grey_24dp)
                         .into(volumeControl);
             }
@@ -445,7 +455,7 @@ public class VideoPlayerRecyclerView extends RecyclerView {
         }
     }
 
-    public void setPosts(ArrayList<Post> posts){
+    public void setPosts(ArrayList<Post> posts) {
         this.posts = posts;
     }
 }

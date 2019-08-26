@@ -18,14 +18,17 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.ViewCompat;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
@@ -66,16 +69,16 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class City_Main extends AppCompatActivity {
 
-    private Context  context;
+    private Context context;
     private FirebaseFirestore firebaseFirestore;
 
     private ImageView header_Image;
 
     private ProgressBar progressBar;
 
+    public static NestedScrollView nestedScrollView;
 
-
-    private LinearLayout cityItem ;
+    private LinearLayout cityItem;
 
     //  private post_recycle_adapter post_recycle_view;
 
@@ -90,7 +93,7 @@ public class City_Main extends AppCompatActivity {
 
     // get All Post -> (City)
     private VideoPlayerRecyclerView Post_list_view;
-    private ArrayList<Post> posts ;
+    private ArrayList<Post> posts;
     private VideoPlayerRecyclerAdapter adapter_Post;
 
     // Button Add Image Or Video
@@ -100,12 +103,13 @@ public class City_Main extends AppCompatActivity {
     private ViewPager pager_sightseeing;
     private ArrayList<Places> List_sightseeing;
     private Adapter_sightseeing adapter_sightseeing;
+
     @SuppressLint("WrongConstant")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.header_main_city);
-        context=this;
+        context = this;
         final Intent intent = getIntent();
         final String CityID = intent.getStringExtra("Ads_id");
         firebaseFirestore = FirebaseFirestore.getInstance();
@@ -117,14 +121,43 @@ public class City_Main extends AppCompatActivity {
         txtHumidity = findViewById(R.id.txtHumidity_display_City);
         txtCelsius = findViewById(R.id.txtCelsius_display_City);
         btnrefresh = findViewById(R.id.btn_refresh_location_display_City);
+        nestedScrollView = findViewById(R.id.nestedScrollView);
+
         fab = findViewById(R.id.fab_add_Post);
+
 
         openWeatherMap = new OpenWeatherMap();
 
         firebaseFirestore = FirebaseFirestore.getInstance();
 
         Post_list_view = findViewById(R.id.RC_City_post);
-        GridLayoutManager layoutManager = new GridLayoutManager(getBaseContext(),1);
+
+
+        Post_list_view.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+
+                if (newState == RecyclerView.SCROLL_STATE_IDLE)
+                {
+                    fab.show();
+                }
+
+
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                if (dy > 0 ||dy<0 && fab.isShown())
+                {
+                    fab.hide();
+                }
+
+            }
+        });
+        GridLayoutManager layoutManager = new GridLayoutManager(getBaseContext(), 1);
         Post_list_view.setLayoutManager(layoutManager);
 
         final GeoPoint[] geoPoint = new GeoPoint[1];
@@ -206,27 +239,28 @@ public class City_Main extends AppCompatActivity {
         // Add All Post From FireBase -> City .
 
 
-
-
         VerticalSpacingItemDecorator itemDecorator = new VerticalSpacingItemDecorator(10);
         Post_list_view.addItemDecoration(itemDecorator);
         posts = new ArrayList<>();
         Post_list_view.setPosts(posts);
-        adapter_Post = new VideoPlayerRecyclerAdapter(context,posts, initGlide());
+        adapter_Post = new VideoPlayerRecyclerAdapter(context, posts, initGlide());
+
+
         Post_list_view.setAdapter(adapter_Post);
+
 
         final float scale = getResources().getDisplayMetrics().density;
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        final  int height = displayMetrics.heightPixels;
+        final int height = displayMetrics.heightPixels;
         int width = displayMetrics.widthPixels;
-        Log.i("kasaji",height+"   dp : "+((height)* scale + 0.5f));
+        Log.i("kasaji", height + "   dp : " + ((height) * scale + 0.5f));
 
         Query SecoundQuery = firebaseFirestore.collection("post")
                 .orderBy("Date", Query.Direction.DESCENDING);
 
-        SecoundQuery.addSnapshotListener( new EventListener<QuerySnapshot>() {
+        SecoundQuery.addSnapshotListener(new EventListener<QuerySnapshot>() {
 
             @Override
             public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
@@ -236,6 +270,7 @@ public class City_Main extends AppCompatActivity {
                         if (documentChange.getType() == DocumentChange.Type.ADDED) {
 
                             Post post = documentChange.getDocument().toObject(Post.class);
+                            post.setPOSTID(documentChange.getDocument().getId());
                             posts.add(post);
                             adapter_Post.notifyDataSetChanged();
                         }
@@ -277,10 +312,18 @@ public class City_Main extends AppCompatActivity {
             }
         });
 
+        nestedScrollView.scrollTo(0,0);
 
     }
 
-    private RequestManager initGlide(){
+    @Override
+    public void onBackPressed() {
+        Post_list_view.releasePlayer();
+        super.onBackPressed();
+
+    }
+
+    private RequestManager initGlide() {
         RequestOptions options = new RequestOptions()
                 .placeholder(R.drawable.white_background)
                 .error(R.drawable.white_background);
@@ -288,6 +331,7 @@ public class City_Main extends AppCompatActivity {
         return Glide.with(this)
                 .setDefaultRequestOptions(options);
     }
+
     private class GetWeather extends AsyncTask<String, Void, String> {
 
 

@@ -34,7 +34,7 @@
         android:orientation="horizontal">
 
         <EditText
-            android:id="@+id/editText"
+            android:id="@+id/txt_Wirte_comment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -51,7 +51,7 @@
             android:textSize="16sp" />
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/btn_comment_send"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_gravity="center"

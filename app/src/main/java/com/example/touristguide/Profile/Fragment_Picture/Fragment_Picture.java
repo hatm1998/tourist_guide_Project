@@ -11,14 +11,24 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.touristguide.R;
+        import com.example.touristguide.video_player.models.Post;
+        import com.google.firebase.auth.FirebaseAuth;
+        import com.google.firebase.firestore.DocumentChange;
+        import com.google.firebase.firestore.EventListener;
+        import com.google.firebase.firestore.FirebaseFirestore;
+        import com.google.firebase.firestore.FirebaseFirestoreException;
+        import com.google.firebase.firestore.Query;
+        import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.ArrayList;
+        import java.util.ArrayList;
 
 public class Fragment_Picture extends Fragment {
 
     private RecyclerView RCV_post;
     private ArrayList<setPicture> list;
     private adapter_picture_inprofile adapter;
+    private FirebaseFirestore firebaseFirestore;
+    private FirebaseAuth mAuth;
 
     public Fragment_Picture() {
         // Required empty public constructor
@@ -31,18 +41,37 @@ public class Fragment_Picture extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_picture_inprofile, container, false);
 
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+
         RCV_post=view.findViewById(R.id.RCV_picture_inprofile);
         list=new ArrayList<>();
-        String Image2[]={
-                "https://firebasestorage.googleapis.com/v0/b/realtimefirebase-aaf23.appspot.com/o/Post%2Ff.jpg?alt=media&token=9162fd8d-407e-4ddb-8b1d-81491a741764",
-                "https://firebasestorage.googleapis.com/v0/b/realtimefirebase-aaf23.appspot.com/o/Post%2Ffff.jpg?alt=media&token=86980ac8-8b4c-414d-a461-aed82c8945da",
-                "https://firebasestorage.googleapis.com/v0/b/realtimefirebase-aaf23.appspot.com/o/Post%2Fffffff.jpg?alt=media&token=242478d1-cf55-4747-9b57-177b27ab6c4c",
-                "https://firebasestorage.googleapis.com/v0/b/realtimefirebase-aaf23.appspot.com/o/Post%2Fff.jpg?alt=media&token=58ee2bf6-0168-43fe-b701-d7adbedc01a5",
-                "https://firebasestorage.googleapis.com/v0/b/realtimefirebase-aaf23.appspot.com/o/Post%2Fffff.jpg?alt=media&token=ce95044f-f86c-4da5-a109-6fa671e10928",
-                "https://firebasestorage.googleapis.com/v0/b/realtimefirebase-aaf23.appspot.com/o/Post%2Ffffff.jpg?alt=media&token=9096167c-fd88-49b0-822a-d5344af308d1"
-        };
-        for(int i=0;i<Image2.length;i++)
-        list.add(new setPicture("",Image2[i]));
+        adapter=new adapter_picture_inprofile(getContext(),list);
+
+        Query SecoundQuery = firebaseFirestore.collection("post")
+                .whereEqualTo("UserID", mAuth.getCurrentUser().getUid());
+        //.orderBy("Date", Query.Direction.DESCENDING);
+
+        SecoundQuery.addSnapshotListener(new EventListener<QuerySnapshot>() {
+
+            @Override
+            public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
+                if (!documentSnapshots.isEmpty()) {
+                    for (DocumentChange documentChange : documentSnapshots.getDocumentChanges()) {
+
+                        if (documentChange.getType() == DocumentChange.Type.ADDED) {
+
+                            Post post = documentChange.getDocument().toObject(Post.class);
+                            post.setPOSTID(documentChange.getDocument().getId());
+                            list.add(new setPicture(documentChange.getDocument().getId(),post.getMedia_url()));
+                            adapter.notifyDataSetChanged();
+
+
+                        }
+                    }
+                }
+            }
+        });
         adapter=new adapter_picture_inprofile(getContext(),list);
         RCV_post.setLayoutManager(new GridLayoutManager(getContext(),3));
         RCV_post.setAdapter(adapter);

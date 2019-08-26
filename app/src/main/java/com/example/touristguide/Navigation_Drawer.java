@@ -2,8 +2,10 @@ package com.example.touristguide;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,9 +28,17 @@ import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.example.touristguide.About_Us.About_Us;
 import com.example.touristguide.Activity.Fragment_Activity;
 import com.example.touristguide.Event.Event_Activity.Event_Page;
+import com.example.touristguide.Notification.MyJobService;
 import com.example.touristguide.Profile.Profile_Page;
 import com.example.touristguide.Setting_Account.Setting_Account;
+import com.example.touristguide.Setting_Account.Settings;
 import com.example.touristguide.notification_saved.notification_page;
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
+import com.firebase.jobdispatcher.FirebaseJobDispatcher;
+import com.firebase.jobdispatcher.GooglePlayDriver;
+import com.firebase.jobdispatcher.Job;
+import com.firebase.jobdispatcher.Lifetime;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.appbar.AppBarLayout;
@@ -55,7 +65,9 @@ public class Navigation_Drawer extends AppCompatActivity
     private FloatingActionButton fab;
     private NavigationTabBar navigationTabBar;
     private int posFragment = 0;
-    public  static DrawerLayout drawer;
+    public static DrawerLayout drawer;
+
+    FirebaseJobDispatcher dispatcher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +77,7 @@ public class Navigation_Drawer extends AppCompatActivity
 
 
 
+        dispatcher = new FirebaseJobDispatcher(new GooglePlayDriver(getApplicationContext()));
 
         mAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
@@ -72,6 +85,11 @@ public class Navigation_Drawer extends AppCompatActivity
                 this, drawer, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+
+
+         SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+          SharedPreferences.Editor editor = mSharedPreferences.edit();
+
 
 
         drawer = findViewById(R.id.drawer_layout);
@@ -93,13 +111,13 @@ public class Navigation_Drawer extends AppCompatActivity
         // replace fragment Activity .
         replacefragment(new Fragment_Activity());
 
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(Navigation_Drawer.this, Add_new_post.class);
-//                startActivity(intent);
-//            }
-//        });
+//        Job myJob = dispatcher.newJobBuilder()
+//                .setService(MyJobService.class) // the JobService that will be called
+//                .setLifetime(Lifetime.UNTIL_NEXT_BOOT)
+//                .setTag("my-unique-tag")        // uniquely identifies the job
+//                .build();
+//
+//        dispatcher.mustSchedule(myJob);
 
 
         ArrayList<NavigationTabBar.Model> models = new ArrayList<>();
@@ -256,7 +274,7 @@ public class Navigation_Drawer extends AppCompatActivity
         } else if (id == R.id.nav_bookmark) {
 
         } else if (id == R.id.nav_account) {
-            Intent intent = new Intent(this, Setting_Account.class);
+            Intent intent = new Intent(this, Settings.class);
             startActivity(intent);
 
         } else if (id == R.id.nav_aboutus) {

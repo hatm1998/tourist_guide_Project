@@ -4,24 +4,27 @@ import java.util.Date;
 
 public class set_Comment {
 
-    private String Img_User,message;
-    private Date date;
+    private String UserID,comment;
+    private Date Date;
 
-    public set_Comment(String img_User, String message, Date date) {
-        Img_User = img_User;
-        this.message = message;
-        this.date = date;
+    set_Comment(){
+
+    }
+    public set_Comment(String UserID, String comment, Date Date) {
+        this.UserID = UserID;
+        this.comment = comment;
+        this.Date = Date;
     }
 
-    public String getImg_User() {
-        return Img_User;
+    public String getUserID() {
+        return UserID;
     }
 
-    public String getMessage() {
-        return message;
+    public String getComment() {
+        return comment;
     }
 
-    public Date getDate() {
-        return date;
+    public java.util.Date getDate() {
+        return Date;
     }
 }
