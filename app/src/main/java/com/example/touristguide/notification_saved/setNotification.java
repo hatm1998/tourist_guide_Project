@@ -4,26 +4,35 @@ import java.util.Date;
 
 public class setNotification {
 
-    private String img,subject,document;
+    private String Msg,PostInfo,UserID,UserSender;
     private Date date;
 
-   public  setNotification(String IMG , String Subject  ,String Document , Date Date){
-        this.img=IMG;
-        this.subject=Subject;
-        this.document=Document;
-        this.date=Date;
+    setNotification()
+    {
+
+    }
+    public setNotification(String msg, String postInfo, String userID, String userSender, Date date) {
+        Msg = msg;
+        PostInfo = postInfo;
+        UserID = userID;
+        UserSender = userSender;
+        this.date = date;
     }
 
-    public String getImg() {
-        return img;
+    public String getMsg() {
+        return Msg;
     }
 
-    public String geSubject() {
-        return subject;
+    public String getPostInfo() {
+        return PostInfo;
     }
 
-    public String getDocument() {
-        return document;
+    public String getUserID() {
+        return UserID;
+    }
+
+    public String getUserSender() {
+        return UserSender;
     }
 
     public Date getDate() {

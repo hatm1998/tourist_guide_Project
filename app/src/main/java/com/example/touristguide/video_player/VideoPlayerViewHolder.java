@@ -31,6 +31,7 @@ import com.example.touristguide.text_component;
 import com.example.touristguide.video_player.models.Post;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.common.base.MoreObjects;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -48,6 +49,7 @@ import org.json.JSONObject;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.UUID;
@@ -66,6 +68,7 @@ public class VideoPlayerViewHolder extends RecyclerView.ViewHolder {
     ProgressBar progressBar, mainImageProgress;
     FirebaseAuth mAuth;
     View parent;
+    String mUsername;
     RequestManager requestManager;
     Button btn_Comment;
     ToggleButton btn_Bookmark, btn_Fav;
@@ -116,10 +119,19 @@ public class VideoPlayerViewHolder extends RecyclerView.ViewHolder {
                 }
             });
 
+
+        firebaseFirestore.collection("User").document(mAuth.getCurrentUser().getUid())
+                .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                mUsername = (String) task.getResult().get("Username");
+            }
+        });
+
         btn_Comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Bottom_Sheet_Comment Comment = new Bottom_Sheet_Comment(context, post.getPOSTID());
+                Bottom_Sheet_Comment Comment = new Bottom_Sheet_Comment(context, post.getPOSTID(), post.getUserID());
 
                 Comment.show(((FragmentActivity) context).getSupportFragmentManager(), "Comment");
             }
@@ -154,11 +166,9 @@ public class VideoPlayerViewHolder extends RecyclerView.ViewHolder {
                         if (documentChange.getType() == DocumentChange.Type.ADDED) {
                             likecont++;
                             numlike.setText("Like : " + likecont);
-                            Toast.makeText(context, "Added ", Toast.LENGTH_LONG).show();
                         } else {
                             likecont--;
                             Toast.makeText(context, "Count = " + likecont, Toast.LENGTH_LONG).show();
-                            numlike.setText("Like : " + likecont);
                         }
 
                     }
@@ -192,6 +202,7 @@ public class VideoPlayerViewHolder extends RecyclerView.ViewHolder {
                     }
                 });
 
+
         btn_Fav.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -209,16 +220,34 @@ public class VideoPlayerViewHolder extends RecyclerView.ViewHolder {
                             .set(exist).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
-                            firebaseFirestore.collection("Token").document(post.getUserID())
-                                    .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                    Reqnot(task.getResult().get("Token").toString());
+                            if (!mAuth.getCurrentUser().getUid().equals(post.getUserID()))
+                                firebaseFirestore.collection("Token").document(post.getUserID())
+                                        .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                        Reqnot(task.getResult().get("Token").toString(), mUsername + " " + context.getResources().getString(R.string.NotiFav));
 
-                                    Toast.makeText(context,"ID : " + task.getResult().get("Token").toString(),Toast.LENGTH_LONG ).show();
+                                        HashMap<String,Object> Notificationmap = new HashMap<>();
+                                        Notificationmap.put("Msg" , mUsername + " " + context.getResources().getString(R.string.NotiFav));
+                                        Notificationmap.put("date" , new Date());
+                                        Notificationmap.put("UserID",post.getUserID());
+                                        Notificationmap.put("UserSender",mAuth.getCurrentUser().getUid());
+                                        Notificationmap.put("PostInfo" , post.getPOSTID());
 
-                                }
-                            });
+                                        firebaseFirestore.collection("Notificarion").document(UUID.randomUUID().toString())
+                                                .set(Notificationmap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful())
+                                                {
+                                                    Toast.makeText(context,"Notification Sent", Toast.LENGTH_LONG).show();
+
+                                                }
+                                            }
+                                        });
+
+                                    }
+                                });
 
 
                         }
@@ -230,8 +259,6 @@ public class VideoPlayerViewHolder extends RecyclerView.ViewHolder {
 
             }
         });
-
-
 
 
         btn_Bookmark.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -273,20 +300,21 @@ public class VideoPlayerViewHolder extends RecyclerView.ViewHolder {
 
     }
 
-    private void Reqnot(String ID)
-    {
-        Notify notify = new Notify(ID);
+    private void Reqnot(String ID, String Msg) {
+        Notify notify = new Notify(ID, Msg);
         notify.execute();
 
     }
+
     public class Notify extends AsyncTask<Void, Void, Void> {
 
-        private String ID;
+        private String ID, Msg;
 
-        Notify(String Reciver)
-        {
+        Notify(String Reciver, String Msg) {
             ID = Reciver;
+            this.Msg = Msg;
         }
+
         @Override
         protected Void doInBackground(Void... voids) {
 
@@ -308,7 +336,7 @@ public class VideoPlayerViewHolder extends RecyclerView.ViewHolder {
                 json.put("to", ID);
 
                 JSONObject info = new JSONObject();
-                info.put("body", "Hatem Favourite of your post ");   // Notification title
+                info.put("body", Msg);   // Notification title
                 info.put("title", "SafariAPP"); // Notification body
                 info.put("content_available", "true");
                 info.put("priority", "high");

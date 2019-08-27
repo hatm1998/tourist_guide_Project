@@ -47,6 +47,11 @@
     <string name="Profile">Profile</string>
     <string name="EditProfile">Edit Profile</string>
     <string name="Privacy">Privacy</string>
+
+    <string name="NotiFav">Liked your Post</string>
+
+    <string name="NotiComment">Comment your Post</string>
+
     <string name="Notification">Notification</string>
     <string name="DontDistrub">Do not Distrub</string>
     <string name="General">General</string>
