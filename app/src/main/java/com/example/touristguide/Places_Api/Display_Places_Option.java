@@ -543,7 +543,7 @@ public class Display_Places_Option extends AppCompatActivity {
                 JSONObject result = Parent.getJSONObject("result");
 
 
-                String address = "kasaji";
+                String address = "UnKnown";
 
                 if (result.has("formatted_address"))
                     address = result.getString("formatted_address");

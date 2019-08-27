@@ -7,13 +7,14 @@ import com.google.protobuf.DescriptorProtos;
 
 public class Places {
 
-  private   String Name,Image;
- private GeoPoint Location;
+  private   String ID_Place,Name,Image;
+  private Location location;
 
-    public Places(String name, String image, GeoPoint location) {
+    public Places(String ID_Place ,String name, String image ,Location location) {
+        this.ID_Place=ID_Place;
         Name = name;
-        Image = image;
-        Location = location;
+       this.Image=image;
+        this.location=location;
     }
 
     public String getName() {
@@ -24,14 +25,11 @@ public class Places {
         return Image;
     }
 
-    public GeoPoint getLocation() {
-        return Location;
+    public String getID_Place() {
+        return ID_Place;
     }
 
-    public Places()
-    {
-
+    public Location getLocation() {
+        return location;
     }
-
-
 }

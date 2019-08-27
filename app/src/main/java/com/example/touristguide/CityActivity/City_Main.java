@@ -63,7 +63,18 @@ import com.google.gson.reflect.TypeToken;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.reflect.Type;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -199,29 +210,17 @@ public class City_Main extends AppCompatActivity {
         pager_sightseeing.setClipToPadding(false);
         pager_sightseeing.setPadding(70, 0, 70, 0);
         pager_sightseeing.setPageMargin(20);
-        adapter_sightseeing = new Adapter_sightseeing(this, List_sightseeing);
-        pager_sightseeing.setAdapter(adapter_sightseeing);
-        pager_sightseeing.setCurrentItem(1);
+
+        // get All Places in Your Country
+        StringBuilder stringBuilder = new StringBuilder("https://maps.googleapis.com/maps/api/place/textsearch/json?");
+        stringBuilder.append("query=الاماكن السياحية+في+"+"الطفيلة");
+        stringBuilder.append("&key=" + getResources().getString(R.string.Google_Places_Key));
+        String Url = stringBuilder.toString();
+       Get_City get_city = new Get_City();
+        get_city.execute(Url);
+
 
         progressBar = findViewById(R.id.header_city_progress);
-
-        final Query firstQuery = firebaseFirestore.collection("Cities").document(CityID).collection("places");
-
-        firstQuery.addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                for (DocumentChange documentChange : queryDocumentSnapshots.getDocumentChanges()) {
-
-                    if (documentChange.getType() == DocumentChange.Type.ADDED) {
-                        Places places = documentChange.getDocument().toObject(Places.class);
-                        List_sightseeing.add(places);
-                        adapter_sightseeing.notifyDataSetChanged();
-                        pager_sightseeing.setCurrentItem(1);
-                    }
-                }
-            }
-        });
-
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -339,6 +338,85 @@ public class City_Main extends AppCompatActivity {
 
         return Glide.with(this)
                 .setDefaultRequestOptions(options);
+    }
+
+    private  class Get_City extends AsyncTask<String, String, String> {
+
+        private String url;
+        private InputStream Is;
+        private BufferedReader bufferedReader;
+        private StringBuilder stringBuilder;
+        private String data;
+        @Override
+        protected String doInBackground(String... strings) {
+            url = strings[0];
+            try {
+                URL MyUrl = new URL(url);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) MyUrl.openConnection();
+                httpURLConnection.connect();
+                Is = httpURLConnection.getInputStream();
+                bufferedReader = new BufferedReader(new InputStreamReader(Is));
+
+                String Line = "";
+                stringBuilder = new StringBuilder();
+                while ((Line = bufferedReader.readLine()) != null) {
+                    stringBuilder.append(Line);
+                }
+                data = stringBuilder.toString();
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return data;
+        }
+
+
+
+
+        @Override
+        protected void onPostExecute(String s) {
+            try {
+                final JSONObject  ParentObject = new JSONObject(s);
+                final JSONArray results = ParentObject.getJSONArray("results");
+
+                for(int i=0;i<results.length();i++)
+                {
+                    JSONObject Parent = results.getJSONObject(i);
+                    String Name = "No.";
+                    if (Parent.has("name"))
+                        Name = Parent.getString("name");
+                    String ID="";
+                    if (Parent.has("place_id"))  // get All Places in Your Country
+                        ID= Parent.getString("place_id");
+                    String photo="";
+                    if (Parent.has("photos"))
+                        photo="https://maps.googleapis.com/maps/api/place/photo?" +
+                                "maxwidth=1000" +
+                                "&photoreference="+ Parent.getJSONArray("photos")
+                                .getJSONObject(0).getString("photo_reference")+
+                                "&key="+context.getResources().getString(R.string.Google_Places_Key);
+                    Location location = new Location("");
+                    if(Parent.has("geometry")) {
+                        JSONObject location_object = Parent.getJSONObject("geometry").getJSONObject("location");
+                        location.setLatitude(location_object.getDouble("lat"));
+                        location.setLongitude(location_object.getDouble("lng"));
+                    }
+                    List_sightseeing.add(new Places(ID,Name,photo,location));
+                 }
+                adapter_sightseeing = new Adapter_sightseeing(context, List_sightseeing);
+                pager_sightseeing.setAdapter(adapter_sightseeing);
+               pager_sightseeing.setCurrentItem(1);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+
+        }
+
     }
 
     private class GetWeather extends AsyncTask<String, Void, String> {
