@@ -45,19 +45,10 @@
                 android:orientation="horizontal">
 
                 <FrameLayout
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_marginStart="4dp"
                     android:layout_marginTop="4dp">
-
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/Pic_User_profile"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:src="@drawable/ic_person_black_24dp"
-                        android:tint="#000000"
-                        app:civ_border_color="#000000"
-                        app:civ_border_width="1dp" />
 
                     <ProgressBar
                         android:id="@+id/progress_picuser_inpost_profile"
@@ -66,6 +57,15 @@
                         android:layout_gravity="center"
                         android:theme="@style/AppTheme.NoActionBar"
                         android:visibility="visible" />
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/Pic_User_profile"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/ic_person_black_24dp"
+                        android:tint="#000000"
+                        app:civ_border_color="#000000"
+                        app:civ_border_width="1dp" />
                 </FrameLayout>
 
                 <LinearLayout
@@ -80,6 +80,7 @@
                         android:id="@+id/Name_User_profile"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:layout_marginStart="5dp"
                         android:fontFamily="@font/simsun"
                         android:gravity="center"
                         android:text="Zaid Al-Kasaji" />
@@ -100,17 +101,11 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <View
-                android:id="@+id/view10"
-                android:layout_width="match_parent"
-                android:layout_height="1sp"
-                android:background="#FACB85" />
-
             <FrameLayout
                 android:id="@+id/media_container_post"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_marginTop="10dp">
+                android:layout_height="300dp"
+                android:layout_marginTop="3dp">
 
                 <ImageView
                     android:id="@+id/volume_control"
@@ -139,12 +134,6 @@
                     android:visibility="visible" />
 
             </FrameLayout>
-
-            <View
-                android:id="@+id/view7"
-                android:layout_width="match_parent"
-                android:layout_height="1sp"
-                android:background="#FACB85" />
 
             <TextView
                 android:id="@+id/txt_post_desc"

@@ -104,9 +104,7 @@ public class Fragment_Post extends Fragment {
     }
 
     private RequestManager initGlide() {
-        RequestOptions options = new RequestOptions()
-                .placeholder(R.drawable.white_background)
-                .error(R.drawable.white_background);
+        RequestOptions options = new RequestOptions();
 
         return Glide.with(this)
                 .setDefaultRequestOptions(options);

@@ -43,10 +43,12 @@
 
             <TextView
                 android:id="@+id/txt_next_gellary"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_gravity="center"
-                android:layout_weight="4"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:background="@drawable/style_btn_next_newpost"
                 android:gravity="center"
                 android:text="@string/next"
                 android:textAlignment="center" />
@@ -71,45 +73,52 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:layout_margin="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1" >
 
-            <VideoView
-                android:id="@+id/img_share"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                />
+                android:layout_weight="1">
 
-            <ImageButton
-                android:id="@+id/btn_video_volume"
-                android:layout_width="46dp"
-                android:layout_height="37dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginBottom="16dp"
-                android:background="@drawable/style_btn_login_signup"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:srcCompat="@drawable/ic_volume_up" />
+                <VideoView
+                    android:id="@+id/img_share"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/txt_video_dur"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="24dp"
-                android:layout_marginBottom="24dp"
-                android:text="00:00"
-                android:textColor="@color/colorChipTextClicked"
-                android:textSize="24sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                <ImageButton
+                    android:id="@+id/btn_video_volume"
+                    android:layout_width="46dp"
+                    android:layout_height="37dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/style_btn_login_signup"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:srcCompat="@drawable/ic_volume_up" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/txt_video_dur"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginBottom="24dp"
+                    android:text="00:00"
+                    android:textColor="@color/colorChipTextClicked"
+                    android:textSize="24sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
 
         <GridView
             android:id="@+id/GV_gallery_pic"
@@ -117,6 +126,7 @@
             android:layout_height="match_parent"
             android:layout_marginTop="2dp"
             android:layout_weight="1"
+            android:background="@drawable/style_layout_comp_eventdisplay"
             android:gravity="center"
             android:horizontalSpacing="1dp"
             android:numColumns="3"

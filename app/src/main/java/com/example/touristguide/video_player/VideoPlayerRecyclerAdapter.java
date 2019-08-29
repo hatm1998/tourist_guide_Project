@@ -2,10 +2,8 @@ package com.example.touristguide.video_player;
 
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.RequestManager;
 import com.example.touristguide.R;
 import com.example.touristguide.video_player.models.Post;
-import com.google.common.base.MoreObjects;
 
 import java.util.ArrayList;
 
@@ -45,6 +42,7 @@ public class VideoPlayerRecyclerAdapter extends RecyclerView.Adapter<RecyclerVie
         viewHolder.setIsRecyclable(true);
         ((VideoPlayerViewHolder)viewHolder).onBind(context,posts.get(i), requestManager);
     }
+
 
     @Override
     public int getItemCount() {

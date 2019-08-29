@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.example.touristguide.video_player.VideoPlayerRecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/RCV_Post_As_Dialog"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+</com.example.touristguide.video_player.VideoPlayerRecyclerView>

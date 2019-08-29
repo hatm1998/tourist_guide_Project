@@ -1,7 +1,7 @@
 package com.example.touristguide.Profile.Fragment_Picture;
 
 public class setPicture {
-    String key,picture;
+   private String key,picture;
 
     public setPicture(String key, String picture) {
         this.key = key;

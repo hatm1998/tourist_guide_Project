@@ -17,8 +17,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="3"
-            android:background="@drawable/ballonwadi"
-            android:scaleY="1.2">
+            android:background="@drawable/ballonwadi">
+
+            <Button
+                android:id="@+id/btn_open_nav"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_weight="2"
+                android:background="@drawable/ic_menu"
+                android:backgroundTint="#CDFFFFFF"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:layout_width="0dp"
@@ -29,23 +40,12 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <Button
-                android:id="@+id/btn_open_nav"
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_weight="2"
-                android:background="@drawable/ic_menu"
-                android:backgroundTint="@color/colorAccent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
             <LinearLayout
                 android:id="@+id/layout_weather"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginBottom="10dp"
                 android:orientation="vertical"
                 android:paddingTop="20dp"
                 android:paddingBottom="20dp"
@@ -67,18 +67,6 @@
                     app:civ_border_width="1dp" />
 
                 <TextView
-                    android:id="@+id/txtHumidity_Activity_page"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="- - - - -"
-                    android:textColor="#D1FFFFFF"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
-
-                <TextView
                     android:id="@+id/txtLastUpdate_Activity_page"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -88,19 +76,31 @@
                     android:gravity="center"
                     android:text="- - - - - - - - -"
                     android:textColor="#D0FFFFFF"
-                    android:textSize="12sp"
+                    android:textSize="14sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/txtDescription_Activity_page"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="- - - - - - -"
                     android:textColor="#D1FFFFFF"
-                    android:textSize="12sp"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtHumidity_Activity_page"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="- - - - -"
+                    android:textColor="#D1FFFFFF"
+                    android:textSize="14sp"
                     android:textStyle="bold" />
 
                 <LinearLayout
@@ -114,22 +114,21 @@
 
                     <TextView
                         android:id="@+id/txtCelsius_Activity_page"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
-                        android:layout_weight="1"
                         android:gravity="center"
                         android:text="- - -"
                         android:textColor="#D1FFFFFF"
-                        android:textSize="12sp"
+                        android:textSize="14sp"
                         android:textStyle="bold" />
 
                     <Button
                         android:id="@+id/btn_refresh_location_Activity_page"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:layout_gravity="center"
-                        android:layout_weight="1"
+                        android:layout_marginStart="10dp"
                         android:background="@drawable/ic_refresh"
                         android:text="R"
                         android:textColor="#D1FFFFFF" />
@@ -146,6 +145,7 @@
         android:id="@+id/Rev_Activity"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="-25dp"
         android:layout_weight="0"
         android:background="@drawable/style_layout_comp_eventdisplay"
         android:numColumns="2"

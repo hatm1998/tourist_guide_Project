@@ -86,7 +86,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="7dp"
-                    android:text="www.ammanhospital.com"
+                    android:inputType="textWebEditText"
+                    android:text="www"
                     android:textColor="#2680CA"
                     android:textSize="12sp" />
             </TableRow>

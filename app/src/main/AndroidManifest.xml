@@ -8,6 +8,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
         android:allowBackup="true"
@@ -20,47 +22,35 @@
             android:name=".Setting_Account.Settings"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"></activity>
         <activity
-            android:name=".Setting_Account.Setting_Account"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
+            android:name=".Setting_Account.Setting_Account"/>
         <activity
-            android:name=".About_Us.About_Us"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
+            android:name=".About_Us.About_Us"/>
         <activity
-            android:name=".Event.Event_Activity.Event_Page"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
+            android:name=".Event.Event_Activity.Event_Page" />
         <activity
-            android:name=".Event.Display_Event.Display_Event_page"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
+            android:name=".Event.Display_Event.Display_Event_page"/>
         <activity
-            android:name=".signup"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
+            android:name=".signup" />
         <activity
-            android:name=".ShareItem.Add_new_post"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
+            android:name=".ShareItem.Add_new_post" />
         <activity android:name=".text_component" />
         <activity
-            android:name=".CityActivity.City_Main"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
+            android:name=".CityActivity.City_Main" />
         <activity android:name=".ShareItem.Next_Info_Item" />
         <activity
-            android:name=".Utilis.Material_Chip_View"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
+            android:name=".Utilis.Material_Chip_View"/>
         <activity
-            android:name=".Contact_page"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
+            android:name=".Contact_page" />
         <activity
-            android:name=".authentication.Login"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
+            android:name=".authentication.Login"/>
 
         <activity
-            android:name=".Places_Api.Display_Places_Option"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
+            android:name=".Places_Api.Display_Places_Option" />
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
         <activity
-            android:name=".Navigation_Drawer"
-            android:theme="@style/Theme.Navigation">
+            android:name=".Navigation_Drawer">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

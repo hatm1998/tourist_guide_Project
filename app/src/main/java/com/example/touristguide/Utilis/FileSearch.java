@@ -1,7 +1,6 @@
 package com.example.touristguide.Utilis;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -14,16 +13,22 @@ public class FileSearch {
         File file = new File(Dir);
         File[] listfile = file.listFiles();
 
-        for (int i = 0; i < listfile.length; i++) {
-            if (listfile[i].isDirectory()) {
+        try {
+            for (int i = 0; i < listfile.length; i++) {
+                if (listfile[i].isDirectory()) {
 
-                pathArray.add(listfile[i].getAbsolutePath());
+                    pathArray.add(listfile[i].getAbsolutePath());
 
 
+                }
             }
-        }
-        return pathArray;
 
+        }catch (Exception e)
+        {
+
+        }
+
+        return pathArray;
     }
 
     public static ArrayList<String> getpicpaths(String Dir) {
@@ -32,6 +37,7 @@ public class FileSearch {
         File file = new File(Dir);
         File[] listfile = file.listFiles();
 
+        if(listfile != null)
         for (int i = 0; i < listfile.length; i++) {
             if (listfile[i].isFile()) {
                 Log.d("PathFiles", listfile[i].getParent());
@@ -50,7 +56,8 @@ public class FileSearch {
 
         File file = new File(Dir);
         File[] listfile = file.listFiles();
-
+        
+        if(listfile != null)
         for (int i = 0; i < listfile.length; i++) {
             if (listfile[i].isFile()) {
 

@@ -9,8 +9,10 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestManager;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.touristguide.R;
-import com.example.touristguide.video_player.models.Post;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
@@ -20,7 +22,6 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class notification_page extends Fragment {
 
@@ -33,6 +34,14 @@ public class notification_page extends Fragment {
 
     public notification_page() {
         // Required empty public constructor
+    }
+    private RequestManager initGlide() {
+        RequestOptions options = new RequestOptions()
+                .placeholder(R.drawable.white_background)
+                .error(R.drawable.white_background);
+
+        return Glide.with(getActivity())
+                .setDefaultRequestOptions(options);
     }
 
 
@@ -54,7 +63,7 @@ public class notification_page extends Fragment {
         Query query = firebaseFirestore.collection("Notificarion")
                 .whereEqualTo("UserID", mAuth.getCurrentUser().getUid());
 
-        adapter = new Adapter_notification(getContext(), list);
+        adapter = new Adapter_notification(getContext(), list,initGlide());
 
         RCV_not.setLayoutManager(new GridLayoutManager(getContext(), 1));
         RCV_not.setAdapter(adapter);

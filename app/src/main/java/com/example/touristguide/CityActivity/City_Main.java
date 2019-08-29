@@ -8,6 +8,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
@@ -21,13 +22,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.ViewCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
@@ -116,6 +114,8 @@ public class City_Main extends AppCompatActivity {
     private ArrayList<Places> List_sightseeing;
     private Adapter_sightseeing adapter_sightseeing;
 
+    private String CityID;
+
     @SuppressLint("WrongConstant")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,7 +123,7 @@ public class City_Main extends AppCompatActivity {
         setContentView(R.layout.header_main_city);
         context = this;
         final Intent intent = getIntent();
-        final String CityID = intent.getStringExtra("Ads_id");
+        CityID = intent.getStringExtra("Ads_id");
         firebaseFirestore = FirebaseFirestore.getInstance();
 
         cityItem = findViewById(R.id.city_item);
@@ -213,10 +213,10 @@ public class City_Main extends AppCompatActivity {
 
         // get All Places in Your Country
         StringBuilder stringBuilder = new StringBuilder("https://maps.googleapis.com/maps/api/place/textsearch/json?");
-        stringBuilder.append("query=الاماكن السياحية+في+"+"الطفيلة");
+        stringBuilder.append("query=الاماكن السياحية+في+"+CityID);
         stringBuilder.append("&key=" + getResources().getString(R.string.Google_Places_Key));
         String Url = stringBuilder.toString();
-       Get_City get_city = new Get_City();
+        Get_City get_city = new Get_City();
         get_city.execute(Url);
 
 
@@ -273,6 +273,8 @@ public class City_Main extends AppCompatActivity {
                             post.setPOSTID(documentChange.getDocument().getId());
                             posts.add(post);
                             adapter_Post.notifyDataSetChanged();
+
+
                         }
                     }
                 }
@@ -312,14 +314,26 @@ public class City_Main extends AppCompatActivity {
             }
         });
 
-        nestedScrollView.scrollTo(0,0);
+        new CountDownTimer(500, 500) {
+            public void onTick(long millisUntilFinished) {
+
+            }
+
+            public void onFinish() {
+                nestedScrollView.scrollTo(0,0);
+            }
+        }.start();
 
     }
-
+public void top(View view){
+    nestedScrollView.scrollTo(0,0);
+  //  Post_list_view.scrollTo(0,0);
+    Toast.makeText(context,"done",Toast.LENGTH_SHORT).show();
+}
     public  void open(View view){
         Intent intent =new Intent(this, Display_Places_Option.class);
         intent.putExtra("search",((Button)view).getText().toString());
-        Toast.makeText(this,((Button)view).getText().toString(),Toast.LENGTH_SHORT).show();
+        intent.putExtra("City",CityID);
         startActivity(intent);
     }
 
@@ -331,10 +345,10 @@ public class City_Main extends AppCompatActivity {
 
     }
 
+
+
     private RequestManager initGlide() {
-        RequestOptions options = new RequestOptions()
-                .placeholder(R.drawable.white_background)
-                .error(R.drawable.white_background);
+        RequestOptions options = new RequestOptions();
 
         return Glide.with(this)
                 .setDefaultRequestOptions(options);

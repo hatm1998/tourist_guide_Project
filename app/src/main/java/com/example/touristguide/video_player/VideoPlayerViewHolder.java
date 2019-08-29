@@ -5,9 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Message;
-import android.telecom.Call;
-import android.transition.CircularPropagation;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -25,20 +22,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.RequestManager;
 import com.example.touristguide.Commnets.Bottom_Sheet_Comment;
-import com.example.touristguide.Commnets.set_Comment;
 import com.example.touristguide.R;
-import com.example.touristguide.text_component;
 import com.example.touristguide.video_player.models.Post;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.common.base.MoreObjects;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Callback;
@@ -138,7 +131,8 @@ public class VideoPlayerViewHolder extends RecyclerView.ViewHolder {
         });
 
 
-        Query SecoundQuery = firebaseFirestore.collection("post").document(post.getPOSTID()).collection("Comment");
+        Query SecoundQuery = firebaseFirestore.collection("post")
+                .document(post.getPOSTID()).collection("Comment");
 
 
         SecoundQuery.addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -154,7 +148,8 @@ public class VideoPlayerViewHolder extends RecyclerView.ViewHolder {
             }
         });
 
-        final Query ThiredQuery = firebaseFirestore.collection("post").document(post.getPOSTID()).collection("Fav");
+        final Query ThiredQuery = firebaseFirestore.collection("post")
+                .document(post.getPOSTID()).collection("Fav");
 
 
         ThiredQuery.addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -277,7 +272,10 @@ public class VideoPlayerViewHolder extends RecyclerView.ViewHolder {
             }
         });
 
+        if(!post.getDesc().equals(""))
         Desc.setText(post.getDesc());
+        else
+            Desc.setVisibility(View.GONE);
         firebaseFirestore.collection("User").document(post.getUserID()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {

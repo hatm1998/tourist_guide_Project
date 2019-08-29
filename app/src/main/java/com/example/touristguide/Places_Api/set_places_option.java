@@ -13,7 +13,6 @@ public class set_places_option {
     private int Level,user_rating;
     private double Rating;
     private Location location;
-
     public set_places_option(String name,
                              String address,
                              String state,

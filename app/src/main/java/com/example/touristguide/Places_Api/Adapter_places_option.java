@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.net.Uri;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,16 +13,13 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.QuickContactBadge;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.touristguide.Event.Event_Activity.silder_Image.adapter_Display_Image_Slider;
-import com.example.touristguide.Event.Event_Activity.silder_Image.set_Image;
 import com.example.touristguide.R;
 import com.hedgehog.ratingbar.RatingBar;
 import com.squareup.picasso.Callback;
@@ -32,7 +28,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import static com.example.touristguide.Places_Api.Display_Places_Option.location;
+import static com.example.touristguide.Places_Api.Display_Places_Option.position_location;
 
 public class Adapter_places_option  extends RecyclerView.Adapter<Adapter_places_option.ViewHolder> {
 
@@ -155,9 +151,9 @@ public class Adapter_places_option  extends RecyclerView.Adapter<Adapter_places_
         holder.level_Resturant.setText("Level : "+pos.getLevel());
         holder.Rating_Resturant.setText(pos.getRating()+"");
         holder.txt_Tel.setText(pos.getPhone());
-        holder.txt_Website.setText(pos.getWebsite());
+        holder.txt_Website.setText((pos.getWebsite().equals("UnKnown")?"UnKnown":"Go to the website"));
         holder.txt_numphoto.setText("Photo : "+pos.getListPhoto().size());
-        holder.btn_Location.setText(String.format("%.2f KM",distance(pos.getLocation(),location)));
+        holder.btn_Location.setText(String.format("%.2f KM",distance(pos.getLocation(),position_location)));
         holder.btn_Tel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

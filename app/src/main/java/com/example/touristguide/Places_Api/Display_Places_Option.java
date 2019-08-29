@@ -1,11 +1,5 @@
 package com.example.touristguide.Places_Api;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
@@ -31,8 +25,19 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.touristguide.Event.Event_Activity.silder_Image.set_Image;
 import com.example.touristguide.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -56,27 +61,33 @@ public class Display_Places_Option extends AppCompatActivity {
     // Component Screen
     private float scale;
     // Component Places
-    private HashMap<String, String> Type_of_Places;
+    private ArrayList<String> Type_of_Places;
     private ToggleButton btn_All_Chip;
-    private ArrayList<ToggleButton> ALL_chip = new ArrayList<>();
     private String search;
+    private String CityID;
 
     private Get_ID_Places get_places = null;
     private final int type_Query_places = 10;
     private final int type_Query_Nearby_places = 15;
     private LayoutAnimationController controller;
-    private ArrayList<set_places_option> list;
-    private Adapter_places_option adapter;
     private ProgressBar progressBar;
     // Component Current Location .
+
     private LocationManager locationManager;
     private String provider;
-    public static  Location location;
+    public static  Location position_location;
     private int MY_PERMISSION = 0;
-    private  int lastson = 0;
-    private int startat = 0;
-    private int counter ;
 
+
+    private ArrayList<set_places_option> list;
+    private Adapter_places_option adapter;
+
+    private  ArrayList<Get_Information_Places> Tasks =new ArrayList<>();
+
+    // FireBase
+
+    private FirebaseFirestore firebaseFirestore;
+    private DocumentReference Ref;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,36 +101,46 @@ public class Display_Places_Option extends AppCompatActivity {
         controller = AnimationUtils.loadLayoutAnimation(context, R.anim.layout);
         Intent intent = getIntent();
         search = intent.getStringExtra("search");
+        CityID=intent.getStringExtra("City");
+        Toast.makeText(context,CityID,Toast.LENGTH_SHORT).show();
 
-        RCV_PLaces.setLayoutManager(new GridLayoutManager(context, 1));
+        list = new ArrayList<>();
+        adapter = new Adapter_places_option(context, list);
+        RCV_PLaces.setAdapter(adapter);
+
+        firebaseFirestore=FirebaseFirestore.getInstance();
+        Ref=  firebaseFirestore.collection("Cities").document(CityID);
+
+        RCV_PLaces.setLayoutManager(new LinearLayoutManager(context));
 
         if (search.equals("Restaurant")) {
-            Type_of_Places = new HashMap<>();
-            Type_of_Places.put("Restaurant", "Restaurant");
-            Type_of_Places.put("Food", "Food");
-            Type_of_Places.put("Night Club", "Night Club");
-            Type_of_Places.put("Bar", "Bar");
+            Type_of_Places= new ArrayList<>();
+            Type_of_Places.add("Restaurant");
+            Type_of_Places.add("Food");
+         //   Type_of_Places.add("Night Club");
+           // Type_of_Places.add("Bar");
         }
 
         if (search.equals("Hotels")) {
-            Type_of_Places = new HashMap<>();
-            Type_of_Places.put("Lodging", "Lodging");
-            Type_of_Places.put("5 Star", "5 Star Hotel");
-            Type_of_Places.put("4 Star", "4 Star Hotel");
-            Type_of_Places.put("3 Or Less Than", "3 Star Hotel+2 Star Hotel+1 Star Hotel");
+            Type_of_Places = new ArrayList<>();
+            Type_of_Places.add("Lodging");
+            Type_of_Places.add("5 Star");
+            Type_of_Places.add("4 Star");
+            Type_of_Places.add("3 Or Less Than");
         }
 
         if (search.equals("Hospital")) {
-            Type_of_Places = new HashMap<>();
-            Type_of_Places.put("Private", "Private hospital");
-            Type_of_Places.put("Government", "Government hospital");
+            Type_of_Places = new ArrayList<>();
+            Type_of_Places.add("Private");
+            Type_of_Places.add("Government");
         }
 
         // Add Button Closest To Me ;
-        Type_of_Places.put("Closest To Me", search);
+        Type_of_Places.add("Closest To Me");
 
 
         scale = getResources().getDisplayMetrics().density;
+
 
         // Create btn All Chip
         btn_All_Chip = new ToggleButton(this);
@@ -127,19 +148,17 @@ public class Display_Places_Option extends AppCompatActivity {
         btn_All_Chip.setChecked(true);
 
         // Create btn All Chip Places .
-        for (String Name : Type_of_Places.keySet()) {
-            Log.i("hazem", Name);
+        for (String Name : Type_of_Places) {
             Create_Chip(new ToggleButton(this), Name, LinearLayout.LayoutParams.WRAP_CONTENT);
         }
 
         Toast.makeText(context, search, Toast.LENGTH_SHORT).show();
         // get All Places in Your Country
 
-        Start_Query(type_Query_places, search);  // Start Default Query .
-
+         Start_Query(type_Query_places, search);  // Start Default Query .
     }
 
-    private void Create_Chip(final ToggleButton chip, String Text, int size) {
+    private void Create_Chip(final ToggleButton chip , String Text, int size) {
         chip.setTextOff(Text);
         chip.setTextOn(Text);
         chip.setChecked(false);
@@ -159,8 +178,6 @@ public class Display_Places_Option extends AppCompatActivity {
         chip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                 startat = 0;
-                 lastson = 0;
 
                 if (chip.isChecked()) {
                     String Place = chip.getTextOn().toString();
@@ -168,20 +185,33 @@ public class Display_Places_Option extends AppCompatActivity {
                     reformation_Chips(chip);
 
 
-
                     if (Place.equals("Closest To Me"))
-                        Start_Query(type_Query_Nearby_places, search);   // Start Query Nearby places by Current location .
+                        Start_Query(type_Query_Nearby_places,"");   // Start Query Nearby places by Current location .
                     else if (Place.equals("All"))
-                        Start_Query(type_Query_places, search);  // Start Default Query .
+                        get_ID_places(search);  // Start Default Query .
                     else
-                        Start_Query(type_Query_places, Type_of_Places.get(Place));   // Start Query Place .
+                    {
+                        if(Place.equals("Night Club"))
+                            Place="Night_Club";
+                        else if(Place.equals("5 Star"))
+                            Place="five_star_hotel";
+                        else if(Place.equals("4 Star"))
+                            Place="four_star_hotel";
+                        else if(Place.equals("3 Or Less Than"))
+                            Place="Less_star_hotel";
+                        else if(Place.equals("Private"))
+                            Place="Private_hospital";
+                        else if(Place.equals("Government"))
+                            Place="Government_hospital";
+                        Start_Query(type_Query_places,Place); } // Start Query Place .
 
 
                 } else {
                     btn_All_Chip.setChecked(true);
                     //  Get Default Query - > Btn All .
-                    Start_Query(type_Query_places, search);
+                    Start_Query(type_Query_places,search);   // Start Default Query .
                 }
+
             }
         });
         LinearLayout.LayoutParams Params =
@@ -198,30 +228,11 @@ public class Display_Places_Option extends AppCompatActivity {
         }
     }
 
-    private void Query_Places(String Places) {
-
-        // get All Places in Your Country
-        StringBuilder stringBuilder = new StringBuilder("https://maps.googleapis.com/maps/api/place/textsearch/json?");
-        stringBuilder.append("query=" + Places + "+in+Amman");
-        stringBuilder.append("&key=" + getResources().getString(R.string.Google_Places_Key));
-        String Url = stringBuilder.toString();
-        if (get_places != null)
-            get_places.cancel(true);
-
-        get_places = new Get_ID_Places();
-        get_places.execute(Url);
-
-
-        Toast.makeText(context, Places, Toast.LENGTH_SHORT).show();
-        Log.i("Qury", stringBuilder.toString());
-
-    }
-
     private void Query_Nearby_places() {
 
         // get All Places in Your Country
         StringBuilder stringBuilder = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json?");
-        stringBuilder.append("location=" + location.getLatitude() + "," + location.getLongitude());
+        stringBuilder.append("location=" + position_location.getLatitude() + "," + position_location.getLongitude());
         stringBuilder.append("&radius=" + 1000);
         stringBuilder.append("&keyword=" + search);
         stringBuilder.append("&key=" + getResources().getString(R.string.Google_Places_Key));
@@ -234,7 +245,7 @@ public class Display_Places_Option extends AppCompatActivity {
 
     }
 
-    private void Start_Query(int type, String Place) {
+    private void Start_Query(int Type ,String place) {
         //Get Coordinates
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
@@ -258,15 +269,15 @@ public class Display_Places_Option extends AppCompatActivity {
             }, MY_PERMISSION);
         }
         locationManager.requestLocationUpdates(provider, 0, 0, new MYLocationListener());
-        location = locationManager.getLastKnownLocation(provider);
-        if (location != null) {
+        position_location = locationManager.getLastKnownLocation(provider);
+        if (position_location != null) {
 
-            if (type == type_Query_places)
-                Query_Places(Place);
-            else if (type == type_Query_Nearby_places)
+            if (Type == (type_Query_places)) {
+                get_ID_places(place);
+            } else if (Type == (type_Query_Nearby_places))
                 Query_Nearby_places(); // Start Query Nearby places by Current location .
-        } else
-            Log.e("TAG", "No Location");
+        }else
+            Log.e("TAGS", "No Location");
     }
 
     public class MYLocationListener implements LocationListener {
@@ -292,11 +303,6 @@ public class Display_Places_Option extends AppCompatActivity {
         }
     }
 
-    private  interface For_Chick{
-
-        void finished(boolean chick);
-    }
-
     private  class Get_ID_Places extends AsyncTask<String, String, String> {
 
         private String url;
@@ -304,16 +310,12 @@ public class Display_Places_Option extends AppCompatActivity {
         private BufferedReader bufferedReader;
         private StringBuilder stringBuilder;
         private String data;
-        //  Component RCV
 
 
         Get_ID_Places() {
 
-            // Clear Array List .
-            list = new ArrayList<>();
-            adapter = new Adapter_places_option(context, list);
-            RCV_PLaces.setAdapter(adapter);
-
+//            Clear Array List .
+            Rest_Rec_view();
         }
 
 
@@ -346,43 +348,17 @@ public class Display_Places_Option extends AppCompatActivity {
 
 
         @Override
-        protected void onPostExecute(String s) {
+        protected void onPostExecute(String s)
+        {
             try {
                 final JSONObject ParentObject = new JSONObject(s);
                 final JSONArray result = ParentObject.getJSONArray("results");
-
-                if (result.length() > 5)
-                    lastson = 5;
-                else lastson = result.length();
-
-
-                RCV_PLaces.addOnScrollListener(new RecyclerView.OnScrollListener() {
-                    @Override
-                    public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                        super.onScrollStateChanged(recyclerView, newState);
-                    }
-
-                    @Override
-                    public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                        super.onScrolled(recyclerView, dx, dy);
-                        Boolean canread = !recyclerView.canScrollVertically(1);
-                        Log.d("LASTONE", lastson + " / " + startat);
-                        if (canread && dy > 0  && result.length() > lastson ) {
-                            //RCV_PLaces.smoothScrollToPosition(lastson);
-                            loadmore(result, lastson);
-
-                        }
-
-                    }
-                });
-
-                int l = 0;
-                for (int i = 0; i < lastson; i++) {
+                for (int i = 0; i < result.length(); i++) {
                     JSONObject Parent = result.getJSONObject(i);
-
                     if (Parent.has("place_id")) { // get All Places in Your Country
                         String ID = Parent.getString("place_id");
-                        Log.i("ID_Places",ID);
+                        Log.i("ID_Places", ID);
+
                         StringBuilder Str_Url = new StringBuilder("https://maps.googleapis.com/maps/api/place/details/json?");
                         Str_Url.append("placeid=" + ID);
                         Str_Url.append("&fields=name," +
@@ -397,93 +373,19 @@ public class Display_Places_Option extends AppCompatActivity {
                                 "photos");
                         Str_Url.append("&key=" + getResources().getString(R.string.Google_Places_Key));
                         String Url = Str_Url.toString();
-                        Get_Information_Places informationPlaces = new Get_Information_Places(list, adapter, new For_Chick() {
-                            @Override
-                            public void finished(boolean chick) {
-
-                            }
-                        },0,0);
-                        informationPlaces.execute(Url);
-                        Log.i("moh", Str_Url.toString());
+                        Get_Information_Places places = new Get_Information_Places();
+                        places.execute(Url);
+                        Tasks.add(places);
                     }
-                    l = i+1;
-
-                    //else
-                    //{Toast.makeText(context,"Error",Toast.LENGTH_SHORT).show();}
-
                 }
 
 
-                lastson = l ;
-
-
-            } catch (JSONException e) {
-                Toast.makeText(context, "Q1 : " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                e.printStackTrace();
-            }
-        }
-
-
-
-        private void loadmore(JSONArray res, int lastone) {
-            progressBar.setVisibility(View.VISIBLE);
-            try {
-                Toast.makeText(context, "last = " + lastone, Toast.LENGTH_SHORT).show();
-                if ((res.length() - lastone > 5))
-                    startat = lastone +5;
-                else
-                    startat = res.length();
-
-                int k = 0;
-                 counter = lastone;
-                for (  counter = lastone; counter < startat ; counter++) {
-                    JSONObject Parent = res.getJSONObject(counter);
-
-                    if (Parent.has("place_id")) { // get All Places in Your Country
-                        String ID = Parent.getString("place_id");
-                        StringBuilder Str_Url = new StringBuilder("https://maps.googleapis.com/maps/api/place/details/json?");
-                        Str_Url.append("placeid=" + ID);
-                        Str_Url.append("&fields=name," +
-                                "formatted_address," +
-                                "geometry," +
-                                "rating," +
-                                "user_ratings_total," +
-                                "opening_hours," +
-                                "price_level," +
-                                "photos");
-                        Str_Url.append("&key=" + getResources().getString(R.string.Google_Places_Key));
-                        String Url = Str_Url.toString();
-                        Get_Information_Places informationPlaces = new Get_Information_Places(list, adapter, new For_Chick() {
-                            @Override
-                            public void finished(boolean chick) {
-
-                                if(chick)
-                                {  Log.i("pop","counter : "+counter);
-                                    progressBar.setVisibility(View.GONE);}
-
-                            }
-                        } , counter, startat);
-                        informationPlaces.execute(Url);
-                        Log.i("moh", Str_Url.toString());
-                        Log.i("mael","counter : "+counter+"   startat : "+startat);
-                    }
-
-
-                    //else
-                    //{Toast.makeText(context,"Error",Toast.LENGTH_SHORT).show();}
-                }
-                lastson = startat;
-
-
-
-            } catch (JSONException e) {
+            }catch (JSONException e) {
                 Toast.makeText(context, "Q1 : " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
             }
 
         }
-
-
     }
 
     private class Get_Information_Places extends AsyncTask<String, String, String> {
@@ -492,25 +394,6 @@ public class Display_Places_Option extends AppCompatActivity {
         private BufferedReader bufferedReader;
         private StringBuilder stringBuilder;
         private String data;
-
-        //  Component RCV
-        private ArrayList<set_places_option> list;
-        private Adapter_places_option adapter;
-
-   int start,last;
-        private For_Chick forChick;
-        Get_Information_Places(ArrayList<set_places_option> list, Adapter_places_option adapter
-        ,  For_Chick forChick , int start , int  last) {
-
-            // Clear Array List .
-            this.list = list;
-            this.adapter = adapter;
-            this.forChick=forChick;
-
-            this.start=start;
-            this.last=last;
-        }
-
         @Override
         protected String doInBackground(String... strings) {
             url = strings[0];
@@ -542,9 +425,7 @@ public class Display_Places_Option extends AppCompatActivity {
                 JSONObject Parent = new JSONObject(s);
                 JSONObject result = Parent.getJSONObject("result");
 
-
                 String address = "UnKnown";
-
                 if (result.has("formatted_address"))
                     address = result.getString("formatted_address");
                 Log.i("abood", address);
@@ -591,9 +472,6 @@ public class Display_Places_Option extends AppCompatActivity {
                 if (result.has("user_ratings_total"))
                     user_rating = result.getInt("user_ratings_total");
                 list.add(new set_places_option(Name, address, IS_open, photos, Phone, Website, price_level, user_rating, rating, location));
-                Log.i("basil", Name);
-                if(start == last-1)
-                this.forChick.finished(true);
                 adapter.notifyDataSetChanged();
             } catch (JSONException e) {
                 Toast.makeText(context, "Q2 : ", Toast.LENGTH_SHORT).show();
@@ -601,5 +479,83 @@ public class Display_Places_Option extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+    }
+
+    private   void Rest_Rec_view(){
+
+        Log.i("onRest",Tasks.size()+"    ");
+        for(Get_Information_Places x : Tasks)
+        {
+            x.cancel(true);
+        }
+     Tasks.clear();
+     Log.i("onRest",Tasks.size()+"   ");
+    //  Clear Array List .
+    list.clear();
+    adapter.notifyDataSetChanged();
+}
+
+    private void get_ID_places(String Place){
+
+      //  Clear Array List .
+        Rest_Rec_view();
+
+        Ref.collection("ID_Places").document(Place).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if(documentSnapshot.exists())
+                {
+                    ArrayList<String> ID=( ArrayList<String>) documentSnapshot.get("ID_Places");
+
+
+                    for( String i : ID) {
+                        StringBuilder Str_Url = new StringBuilder("https://maps.googleapis.com/maps/api/place/details/json?");
+                        Str_Url.append("placeid=" + i);
+                        Str_Url.append("&fields=name," +
+                                "formatted_address," +
+                                "formatted_phone_number,"+
+                                "website,"+
+                                "geometry," +
+                                "rating," +
+                                "user_ratings_total," +
+                                "opening_hours," +
+                                "price_level," +
+                                "photos");
+                        Str_Url.append("&key=" + getResources().getString(R.string.Google_Places_Key));
+                        String Url = Str_Url.toString();
+
+                        Get_Information_Places places = new Get_Information_Places();
+                        places.execute(Url);
+                        Tasks.add(places);
+                    }
+                }
+                else
+                    Toast.makeText(context," Not Found ! ",Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(context,"Error : "+e.getMessage(),Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    private  void  Add_ID_places(ArrayList<String> ID ,String Places) {
+        HashMap<String ,ArrayList<String>> data=new HashMap<>();
+        data.put("ID_Places",ID);
+
+        firebaseFirestore.collection("Cities").document("Ma'an")
+                .collection("ID_Places").document(Places).set(data).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(context,"Done FireBase ",Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(context,"Error : "+e.getMessage(),Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

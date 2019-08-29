@@ -4,17 +4,15 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
-import com.example.touristguide.R;
 import com.example.touristguide.Event.Event_Activity.silder_Image.adapter_Image_Slider;
 import com.example.touristguide.Event.Event_Activity.silder_Image.set_Image;
+import com.example.touristguide.R;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -56,7 +54,7 @@ public class Event_Page extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event__page);
 
-        RCV_Events =findViewById(R.id.REV_Event_page);
+      /*  RCV_Events =findViewById(R.id.REV_Event_page);
 
         imageModelArrayList=new ArrayList<>();
 
@@ -72,7 +70,8 @@ public class Event_Page extends AppCompatActivity {
 
         adapter_events=new Adapter_Events(this,List);
         RCV_Events.setLayoutManager(new GridLayoutManager(this,1));
-        RCV_Events.setAdapter(adapter_events);
+        RCV_Events.setAdapter(adapter_events);*/
+
     }
     private void init_Sliding_IMage() {
         // set Image To silder In Home Page.

@@ -1,5 +1,4 @@
 package com.example.touristguide.Activity;
-
 public class setGovernorates {
 
     private int image;

@@ -2,6 +2,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_notification"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="10dp"
@@ -41,21 +42,6 @@
                 android:fontFamily="@font/mvboli"
                 android:textColor="#FDFACB85" />
         </LinearLayout>
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/img_event_notification_page"
-            android:layout_width="70dp"
-            android:layout_height="90dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:src="@drawable/ic_person_black_24dp"
-            android:tint="#000000"
-            app:civ_border_color="#000000"
-            app:civ_border_width="2dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -99,6 +85,21 @@
             app:layout_constraintEnd_toEndOf="@+id/img_event_notification_page"
             app:layout_constraintStart_toStartOf="@+id/img_event_notification_page"
             app:layout_constraintTop_toTopOf="@+id/img_event_notification_page" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/img_event_notification_page"
+            android:layout_width="70dp"
+            android:layout_height="90dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:src="@drawable/ic_person_black_24dp"
+            android:tint="#000000"
+            app:civ_border_color="#000000"
+            app:civ_border_width="2dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

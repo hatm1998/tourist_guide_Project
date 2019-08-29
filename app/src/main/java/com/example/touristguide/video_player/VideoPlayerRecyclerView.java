@@ -13,13 +13,11 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 
 import com.bumptech.glide.RequestManager;
 import com.example.touristguide.CityActivity.City_Main;
@@ -55,7 +53,6 @@ public class VideoPlayerRecyclerView extends RecyclerView {
     private enum VolumeState {ON, OFF}
 
     ;
-
 
     // ui
     private ImageView thumbnail, volumeControl;
@@ -98,7 +95,8 @@ public class VideoPlayerRecyclerView extends RecyclerView {
 
 
         videoSurfaceView = new PlayerView(this.context);
-        videoSurfaceView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_ZOOM);
+        videoSurfaceView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FILL);
+
 
         BandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
         final TrackSelection.Factory videoTrackSelectionFactory =
@@ -314,6 +312,7 @@ public class VideoPlayerRecyclerView extends RecyclerView {
 
         videoSurfaceView.setPlayer(videoPlayer);
 
+
         viewHolderParent.setOnClickListener(videoViewClickListener);
 
         DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(
@@ -329,7 +328,9 @@ public class VideoPlayerRecyclerView extends RecyclerView {
             videoPlayer.prepare(videoSource);
             videoPlayer.setPlayWhenReady(true);
         }
+        Log.i("soso",child.getTag()+"");
     }
+
 
     private OnClickListener videoViewClickListener = new OnClickListener() {
         @Override
