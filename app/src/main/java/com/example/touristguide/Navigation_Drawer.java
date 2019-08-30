@@ -17,7 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -335,7 +335,7 @@ public class Navigation_Drawer extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        Toast.makeText(getBaseContext(), "" + id, Toast.LENGTH_LONG).show();
+
         if (id == R.id.nav_event) {
             startActivity(new Intent(this, Event_Page.class));
             Animatoo.animateFade(this);
@@ -411,7 +411,7 @@ public class Navigation_Drawer extends AppCompatActivity
                             HashMap<String, String> tokenmap = new HashMap<>();
                             tokenmap.put("Token", token);
                             firebaseFirestore.collection("Token").document(mAuth.getCurrentUser().getUid()).set(tokenmap);
-                            Toast.makeText(Navigation_Drawer.this, token, Toast.LENGTH_SHORT).show();
+
                         }
                     });
         }

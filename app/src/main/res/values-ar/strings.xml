@@ -12,4 +12,5 @@
     <string name="warningdialog">رسالة تنبيه</string>
     <string name="No">لا</string>
     <string name="Yes">نعم</string>
+    <string name="NotificationSetting">الأحداث , التعليقات و الإعجاب</string>
 </resources>

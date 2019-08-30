@@ -108,20 +108,6 @@
                         android:text="@string/EditProfile"
                         android:textSize="24sp" />
 
-                    <TextView
-                        android:id="@+id/txt_privacy"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginEnd="20dp"
-                        android:layout_marginBottom="5dp"
-                        android:clickable="true"
-                        android:fontFamily="@font/mvboli"
-                        android:foreground="?android:attr/selectableItemBackground"
-                        android:text="@string/Privacy"
-                        android:textSize="24sp" />
-
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -188,7 +174,7 @@
                                 android:layout_marginStart="35dp"
                                 android:layout_marginEnd="20dp"
                                 android:fontFamily="@font/mvboli"
-                                android:text="Event,comment and Like" />
+                                android:text="@string/NotificationSetting" />
                         </LinearLayout>
 
                         <LinearLayout

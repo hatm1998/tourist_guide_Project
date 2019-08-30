@@ -54,7 +54,7 @@ public class camera_fragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_camera, container, false);
         GallaryGrid = view.findViewById(R.id.GV_gallery_pic);
         ImagePic = view.findViewById(R.id.img_share);
-        btn_video_vol = view.findViewById(R.id.btn_video_volume);
+
         txt_next = view.findViewById(R.id.txt_next_gellary);
         ImagePic.setMediaController(mediaController);
         ImagePic.pause();
@@ -63,21 +63,7 @@ public class camera_fragment extends Fragment {
         directories = new ArrayList<>();
 
 
-        btn_video_vol.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (voice) {
-                    ImagePic.setOnPreparedListener(PreparedListener);
-                    btn_video_vol.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_volume_off_black_24dp));
 
-                    voice = false;
-
-                } else {
-                    btn_video_vol.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_volume_up));
-                    voice = true;
-                }
-            }
-        });
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getActivity())
                 .build();
         ImageLoader.getInstance().init(config);

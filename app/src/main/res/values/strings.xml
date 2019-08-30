@@ -106,5 +106,6 @@
     <string name="warningdialog">Warning dialog</string>
     <string name="Yes">Yes</string>
     <string name="No">No</string>
+    <string name="NotificationSetting">Event , Comment and Like</string>
 
 </resources>
