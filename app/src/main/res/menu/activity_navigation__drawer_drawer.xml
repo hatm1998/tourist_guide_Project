@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single"
-        >
+    <group>
         <item  android:title="@string/menu_Event"
             android:id="@+id/nav_event"
             android:iconTint="#ffffff"

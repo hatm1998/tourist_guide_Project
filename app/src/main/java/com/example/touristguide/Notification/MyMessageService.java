@@ -28,18 +28,16 @@ public class MyMessageService extends FirebaseMessagingService {
         super.onMessageReceived(remoteMessage);
 
 
-        shownotification(remoteMessage.getNotification().getTitle() , remoteMessage.getNotification().getBody()  );
+        shownotification(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody());
     }
 
 
-
-    public void shownotification(String Title , String Message)
-    {
+    public void shownotification(String Title, String Message) {
 
 
         Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this,"MyNotification")
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "MyNotification")
                 .setContentTitle(Title)
                 .setContentText(Message)
                 .setSmallIcon(R.drawable.logo)
@@ -47,6 +45,6 @@ public class MyMessageService extends FirebaseMessagingService {
                 .setAutoCancel(true);
 //builder.addAction(Toast.makeText(getApplicationContext(),"Hello",Toast.LENGTH_LONG).show());
         NotificationManagerCompat managerCompat = NotificationManagerCompat.from(this);
-        managerCompat.notify(99999,builder.build());
+        managerCompat.notify(99999, builder.build());
     }
 }

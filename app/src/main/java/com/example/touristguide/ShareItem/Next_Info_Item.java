@@ -11,6 +11,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -36,6 +37,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
 
@@ -45,12 +47,17 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import org.json.JSONObject;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.lang.reflect.Field;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -226,7 +233,25 @@ public class Next_Info_Item extends AppCompatActivity {
                                             @Override
                                             public void onComplete(@NonNull Task<DocumentReference> task) {
 
-
+                                                firebaseFirestore.collection("User").document(mAuth.getCurrentUser().getUid())
+                                                        .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                        String user = task.getResult().get("Username").toString();
+                                                        String categories = "";
+                                                        for (int x = 0 ; x < ListSelectedItem.size() ; x++)
+                                                        {
+                                                            if (x < ListSelectedItem.size()-1)
+                                                            {
+                                                                categories += ListSelectedItem.get(x) + " , ";
+                                                            }
+                                                            else
+                                                                categories += ListSelectedItem.get(x) ;
+                                                        }
+                                                        Notify notify = new Notify(ListSelectedItem,user + " " + getResources().getString(R.string.PostCategories) + categories);
+                                                        notify.execute();
+                                                    }
+                                                });
 
 
                                                 Toast.makeText(getBaseContext(), "done , post was uploaded Successfully", Toast.LENGTH_LONG).show();
@@ -269,6 +294,58 @@ public class Next_Info_Item extends AppCompatActivity {
         }
 
 
+    }
+
+    public class Notify extends AsyncTask<Void, Void, Void> {
+
+        private String Msg;
+        private ArrayList<String> ID;
+
+        Notify(ArrayList<String> Reciver, String Msg) {
+            ID = Reciver;
+            this.Msg = Msg;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            for (int x = 0; x < ID.size(); x++)
+                try {
+
+                    URL url = new URL("https://fcm.googleapis.com/fcm/send");
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+                    conn.setUseCaches(false);
+                    conn.setDoInput(true);
+                    conn.setDoOutput(true);
+
+                    conn.setRequestMethod("POST");
+                    conn.setRequestProperty("Authorization", "key=AIzaSyARUYhU0qleq6Dlbj6ZQ9b0JXyB3bqsYIo");
+                    conn.setRequestProperty("Content-Type", "application/json");
+
+                    JSONObject json = new JSONObject();
+
+                    json.put("to", "/topics/" + ID.get(x));
+
+                    JSONObject info = new JSONObject();
+                    info.put("body", Msg);   // Notification title
+                    info.put("title", "SafariAPP"); // Notification body
+                    info.put("content_available", "true");
+                    info.put("priority", "high");
+
+                    json.put("notification", info);
+
+                    OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
+                    wr.write(json.toString());
+                    wr.flush();
+                    conn.getInputStream();
+
+                    // Toast.makeText(getBaseContext(),"Done",Toast.LENGTH_LONG).show();
+
+                } catch (Exception e) {
+                    Log.d("ErrorOne", "" + e);
+                }
+            return null;
+        }
     }
 
 

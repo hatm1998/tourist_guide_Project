@@ -120,15 +120,8 @@ public class Material_Chip_View extends AppCompatActivity {
         });
 
 
-        String chip_Name[] = {"Medical tourism"
-                , "Culture"
-                , "Entertainment"
-                , "Shopping"
-                , "Desert"
-                , "Beach"
-                , "Beaches"
-                , "Nature"
-                , "Arts"};
+        String chip_Name[] = getResources().getStringArray(R.array.chip_Name);
+
         // add Chips View .
         final FlowLayout layout = (FlowLayout) (findViewById(R.id.flayout));
         final float scale = getResources().getDisplayMetrics().density;

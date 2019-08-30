@@ -2,4 +2,14 @@
 <resources>
     <string name="app_name">سفاري</string>
     <string name="Email">البريد الإلكتروني</string>
+    <string name="Profile">الحساب</string>
+    <string name="Language">اللغة</string>
+    <string name="SignUp">إنشاء حساب</string>
+    <string name="OK">موافق</string>
+    <string name="Notification">الإشعارات</string>
+    <string name="SelectLang">الرجاء إختيار واحدة من هذه اللغات</string>
+    <string name="ChangeLang">هل أنت متأكد من تغير اللغة ؟</string>
+    <string name="warningdialog">رسالة تنبيه</string>
+    <string name="No">لا</string>
+    <string name="Yes">نعم</string>
 </resources>

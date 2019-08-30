@@ -155,6 +155,7 @@ public class Adapter_notification  extends RecyclerView.Adapter<Adapter_notifica
             }
         });
 
+
        // Toast.makeText(context,list.get(position).getPostInfo() , Toast.LENGTH_LONG).show();
 
        // Log.d("Info1",list.get(position).getPostInfo());

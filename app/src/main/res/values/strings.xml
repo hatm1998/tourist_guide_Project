@@ -56,6 +56,15 @@
     <string name="DontDistrub">Do not Distrub</string>
     <string name="General">General</string>
     <string name="Language">Language</string>
+    <string name="Google_Places_Key">AIzaSyBi2SZsin1lPcKpyPYKvYLsoVN81Fx747A</string>
+    <string name="facebook_app_id">226485184939883</string>
+
+    <string name="fb_login_protocol_scheme">fb226485184939883</string>
+
+
+    <string name="categories">Categories</string>
+
+    <string name="PostCategories">Post with These Categories : </string>
     <string-array name="Categort">
         <item>Medical tourism</item>
         <item>Culture</item>
@@ -67,17 +76,22 @@
         <item>Arts</item>
 
     </string-array>
-    <string name="Google_Places_Key">AIzaSyBi2SZsin1lPcKpyPYKvYLsoVN81Fx747A</string>
-
     <string-array name="NotificationSettings">
         <item>Events</item>
         <item>Comment</item>
         <item>Likes</item>
 
     </string-array>
-
-    <string name="facebook_app_id">226485184939883</string>
-    <string name="fb_login_protocol_scheme">fb226485184939883</string>
+    <string-array name="chip_Name">
+        <item>Medical tourism</item>
+        <item>Culture</item>
+        <item>Entertainment</item>
+        <item>Shopping</item>
+        <item>Desert</item>
+        <item>Beach</item>
+        <item>Nature</item>
+        <item>Arts</item>
+    </string-array>
 
 
     <string-array name="selectedNotification">
@@ -87,5 +101,10 @@
 
 
     </string-array>
+    <string name="SelectLang">Please Select One of these Language</string>
+    <string name="ChangeLang">Are You sure to change Language ?</string>
+    <string name="warningdialog">Warning dialog</string>
+    <string name="Yes">Yes</string>
+    <string name="No">No</string>
 
 </resources>

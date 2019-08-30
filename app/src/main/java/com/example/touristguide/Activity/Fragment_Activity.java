@@ -2,6 +2,7 @@ package com.example.touristguide.Activity;
 
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
@@ -69,7 +70,7 @@ public class Fragment_Activity extends Fragment   {
     private String provider;
     private Location location;
     private double lat, lng;
-    private  int MY_PERMISSION = 0;
+
    private  OpenWeatherMap openWeatherMap ;
 
     public Fragment_Activity() {
@@ -163,29 +164,13 @@ public class Fragment_Activity extends Fragment   {
         return view;
     }
 
+    @SuppressLint("MissingPermission")
     private void Get_Current_Location(){
 //Get Coordinates
         locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
 
         provider = locationManager.getBestProvider(new Criteria(), false);
 
-        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-
-
-            ActivityCompat.requestPermissions(getActivity(), new String[]{
-                    Manifest.permission.INTERNET,
-                    Manifest.permission.ACCESS_COARSE_LOCATION,
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_NETWORK_STATE,
-                    Manifest.permission.SYSTEM_ALERT_WINDOW,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE
-
-
-            }, MY_PERMISSION);
-        }
         locationManager.requestLocationUpdates(provider, 0, 0, new MYLocationListener());
         location = locationManager.getLastKnownLocation(provider);
         if (location != null)

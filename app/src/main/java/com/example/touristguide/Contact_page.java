@@ -1,8 +1,11 @@
 package com.example.touristguide;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -50,6 +53,7 @@ import org.json.JSONObject;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Locale;
 
 
 public class Contact_page extends AppCompatActivity {
@@ -74,17 +78,20 @@ public class Contact_page extends AppCompatActivity {
         setContentView(R.layout.activity_contact_page);
         context = this;
 
+
              mAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
         LoginProgress = findViewById(R.id.pr_Login_main);
         FacebookSdk.sdkInitialize(this);
 
+        LoadLocal();
 
         callbackManager = CallbackManager.Factory.create();
         AppEventsLogger.activateApp(getApplication());
 
         btn_google = findViewById(R.id.btn_Google_login);
         btn_facebook = findViewById(R.id.btn_Facebook_login);
+
 
 
         GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions
@@ -157,6 +164,29 @@ public class Contact_page extends AppCompatActivity {
             callbackManager.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
     }
+
+    private void setLocal(String lang) {
+
+        Locale locale = new Locale(lang);
+        Locale.setDefault(locale);
+        Configuration configuration = new Configuration();
+        configuration.locale = locale;
+
+        getBaseContext().getResources().updateConfiguration(configuration, getBaseContext().getResources().getDisplayMetrics());
+
+        SharedPreferences.Editor editor = getSharedPreferences("Setting", MODE_PRIVATE).edit();
+        editor.putString("My_Lang", lang);
+        editor.apply();
+
+    }
+
+    public void LoadLocal() {
+        SharedPreferences preferences = getSharedPreferences("Setting", Activity.MODE_PRIVATE);
+        String Lang = preferences.getString("My_Lang", "en");
+        setLocal(Lang);
+
+    }
+
 
     private void FireBaseAutWithGoogle(GoogleSignInAccount account) {
 

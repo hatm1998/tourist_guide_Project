@@ -407,6 +407,7 @@ public class VideoPlayerRecyclerView extends RecyclerView {
             videoPlayer = null;
         }
 
+
         viewHolderParent = null;
     }
 

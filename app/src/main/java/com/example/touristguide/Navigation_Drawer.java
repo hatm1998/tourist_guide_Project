@@ -1,9 +1,13 @@
 package com.example.touristguide;
 
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -19,6 +23,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.app.ActivityCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -27,6 +32,8 @@ import androidx.fragment.app.FragmentTransaction;
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.example.touristguide.About_Us.About_Us;
 import com.example.touristguide.Activity.Fragment_Activity;
+import com.example.touristguide.Bookmark.BookMarks;
+import com.example.touristguide.Category.Category_Fragment;
 import com.example.touristguide.Event.Event_Activity.Event_Page;
 import com.example.touristguide.Profile.Profile_Page;
 import com.example.touristguide.Setting_Account.Settings;
@@ -48,6 +55,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import devlight.io.library.ntb.NavigationTabBar;
@@ -64,10 +72,10 @@ public class Navigation_Drawer extends AppCompatActivity
     private FloatingActionButton fab;
     private NavigationTabBar navigationTabBar;
     private int posFragment = 0;
+    private int MY_PERMISSION = 0;
     public static DrawerLayout drawer;
 
     FirebaseJobDispatcher dispatcher;
-
 
 
     @Override
@@ -81,7 +89,7 @@ public class Navigation_Drawer extends AppCompatActivity
 
     }
 
-      @Override
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation__drawer);
@@ -110,8 +118,26 @@ public class Navigation_Drawer extends AppCompatActivity
         toggle.syncState();
 
 
-        SharedPreferences mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        SharedPreferences.Editor editor = mSharedPreferences.edit();
+
+
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+
+            ActivityCompat.requestPermissions(this, new String[]{
+                    Manifest.permission.INTERNET,
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_NETWORK_STATE,
+                    Manifest.permission.SYSTEM_ALERT_WINDOW,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+
+
+            }, MY_PERMISSION);
+        }
 
 
         drawer = findViewById(R.id.drawer_layout);
@@ -218,6 +244,8 @@ public class Navigation_Drawer extends AppCompatActivity
                             break;
                         }
                         case 2: {
+                            Category_Fragment category_fragment = new Category_Fragment();
+                            replacefragment(category_fragment);
                             posFragment = index;
                             break;
                         }
@@ -235,6 +263,7 @@ public class Navigation_Drawer extends AppCompatActivity
             }
         });
 
+        LoadLocal();
     }
 
     private void hideAppBar(final AppBarLayout appBar) {
@@ -278,17 +307,41 @@ public class Navigation_Drawer extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    private void setLocal(String lang) {
+
+        Locale locale = new Locale(lang);
+        Locale.setDefault(locale);
+        Configuration configuration = new Configuration();
+        configuration.locale = locale;
+
+        getBaseContext().getResources().updateConfiguration(configuration, getBaseContext().getResources().getDisplayMetrics());
+
+        SharedPreferences.Editor editor = getSharedPreferences("Setting", MODE_PRIVATE).edit();
+        editor.putString("My_Lang", lang);
+        editor.apply();
+
+    }
+
+    public void LoadLocal() {
+        SharedPreferences preferences = getSharedPreferences("Setting", Activity.MODE_PRIVATE);
+        String Lang = preferences.getString("My_Lang", "en");
+        setLocal(Lang);
+
+    }
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+        Toast.makeText(getBaseContext(), "" + id, Toast.LENGTH_LONG).show();
         if (id == R.id.nav_event) {
             startActivity(new Intent(this, Event_Page.class));
             Animatoo.animateFade(this);
         } else if (id == R.id.nav_bookmark) {
 
+            startActivity(new Intent(this, BookMarks.class));
 
         } else if (id == R.id.nav_account) {
             Intent intent = new Intent(this, Settings.class);
@@ -297,6 +350,10 @@ public class Navigation_Drawer extends AppCompatActivity
         } else if (id == R.id.nav_aboutus) {
             Intent intent = new Intent(this, About_Us.class);
 
+            startActivity(intent);
+
+        } else if (id == R.id.nav_bookmark) {
+            Intent intent = new Intent(Navigation_Drawer.this, BookMarks.class);
 
             startActivity(intent);
 
@@ -311,7 +368,6 @@ public class Navigation_Drawer extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
 
 
     @Override
@@ -361,8 +417,6 @@ public class Navigation_Drawer extends AppCompatActivity
         }
 
     }
-
-
 
 
     public void replacefragment(Fragment fragment) {

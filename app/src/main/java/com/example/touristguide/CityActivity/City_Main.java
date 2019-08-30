@@ -150,8 +150,7 @@ public class City_Main extends AppCompatActivity {
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
 
-                if (newState == RecyclerView.SCROLL_STATE_IDLE)
-                {
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                     fab.show();
                 }
 
@@ -162,8 +161,7 @@ public class City_Main extends AppCompatActivity {
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
 
-                if (dy > 0 ||dy<0 && fab.isShown())
-                {
+                if (dy > 0 || dy < 0 && fab.isShown()) {
                     fab.hide();
                 }
 
@@ -213,7 +211,7 @@ public class City_Main extends AppCompatActivity {
 
         // get All Places in Your Country
         StringBuilder stringBuilder = new StringBuilder("https://maps.googleapis.com/maps/api/place/textsearch/json?");
-        stringBuilder.append("query=الاماكن السياحية+في+"+CityID);
+        stringBuilder.append("query=الاماكن السياحية+في+" + CityID);
         stringBuilder.append("&key=" + getResources().getString(R.string.Google_Places_Key));
         String Url = stringBuilder.toString();
         Get_City get_city = new Get_City();
@@ -266,14 +264,14 @@ public class City_Main extends AppCompatActivity {
             public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
                 if (!documentSnapshots.isEmpty()) {
                     for (DocumentChange documentChange : documentSnapshots.getDocumentChanges()) {
-
                         if (documentChange.getType() == DocumentChange.Type.ADDED) {
 
                             Post post = documentChange.getDocument().toObject(Post.class);
-                            post.setPOSTID(documentChange.getDocument().getId());
-                            posts.add(post);
-                            adapter_Post.notifyDataSetChanged();
-
+                            if (post.getCityName().contains(CityID)) {
+                                post.setPOSTID(documentChange.getDocument().getId());
+                                posts.add(post);
+                                adapter_Post.notifyDataSetChanged();
+                            }
 
                         }
                     }
@@ -320,20 +318,23 @@ public class City_Main extends AppCompatActivity {
             }
 
             public void onFinish() {
-                nestedScrollView.scrollTo(0,0);
+                nestedScrollView.scrollTo(0, 0);
             }
         }.start();
 
     }
-public void top(View view){
-    nestedScrollView.scrollTo(0,0);
-  //  Post_list_view.scrollTo(0,0);
-    Toast.makeText(context,"done",Toast.LENGTH_SHORT).show();
-}
-    public  void open(View view){
-        Intent intent =new Intent(this, Display_Places_Option.class);
-        intent.putExtra("search",((Button)view).getText().toString());
-        intent.putExtra("City",CityID);
+
+    public void top(View view) {
+        nestedScrollView.scrollTo(0, 0);
+        //  Post_list_view.scrollTo(0,0);
+
+    }
+
+    public void open(View view) {
+        Post_list_view.releasePlayer();
+        Intent intent = new Intent(this, Display_Places_Option.class);
+        intent.putExtra("search", ((Button) view).getText().toString());
+        intent.putExtra("City", CityID);
         startActivity(intent);
     }
 
@@ -346,7 +347,6 @@ public void top(View view){
     }
 
 
-
     private RequestManager initGlide() {
         RequestOptions options = new RequestOptions();
 
@@ -354,13 +354,14 @@ public void top(View view){
                 .setDefaultRequestOptions(options);
     }
 
-    private  class Get_City extends AsyncTask<String, String, String> {
+    private class Get_City extends AsyncTask<String, String, String> {
 
         private String url;
         private InputStream Is;
         private BufferedReader bufferedReader;
         private StringBuilder stringBuilder;
         private String data;
+
         @Override
         protected String doInBackground(String... strings) {
             url = strings[0];
@@ -387,46 +388,42 @@ public void top(View view){
         }
 
 
-
-
         @Override
         protected void onPostExecute(String s) {
             try {
-                final JSONObject  ParentObject = new JSONObject(s);
+                final JSONObject ParentObject = new JSONObject(s);
                 final JSONArray results = ParentObject.getJSONArray("results");
 
-                for(int i=0;i<results.length();i++)
-                {
+                for (int i = 0; i < results.length(); i++) {
                     JSONObject Parent = results.getJSONObject(i);
                     String Name = "No.";
                     if (Parent.has("name"))
                         Name = Parent.getString("name");
-                    String ID="";
+                    String ID = "";
                     if (Parent.has("place_id"))  // get All Places in Your Country
-                        ID= Parent.getString("place_id");
-                    String photo="";
+                        ID = Parent.getString("place_id");
+                    String photo = "";
                     if (Parent.has("photos"))
-                        photo="https://maps.googleapis.com/maps/api/place/photo?" +
+                        photo = "https://maps.googleapis.com/maps/api/place/photo?" +
                                 "maxwidth=1000" +
-                                "&photoreference="+ Parent.getJSONArray("photos")
-                                .getJSONObject(0).getString("photo_reference")+
-                                "&key="+context.getResources().getString(R.string.Google_Places_Key);
+                                "&photoreference=" + Parent.getJSONArray("photos")
+                                .getJSONObject(0).getString("photo_reference") +
+                                "&key=" + context.getResources().getString(R.string.Google_Places_Key);
                     Location location = new Location("");
-                    if(Parent.has("geometry")) {
+                    if (Parent.has("geometry")) {
                         JSONObject location_object = Parent.getJSONObject("geometry").getJSONObject("location");
                         location.setLatitude(location_object.getDouble("lat"));
                         location.setLongitude(location_object.getDouble("lng"));
                     }
-                    List_sightseeing.add(new Places(ID,Name,photo,location));
-                 }
+                    List_sightseeing.add(new Places(ID, Name, photo, location));
+                }
                 adapter_sightseeing = new Adapter_sightseeing(context, List_sightseeing);
                 pager_sightseeing.setAdapter(adapter_sightseeing);
-               pager_sightseeing.setCurrentItem(1);
+                pager_sightseeing.setCurrentItem(1);
 
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
 
 
         }

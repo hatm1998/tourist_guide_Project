@@ -4,13 +4,13 @@ import java.util.Date;
 
 public class setNotification {
 
-    private String Msg,PostInfo,UserID,UserSender;
+    private String Msg, PostInfo, UserID, UserSender;
     private Date date;
 
-    setNotification()
-    {
+    setNotification() {
 
     }
+
     public setNotification(String msg, String postInfo, String userID, String userSender, Date date) {
         Msg = msg;
         PostInfo = postInfo;

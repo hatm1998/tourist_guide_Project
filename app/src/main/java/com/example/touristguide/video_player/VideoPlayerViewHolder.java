@@ -286,6 +286,7 @@ public class VideoPlayerViewHolder extends RecyclerView.ViewHolder {
         });
 
 
+       // Toast.makeText(context, (int) (post.getLoc().getLatitude() + post.getLoc().getLongitude()), Toast.LENGTH_LONG).show();
         btn_Location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

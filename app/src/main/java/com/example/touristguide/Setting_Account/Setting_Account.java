@@ -105,8 +105,7 @@ public class Setting_Account extends AppCompatActivity {
 
                                         UpdateUser(task.getResult().toString());
                                         Remove.removeAll(Selected_Chip);
-                                        if (Remove.size() > 0)
-                                        {
+                                        if (Remove.size() > 0) {
                                             for (int i = 0; i < Selected_Chip.size(); i++) {
                                                 final int finalI = i;
                                                 FirebaseMessaging.getInstance().unsubscribeFromTopic(Selected_Chip.get(i))
@@ -118,9 +117,8 @@ public class Setting_Account extends AppCompatActivity {
                                                                     String msg = "Error Subscribe";
                                                                     Log.d("Erorrs", msg);
                                                                     Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
-                                                                }
-                                                                else
-                                                                   Log.d("unsubscribeFromTopic",Selected_Chip.get(finalI));
+                                                                } else
+                                                                    Log.d("unsubscribeFromTopic", Selected_Chip.get(finalI));
 
                                                             }
                                                         });
